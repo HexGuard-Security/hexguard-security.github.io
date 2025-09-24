@@ -744,7 +744,8 @@ function initializeHeroSphere() {
     const particles = [];
     const NUM = 2000;
     function computeRadius() {
-        return Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.75;
+        // 30% larger than previous (0.75 * 1.3 = 0.975)
+        return Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.975;
     }
     let RADIUS = computeRadius();
 
@@ -767,10 +768,10 @@ function initializeHeroSphere() {
 
     let rotY = 0;
     let mouse = { x: null, y: null, active: false };
-    const influence = 120;
-    const maxForce = 50;
-    const spring = 0.03;
-    const damping = 0.9;
+    const influence = 200; // larger interaction radius
+    const maxForce = 140;  // stronger push
+    const spring = 0.02;   // slower return for exaggerated stretch
+    const damping = 0.88;  // slightly less damping for more motion
 
     function setMouse(e) {
         const rect = canvas.getBoundingClientRect();
