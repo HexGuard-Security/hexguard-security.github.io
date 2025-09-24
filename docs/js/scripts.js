@@ -397,10 +397,7 @@ function animateSecurityGrid() {
     });
 }
 
-// Initialize security grid animation
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(animateSecurityGrid, 1000);
-});
+// (old grid animation disabled)
 
 // Pricing calculator (if needed for enterprise)
 function calculateEnterprisePrice(users, features) {
@@ -729,6 +726,83 @@ function addSpotlightStyles() {
     document.head.appendChild(style);
 }
 
+// Particle sphere in hero
+function initializeHeroSphere() {
+    const canvas = document.getElementById('hero-sphere');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * devicePixelRatio;
+        canvas.height = rect.height * devicePixelRatio;
+        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const particles = [];
+    const NUM = 900;
+    function computeRadius() {
+        return Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.75;
+    }
+    let RADIUS = computeRadius();
+
+    function themedColor() {
+        const hue = 182 + Math.floor(Math.random() * 16);
+        const sat = 70 + Math.floor(Math.random() * 20);
+        const light = 45 + Math.floor(Math.random() * 10);
+        return `hsl(${hue} ${sat}% ${light}%)`;
+    }
+
+    for (let i = 0; i < NUM; i++) {
+        const t = i / NUM;
+        const phi = Math.acos(1 - 2 * t);
+        const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+        const x = RADIUS * Math.sin(phi) * Math.cos(theta);
+        const y = RADIUS * Math.sin(phi) * Math.sin(theta);
+        const z = RADIUS * Math.cos(phi);
+        particles.push({ x, y, z, color: themedColor(), size: 1 + Math.random() * 1.5 });
+    }
+
+    let rotY = 0;
+    function render() {
+        const { width, height } = canvas;
+        ctx.clearRect(0, 0, width, height);
+        const cx = width / 2 / devicePixelRatio;
+        const cy = height / 2 / devicePixelRatio;
+
+        rotY += 0.004;
+        const sinY = Math.sin(rotY);
+        const cosY = Math.cos(rotY);
+        const perspective = 500;
+
+        const projected = particles.map(p => {
+            const rx = p.x * cosY + p.z * sinY;
+            const rz = -p.x * sinY + p.z * cosY;
+            const scale = perspective / (perspective - rz);
+            return {
+                sx: cx + rx * scale,
+                sy: cy + p.y * scale,
+                s: p.size * scale,
+                color: p.color,
+                z: rz
+            };
+        }).sort((a,b) => a.z - b.z);
+
+        projected.forEach(pt => {
+            ctx.beginPath();
+            ctx.fillStyle = pt.color;
+            ctx.globalAlpha = 0.85;
+            ctx.arc(pt.sx, pt.sy, pt.s, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(render);
+    }
+    render();
+}
+
 // Lazy loading for images
 function initializeLazyLoading() {
     if ('IntersectionObserver' in window) {
@@ -779,7 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeLazyLoading();
     registerServiceWorker();
     initializeHqMap();
-    initializeBugField();
+    initializeHeroSphere();
 });
 
 // Utility functions for external use
