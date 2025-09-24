@@ -299,38 +299,113 @@
     <section class="download-section">
         <div class="container">
             <div class="download-content">
-                <h2>Ready to Secure Your Firmware?</h2>
-                <p>Download Firmwire today and start analyzing firmware vulnerabilities in minutes</p>
-                
-                <div class="download-options">
-                    <div class="download-option">
-                        <i class="fab fa-windows"></i>
-                        <h4>Windows</h4>
-                        <p>Windows 10/11 (64-bit)</p>
-                        <button class="download-btn" onclick="downloadFirmwire('windows')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
-                    
-                    <div class="download-option">
-                        <i class="fab fa-apple"></i>
-                        <h4>macOS</h4>
-                        <p>macOS 10.15+ (Intel/Apple Silicon)</p>
-                        <button class="download-btn" onclick="downloadFirmwire('mac')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
-                    
-                    <div class="download-option">
-                        <i class="fab fa-linux"></i>
-                        <h4>Linux</h4>
-                        <p>Ubuntu 18.04+ / CentOS 7+</p>
-                        <button class="download-btn" onclick="downloadFirmwire('linux')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
+                <h2>Downloads</h2>
+                <p>Choose your platform. Verify checksums before installation.</p>
+
+                <div class="downloads-table-wrapper">
+                    <table class="downloads-table">
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>Version</th>
+                                <th>Release date</th>
+                                <th>Size</th>
+                                <th>Checksums</th>
+                                <th>Download</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="platform">
+                                        <i class="fab fa-windows"></i>
+                                        <span>Windows x64</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge">v1.2.0</span></td>
+                                <td>2025-09-01</td>
+                                <td>84.2 MB</td>
+                                <td>
+                                    <a href="#" class="link">SHA256</a>
+                                </td>
+                                <td>
+                                    <a class="download-link" href="#" onclick="downloadFirmwire('windows')"><i class="fas fa-download"></i> Installer</a>
+                                </td>
+                                <td><a href="#" class="link">Release notes</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="platform">
+                                        <i class="fab fa-apple"></i>
+                                        <span>macOS (Universal)</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge">v1.2.0</span></td>
+                                <td>2025-09-01</td>
+                                <td>72.9 MB</td>
+                                <td>
+                                    <a href="#" class="link">SHA256</a>
+                                </td>
+                                <td>
+                                    <a class="download-link" href="#" onclick="downloadFirmwire('mac')"><i class="fas fa-download"></i> DMG</a>
+                                </td>
+                                <td><a href="#" class="link">Release notes</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="platform">
+                                        <i class="fab fa-linux"></i>
+                                        <span>Linux x64</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge">v1.2.0</span></td>
+                                <td>2025-09-01</td>
+                                <td>65.4 MB</td>
+                                <td>
+                                    <a href="#" class="link">SHA256</a>
+                                </td>
+                                <td>
+                                    <a class="download-link" href="#" onclick="downloadFirmwire('linux')"><i class="fas fa-download"></i> AppImage</a>
+                                </td>
+                                <td><a href="#" class="link">Release notes</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                
+
+                <div class="older-versions">
+                    <details>
+                        <summary><i class="fas fa-history"></i> Older versions</summary>
+                        <div class="older-versions-grid">
+                            <div class="older-list">
+                                <h4><i class="fab fa-windows"></i> Windows</h4>
+                                <ul>
+                                    <li><span>v1.1.3</span> · <span>2025-06-10</span> · <a href="#" class="link">Installer</a> · <a href="#" class="link">SHA256</a></li>
+                                    <li><span>v1.1.0</span> · <span>2025-03-01</span> · <a href="#" class="link">Installer</a> · <a href="#" class="link">SHA256</a></li>
+                                    <li><span>v1.0.0</span> · <span>2024-12-15</span> · <a href="#" class="link">Installer</a> · <a href="#" class="link">SHA256</a></li>
+                                </ul>
+                            </div>
+                            <div class="older-list">
+                                <h4><i class="fab fa-apple"></i> macOS</h4>
+                                <ul>
+                                    <li><span>v1.1.3</span> · <span>2025-06-10</span> · <a href="#" class="link">DMG</a> · <a href="#" class="link">SHA256</a></li>
+                                    <li><span>v1.1.0</span> · <span>2025-03-01</span> · <a href="#" class="link">DMG</a> · <a href="#" class="link">SHA256</a></li>
+                                    <li><span>v1.0.0</span> · <span>2024-12-15</span> · <a href="#" class="link">DMG</a> · <a href="#" class="link">SHA256</a></li>
+                                </ul>
+                            </div>
+                            <div class="older-list">
+                                <h4><i class="fab fa-linux"></i> Linux</h4>
+                                <ul>
+                                    <li><span>v1.1.3</span> · <span>2025-06-10</span> · <a href="#" class="link">AppImage</a> · <a href="#" class="link">SHA256</a></li>
+                                    <li><span>v1.1.0</span> · <span>2025-03-01</span> · <a href="#" class="link">AppImage</a> · <a href="#" class="link">SHA256</a></li>
+                                    <li><span>v1.0.0</span> · <span>2024-12-15</span> · <a href="#" class="link">AppImage</a> · <a href="#" class="link">SHA256</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
                 <div class="cli-install">
                     <h4>Quick Install via CLI</h4>
                     <div class="install-commands">
@@ -373,7 +448,7 @@
                             <i class="fas fa-clock"></i>
                             <div>
                                 <h4>Business Hours</h4>
-                                <p>Mon-Fri: 9AM-6PM PST</p>
+                                <p>Mon-Fri: 2AM-10AM UTC</p>
                             </div>
                         </div>
                     </div>

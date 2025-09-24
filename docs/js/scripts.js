@@ -232,6 +232,18 @@ function downloadFirmwire(platform = 'default') {
     // window.open(downloadUrls[platform] || downloadUrls.default, '_blank');
 }
 
+// Enhance older versions details to scroll into view when opened
+document.addEventListener('DOMContentLoaded', function() {
+    const details = document.querySelector('.older-versions details');
+    if (details) {
+        details.addEventListener('toggle', function() {
+            if (details.open) {
+                details.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+});
+
 // Contact sales functionality
 function contactSales() {
     // Scroll to contact section
