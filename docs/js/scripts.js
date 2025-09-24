@@ -173,21 +173,22 @@ function handleContactForm(e) {
     e.preventDefault();
 
     const name = (document.getElementById('name')?.value || '').trim();
+    const email = (document.getElementById('email')?.value || '').trim();
     const message = (document.getElementById('message')?.value || '').trim();
 
-    if (!name || !message) {
-        showNotification('Please provide your name and a message.', 'warning');
+    if (!name || !message || !email) {
+        showNotification('Please provide your name, email, and a message.', 'warning');
         return;
     }
 
     const phone = '916366934469'; // E.164 without plus for wa.me
-    const text = `Hi HexGuard, I am ${name}.%0A%0A${encodeURIComponent(message)}`;
+    const text = encodeURIComponent(`Hi HexGuard, I am ${name} (${email}).\n\n${message}`);
     const url = `https://wa.me/${phone}?text=${text}`;
 
     // Open WhatsApp link
     window.open(url, '_blank');
 
-    trackEvent('contact_whatsapp', { name_length: name.length, message_length: message.length });
+    trackEvent('contact_whatsapp', { name_length: name.length, email_present: !!email, message_length: message.length });
 }
 
 // Download functionality

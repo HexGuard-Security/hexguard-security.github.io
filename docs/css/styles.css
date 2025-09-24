@@ -895,7 +895,7 @@ section {
 }
 
 .form-group textarea {
-    min-height: 120px;
+    min-height: 80px;
 }
 
 .submit-btn {
