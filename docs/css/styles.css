@@ -563,6 +563,13 @@ section {
     box-shadow: var(--shadow-md);
 }
 
+/* Force a single row of three tiles on larger screens */
+@media (min-width: 1024px) {
+    .pricing-cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
 .pricing-note {
     text-align: center;
     color: var(--text-secondary);
