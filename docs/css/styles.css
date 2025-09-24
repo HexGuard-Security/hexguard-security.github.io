@@ -35,17 +35,7 @@ body {
     padding: 0 20px;
 }
 
-/* Navigation */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: transparent;
-    border: 0;
-    z-index: 1000;
-}
-
-.nav-container { display: none; }
+/* Navigation removed */
 
 .nav-brand {
     display: flex;
