@@ -615,6 +615,74 @@ function initializeFeatureSpotlight() {
     }
 }
 
+// Crawling bugs animation in hero
+function initializeBugField() {
+    const field = document.querySelector('.bug-field');
+    if (!field) return;
+
+    const NUM_BUGS = 8;
+    const SPEED_PX_PER_SEC = 40; // average speed
+
+    const bugs = [];
+
+    function random(min, max) { return Math.random() * (max - min) + min; }
+    function randomInt(min, max) { return Math.floor(random(min, max)); }
+
+    function spawnBug() {
+        const el = document.createElement('img');
+        el.src = 'img/logo.svg';
+        el.alt = 'HexGuard bug';
+        el.className = 'bug';
+        const rect = field.getBoundingClientRect();
+        const x = random(0, rect.width - 36);
+        const y = random(0, rect.height - 36);
+        el.style.transform = `translate(${x}px, ${y}px) rotate(${randomInt(0,360)}deg)`;
+        field.appendChild(el);
+        return { el, x, y, angle: random(0, 2*Math.PI), speed: random(0.6, 1.4) * SPEED_PX_PER_SEC };
+    }
+
+    for (let i = 0; i < NUM_BUGS; i++) {
+        bugs.push(spawnBug());
+    }
+
+    function step(deltaSec) {
+        const rect = field.getBoundingClientRect();
+        bugs.forEach(b => {
+            b.angle += random(-0.4, 0.4) * deltaSec;
+            const vx = Math.cos(b.angle) * b.speed * deltaSec;
+            const vy = Math.sin(b.angle) * b.speed * deltaSec;
+            b.x += vx; b.y += vy;
+
+            const maxX = rect.width - 36;
+            const maxY = rect.height - 36;
+            if (b.x < 0) { b.x = 0; b.angle = Math.PI - b.angle; }
+            if (b.x > maxX) { b.x = maxX; b.angle = Math.PI - b.angle; }
+            if (b.y < 0) { b.y = 0; b.angle = -b.angle; }
+            if (b.y > maxY) { b.y = maxY; b.angle = -b.angle; }
+
+            const deg = (b.angle * 180 / Math.PI) + 90;
+            b.el.style.transform = `translate(${b.x}px, ${b.y}px) rotate(${deg}deg)`;
+        });
+    }
+
+    let last = performance.now();
+    function animate(now) {
+        const deltaSec = Math.min(0.05, (now - last) / 1000);
+        last = now;
+        step(deltaSec);
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+
+    window.addEventListener('resize', () => {
+        const rect = field.getBoundingClientRect();
+        bugs.forEach(b => {
+            b.x = Math.max(0, Math.min(rect.width - 36, b.x));
+            b.y = Math.max(0, Math.min(rect.height - 36, b.y));
+        });
+    });
+}
+
 // Add CSS for spotlight effect
 function addSpotlightStyles() {
     const style = document.createElement('style');
@@ -687,6 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeLazyLoading();
     registerServiceWorker();
     initializeHqMap();
+    initializeBugField();
 });
 
 // Utility functions for external use

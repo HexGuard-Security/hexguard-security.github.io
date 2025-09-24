@@ -244,40 +244,22 @@ body {
 
 /* Security Grid Animation */
 /* Hero logo animation */
-.hero-logo-wrap {
+/* Hero bug field */
+.bug-field {
     position: relative;
-    width: 280px;
-    height: 280px;
+    width: 100%;
+    height: 380px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 }
 
-.logo-glow {
+.bug {
     position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: radial-gradient(closest-side, rgba(0, 102, 255, 0.35), rgba(0, 212, 170, 0.15) 40%, transparent 70%);
-    filter: blur(12px);
-    animation: pulseGlow 3.5s ease-in-out infinite;
-}
-
-.hero-logo {
-    width: 70%;
-    height: auto;
-    display: block;
-    animation: floatY 4.5s ease-in-out infinite;
-}
-
-@keyframes floatY {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-@keyframes pulseGlow {
-    0%, 100% { opacity: 0.7; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
+    width: 36px;
+    height: 36px;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.35));
+    transition: transform 0.2s linear;
 }
 
 /* Section Styling */
