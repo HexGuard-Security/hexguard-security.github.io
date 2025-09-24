@@ -60,15 +60,13 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
     text-decoration: none;
 }
 
-.nav-brand i {
-    color: var(--primary-color);
-    font-size: 1.8rem;
+.brand-image {
+    height: 28px;
+    width: auto;
+    display: block;
 }
 
 .nav-menu {
@@ -279,6 +277,13 @@ section {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.firmwire-logo {
+    height: 28px;
+    width: auto;
+    vertical-align: -6px;
+    margin-right: 10px;
 }
 
 .product-showcase {
@@ -901,7 +906,7 @@ section {
 }
 
 .form-group textarea {
-    min-height: 160px;
+    min-height: 250px;
 }
 
 .submit-btn {
