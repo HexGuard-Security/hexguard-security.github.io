@@ -1016,27 +1016,35 @@ window.HexGuard = {
     trackEvent
 };
 
-// Initialize Leaflet map for HQ (Silom 3, Bangkok)
+// Initialize Leaflet map for offices (Bangkok + Bengaluru)
 function initializeHqMap() {
     const mapEl = document.getElementById('hq-map');
     if (!mapEl || typeof L === 'undefined') return;
 
-    // Approximate coordinates for Silom Soi 3, Bangkok
-    const hqCoords = [13.7258, 100.5326];
+    // Approximate coordinates
+    const bkkCoords = [13.7258, 100.5326]; // Silom Soi 3, Bangkok
+    const blrCoords = [12.8456, 77.6600];  // Electronic City Phase 1, Bengaluru
 
     const map = L.map('hq-map', {
         zoomControl: true,
         scrollWheelZoom: false
-    }).setView(hqCoords, 16);
+    }).setView(bkkCoords, 5);
 
     // Dark-themed tiles aligned with site aesthetics
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
     }).addTo(map);
 
-    // Custom marker
-    const marker = L.marker(hqCoords).addTo(map);
-    marker.bindPopup('<b>HexGuard HQ</b><br>Silom 3, Bang Rak, Bangkok').openPopup();
+    // Markers
+    const bkkMarker = L.marker(bkkCoords).addTo(map);
+    bkkMarker.bindPopup('<b>HexGuard HQ</b><br>Silom 3, Bang Rak, Bangkok');
+
+    const blrMarker = L.marker(blrCoords).addTo(map);
+    blrMarker.bindPopup('<b>HexGuard Bengaluru</b><br>12th Cross, Electronic City Phase 1');
+
+    // Fit to both offices
+    const bounds = L.latLngBounds([bkkCoords, blrCoords]);
+    map.fitBounds(bounds, { padding: [40, 40] });
 }
 
 // Add animations CSS
