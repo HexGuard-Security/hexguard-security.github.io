@@ -742,7 +742,7 @@ function initializeHeroSphere() {
     window.addEventListener('resize', resize);
 
     const particles = [];
-    const NUM = 900;
+    const NUM = 2000;
     function computeRadius() {
         return Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.75;
     }
@@ -759,13 +759,28 @@ function initializeHeroSphere() {
         const t = i / NUM;
         const phi = Math.acos(1 - 2 * t);
         const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-        const x = RADIUS * Math.sin(phi) * Math.cos(theta);
-        const y = RADIUS * Math.sin(phi) * Math.sin(theta);
-        const z = RADIUS * Math.cos(phi);
-        particles.push({ x, y, z, color: themedColor(), size: 1 + Math.random() * 1.5 });
+        const bx = RADIUS * Math.sin(phi) * Math.cos(theta);
+        const by = RADIUS * Math.sin(phi) * Math.sin(theta);
+        const bz = RADIUS * Math.cos(phi);
+        particles.push({ bx, by, bz, ox: 0, oy: 0, oz: 0, vx: 0, vy: 0, vz: 0, color: themedColor(), size: 0.6 + Math.random() * 0.7, tw: Math.random() * Math.PI * 2, tws: 0.8 + Math.random() * 1.2 });
     }
 
     let rotY = 0;
+    let mouse = { x: null, y: null, active: false };
+    const influence = 120;
+    const maxForce = 50;
+    const spring = 0.03;
+    const damping = 0.9;
+
+    function setMouse(e) {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
+        mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+        mouse.active = true;
+    }
+    canvas.addEventListener('mousemove', setMouse);
+    canvas.addEventListener('mouseleave', () => { mouse.active = false; });
+
     function render() {
         const { width, height } = canvas;
         ctx.clearRect(0, 0, width, height);
@@ -777,26 +792,63 @@ function initializeHeroSphere() {
         const cosY = Math.cos(rotY);
         const perspective = 500;
 
-        const projected = particles.map(p => {
-            const rx = p.x * cosY + p.z * sinY;
-            const rz = -p.x * sinY + p.z * cosY;
-            const scale = perspective / (perspective - rz);
-            return {
-                sx: cx + rx * scale,
-                sy: cy + p.y * scale,
-                s: p.size * scale,
-                color: p.color,
-                z: rz
-            };
-        }).sort((a,b) => a.z - b.z);
+        const mouseX = mouse.x != null ? mouse.x / devicePixelRatio : null;
+        const mouseY = mouse.y != null ? mouse.y / devicePixelRatio : null;
 
-        projected.forEach(pt => {
+        const drawn = [];
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            // current object-space position
+            let x = p.bx + p.ox;
+            let y = p.by + p.oy;
+            let z = p.bz + p.oz;
+
+            // spring to base
+            p.vx += -(p.ox) * spring;
+            p.vy += -(p.oy) * spring;
+            p.vz += -(p.oz) * spring;
+
+            // rotate for screen projection for mouse force calc
+            const rx = x * cosY + z * sinY;
+            const rz = -x * sinY + z * cosY;
+            if (mouse.active && mouseX != null) {
+                const scaleMouse = perspective / (perspective - rz);
+                const sx = cx + rx * scaleMouse;
+                const sy = cy + y * scaleMouse;
+                const dx = sx - mouseX;
+                const dy = sy - mouseY;
+                const dist = Math.hypot(dx, dy);
+                if (dist < influence) {
+                    const f = maxForce * (1 - dist / influence) * (1 - dist / influence);
+                    const nx = x / RADIUS, ny = y / RADIUS, nz = z / RADIUS;
+                    p.vx += nx * f * 0.03;
+                    p.vy += ny * f * 0.03;
+                    p.vz += nz * f * 0.03;
+                }
+            }
+
+            // integrate
+            p.vx *= damping; p.vy *= damping; p.vz *= damping;
+            p.ox += p.vx; p.oy += p.vy; p.oz += p.vz;
+
+            // final projection
+            x = p.bx + p.ox; y = p.by + p.oy; z = p.bz + p.oz;
+            const rrx = x * cosY + z * sinY;
+            const rrz = -x * sinY + z * cosY;
+            const scale = perspective / (perspective - rrz);
+            const twinkle = 0.7 + 0.3 * Math.sin(p.tw += 0.02 * p.tws);
+            drawn.push({ sx: cx + rrx * scale, sy: cy + y * scale, s: p.size * scale, color: p.color, alpha: 0.7 * twinkle, z: rrz });
+        }
+
+        drawn.sort((a,b) => a.z - b.z);
+        for (let i = 0; i < drawn.length; i++) {
+            const pt = drawn[i];
             ctx.beginPath();
             ctx.fillStyle = pt.color;
-            ctx.globalAlpha = 0.85;
+            ctx.globalAlpha = pt.alpha;
             ctx.arc(pt.sx, pt.sy, pt.s, 0, Math.PI * 2);
             ctx.fill();
-        });
+        }
         ctx.globalAlpha = 1;
         requestAnimationFrame(render);
     }
