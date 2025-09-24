@@ -249,10 +249,11 @@ body {
 .hero-visual { overflow: visible; }
 
 #hero-sphere {
-    width: 100%;
+    width: 100vw;
+    max-width: none;
     height: 640px;
     display: block;
-    margin-left: 8%;
+    margin-left: calc((100vw - 100%) / -2);
 }
 
 /* Section Styling */
