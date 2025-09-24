@@ -70,6 +70,9 @@ function initializeAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
+                // Ensure final state persists after animation
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
                 
                 // Stagger animation for feature cards
                 if (entry.target.classList.contains('feature-card')) {
