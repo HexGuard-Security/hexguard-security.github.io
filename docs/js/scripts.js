@@ -137,6 +137,8 @@ function initializeTerminalAnimation() {
 
     // initialize hidden state
     lines.forEach(l => {
+        // cache full text for typewriter support
+        l.dataset.fulltext = l.textContent || '';
         l.style.opacity = '0';
         l.style.transform = 'translateX(-12px)';
         l.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
@@ -151,15 +153,54 @@ function initializeTerminalAnimation() {
             observer.unobserve(entry.target);
             // play animation
             let t = 350; // initial delay
+
+            function typeLine(line, text, onDone) {
+                // remove pseudo-caret to avoid duplicate
+                line.classList.remove('typing');
+                // clear and reveal progressively
+                line.textContent = '';
+                appendCaret(line);
+                let i = 0;
+                (function step() {
+                    if (i < text.length) {
+                        const ch = text.charAt(i);
+                        // insert character before caret
+                        const caret = line.querySelector('.terminal-caret');
+                        const node = document.createTextNode(ch);
+                        if (caret) {
+                            line.insertBefore(node, caret);
+                        } else {
+                            line.appendChild(node);
+                            appendCaret(line);
+                        }
+                        i++;
+                        // dynamic typing speed
+                        let d = 18 + Math.random()*30;
+                        if (/[,.)]/.test(ch)) d += 60; // small pause on punctuation
+                        setTimeout(step, d);
+                    } else {
+                        // finished typing
+                        if (typeof onDone === 'function') onDone();
+                    }
+                })();
+            }
+
             lines.forEach((line, idx) => {
                 setTimeout(() => {
                     line.style.opacity = '1';
                     line.style.transform = 'translateX(0)';
-                    // move caret to current line end
+                    // clear existing carets
                     lines.forEach(l => { const c=l.querySelector('.terminal-caret'); if(c) c.remove(); });
-                    appendCaret(line);
+                    const text = line.dataset.fulltext || '';
+                    if (line.classList.contains('typing')) {
+                        typeLine(line, text, () => enhanceTerminalBadges());
+                    } else {
+                        line.textContent = text;
+                        appendCaret(line);
+                        enhanceTerminalBadges();
+                    }
                 }, t);
-                t += delayFor(line.textContent || '', idx);
+                t += delayFor(line.dataset.fulltext || '', idx);
             });
         });
     }, { threshold: 0.2 });
