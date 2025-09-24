@@ -67,6 +67,13 @@ body {
     height: 28px;
     width: auto;
     display: block;
+    background: transparent;
+}
+
+.brand-text {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.2rem;
 }
 
 .nav-menu {
