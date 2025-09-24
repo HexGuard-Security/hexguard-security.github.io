@@ -1158,15 +1158,16 @@ function initializeMiniParticleSphere(canvas) {
         const idleX = Math.sin(t * 0.6) * 0.12;
         const idleY = Math.cos(t * 0.4) * 0.12;
 
-        // particle size scales with logo radius; keep them tiny even on big logos
-        const baseSize = Math.max(0.24, radius * 0.010);
+        // particle size scales with logo radius; slightly larger for visibility
+        const baseSize = Math.max(0.34, radius * 0.013);
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             const rp = rotatePoint(p, rotX + idleX, rotY + idleY);
             const depth = (rp.z + 1) * 0.5; // 0..1
             const px = centerX + rp.x * radius;
             const py = centerY + rp.y * radius;
-            const size = baseSize * (0.6 + depth * 0.9);
+            // increased slightly and fixed accidental typo
+            const size = baseSize * (0.75 + depth * 1.05);
             ctx.fillStyle = colorAt(i / particles.length);
             ctx.globalAlpha = 0.58 + depth * 0.32;
             ctx.beginPath();
@@ -1240,7 +1241,8 @@ function startDynamicFavicon() {
         ctx.fillStyle = 'rgba(0,0,0,0.0)';
         ctx.fillRect(0, 0, size, size);
 
-        const baseSize = Math.max(0.22, radius * 0.010);
+        // keep favicon dots a touch larger so they survive downscaling
+        const baseSize = Math.max(0.26, radius * 0.012);
         const drawn = [];
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
@@ -1250,7 +1252,7 @@ function startDynamicFavicon() {
                 y: centerY + rp.y * radius,
                 z: rp.z,
                 c: colorAt(i / particles.length),
-                s: baseSize * (0.6 + (rp.z + 1) * 0.45)
+                s: baseSize * (0.72 + (rp.z + 1) * 0.52)
             });
         }
         drawn.sort((a, b) => a.z - b.z);
