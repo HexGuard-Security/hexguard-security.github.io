@@ -559,6 +559,36 @@ section {
     background: linear-gradient(180deg, rgba(0, 102, 255, 0.08), rgba(0, 212, 170, 0.06) 60%, rgba(26, 31, 46, 0.6));
 }
 
+.pricing-card.education {
+    position: relative;
+    border-color: rgba(94, 234, 123, 0.5);
+    box-shadow: 0 12px 42px rgba(180, 255, 0, 0.18), 0 0 0 1px rgba(180, 255, 0, 0.08) inset;
+    background: linear-gradient(180deg, rgba(180, 255, 0, 0.08), rgba(94, 234, 212, 0.06) 60%, rgba(26, 31, 46, 0.6));
+}
+
+.pricing-card.education .pricing-header h3 {
+    color: #bbff00;
+}
+
+.edu-badge {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    background: radial-gradient(closest-side, rgba(187,255,0,0.9), rgba(187,255,0,0.45) 60%, transparent 80%);
+    color: #0a0f1c;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 24px rgba(187,255,0,0.45);
+}
+
+.edu-badge i {
+    color: #0a0f1c;
+}
+
 .featured-badge {
     position: absolute;
     top: -12px;
