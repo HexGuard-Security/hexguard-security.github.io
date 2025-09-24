@@ -731,79 +731,117 @@ function initializeHeroThree() {
     const mount = document.getElementById('hero-three');
     if (!mount || !window.THREE) return;
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x0a0f1c, 20, 120);
     const camera = new THREE.PerspectiveCamera(45, 2, 0.1, 1000);
-    camera.position.set(0, 8, 26);
+    camera.position.set(0, 0, 26);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     mount.appendChild(renderer.domElement);
 
-    const light = new THREE.DirectionalLight(0x66ccff, 1.0);
-    light.position.set(5, 10, 7);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0x1e2a3a, 0.6));
-
-    // PCB-like plane with grid traces
-    const board = new THREE.Group();
-    scene.add(board);
-
-    const boardGeom = new THREE.PlaneGeometry(18, 12, 72, 48);
-    const boardMat = new THREE.MeshStandardMaterial({ color: 0x0f2430, metalness: 0.2, roughness: 0.8, side: THREE.DoubleSide });
-    const boardMesh = new THREE.Mesh(boardGeom, boardMat);
-    boardMesh.rotation.x = -Math.PI / 2.3;
-    board.add(boardMesh);
-
-    // Traces as glowing lines
-    const traceMat = new THREE.LineBasicMaterial({ color: 0x00d4aa, transparent: true, opacity: 0.8 });
-    for (let i = -8; i <= 8; i += 1) {
-        const pathGeom = new THREE.BufferGeometry();
-        const pts = [];
-        for (let x = -9; x <= 9; x += 0.5) {
-            const y = Math.sin((x + i) * 0.6) * 0.2 + Math.cos((x - i) * 0.3) * 0.15;
-            pts.push(new THREE.Vector3(x, y + 0.02, i));
-        }
-        pathGeom.setFromPoints(pts);
-        const line = new THREE.Line(pathGeom, traceMat);
-        line.rotation.x = -Math.PI / 2.3;
-        board.add(line);
+    // Modern particle aesthetic (timeless) using shader-driven points
+    const COUNT = 24000;
+    const positions = new Float32Array(COUNT * 3);
+    const base = new Float32Array(COUNT * 3); // unit sphere base positions
+    const colors = new Float32Array(COUNT * 3);
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const radius = 8.5;
+    for (let i = 0; i < COUNT; i++) {
+        // Fibonacci sphere distribution
+        const t = i / COUNT;
+        const phi = Math.acos(1 - 2 * t);
+        const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+        const ux = Math.sin(phi) * Math.cos(theta);
+        const uy = Math.sin(phi) * Math.sin(theta);
+        const uz = Math.cos(phi);
+        base[i*3+0] = ux;
+        base[i*3+1] = uy;
+        base[i*3+2] = uz;
+        positions[i*3+0] = ux * radius;
+        positions[i*3+1] = uy * radius;
+        positions[i*3+2] = uz * radius;
+        const c = 0.6 + Math.random()*0.4;
+        colors[i*3+0] = 0.0 + 0.1 * c; // subtle aqua tint via shader
+        colors[i*3+1] = 0.8 * c;
+        colors[i*3+2] = 0.7 * c;
     }
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geom.setAttribute('base', new THREE.BufferAttribute(base, 3));
+    geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // IC chips as boxes with emissive pins
-    const chips = new THREE.Group();
-    board.add(chips);
-    const chipMat = new THREE.MeshStandardMaterial({ color: 0x1a2b3a, metalness: 0.3, roughness: 0.5, emissive: 0x002a2a, emissiveIntensity: 0.35 });
-    const chipPositions = [ [-3, 0.4, -1], [4, 0.4, 2.5], [1.5, 0.4, -4] ];
-    chipPositions.forEach(([x, h, z]) => {
-        const chip = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.8, 2.4), chipMat);
-        chip.position.set(x, 0.5, z);
-        chip.rotation.x = -Math.PI / 2.3;
-        chips.add(chip);
-        // pins
-        const pinMat = new THREE.MeshStandardMaterial({ color: 0x0bd1b2, emissive: 0x004a4a, emissiveIntensity: 0.6, metalness: 0.7, roughness: 0.2 });
-        for (let i = -1.3; i <= 1.3; i += 0.2) {
-            const pin = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.35), pinMat);
-            pin.position.set(x + i, 0.38, z + 1.25);
-            pin.rotation.x = -Math.PI / 2.3;
-            board.add(pin);
-            const pin2 = pin.clone();
-            pin2.position.set(x + i, 0.38, z - 1.25);
-            board.add(pin2);
+    const uniforms = {
+        uTime: { value: 0 },
+        uRadius: { value: radius },
+        uAmp: { value: 2.4 },
+        uNoiseScale: { value: 1.2 },
+        uPrimary: { value: new THREE.Color('#00d4aa') },
+        uSecondary: { value: new THREE.Color('#0066ff') }
+    };
+
+    const vertexShader = `
+        attribute vec3 base;
+        attribute vec3 color;
+        uniform float uTime;
+        uniform float uRadius;
+        uniform float uAmp;
+        uniform float uNoiseScale;
+        varying vec3 vColor;
+
+        // Simple 3D noise (value noise blend)
+        float hash(vec3 p){ return fract(sin(dot(p, vec3(127.1,311.7, 74.7))) * 43758.5453123); }
+        float noise(vec3 x){
+          vec3 i = floor(x); vec3 f = fract(x);
+          float n000 = hash(i + vec3(0,0,0));
+          float n001 = hash(i + vec3(0,0,1));
+          float n010 = hash(i + vec3(0,1,0));
+          float n011 = hash(i + vec3(0,1,1));
+          float n100 = hash(i + vec3(1,0,0));
+          float n101 = hash(i + vec3(1,0,1));
+          float n110 = hash(i + vec3(1,1,0));
+          float n111 = hash(i + vec3(1,1,1));
+          vec3 u = f*f*(3.0-2.0*f);
+          return mix(mix(mix(n000, n100, u.x), mix(n010, n110, u.x), u.y),
+                     mix(mix(n001, n101, u.x), mix(n011, n111, u.x), u.y), u.z);
         }
+
+        void main(){
+          float t = uTime * 0.35;
+          // layered noise for organic morph
+          float n1 = noise(base * (uNoiseScale*0.9) + vec3(0.0, t, 0.0));
+          float n2 = noise(base * (uNoiseScale*1.6) + vec3(t*0.7, 0.0, -t*0.5));
+          float disp = (n1*0.6 + n2*0.4 - 0.5) * uAmp;
+          vec3 pos = normalize(base) * (uRadius + disp);
+          // subtle drift across surface
+          pos += vec3(sin(t+base.y*3.0), cos(t*0.6+base.z*2.5), sin(t*0.8+base.x*2.0)) * 0.15;
+          vColor = color;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+          gl_PointSize = 1.6 + disp*0.3;
+          gl_PointSize *= (300.0 / - (modelViewMatrix * vec4(pos,1.0)).z);
+        }
+    `;
+    const fragmentShader = `
+        precision mediump float;
+        varying vec3 vColor;
+        void main(){
+          float d = length(gl_PointCoord - 0.5);
+          if(d>0.5) discard;
+          float alpha = smoothstep(0.5, 0.0, d) * 0.95;
+          vec3 col = vColor;
+          gl_FragColor = vec4(col, alpha);
+        }
+    `;
+
+    const mat = new THREE.ShaderMaterial({
+        uniforms,
+        vertexShader,
+        fragmentShader,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        vertexColors: true
     });
-
-    // Flowing data packets as moving sprites
-    const packetGeom = new THREE.SphereGeometry(0.06, 8, 8);
-    const packetMat = new THREE.MeshBasicMaterial({ color: 0x00d4aa });
-    const packets = [];
-    for (let i = 0; i < 120; i++) {
-        const m = new THREE.Mesh(packetGeom, packetMat.clone());
-        m.material.color.setHSL(0.5 + Math.random()*0.1, 1, 0.6 + Math.random()*0.2);
-        m.userData.t = Math.random() * Math.PI * 2;
-        m.userData.speed = 0.6 + Math.random() * 0.8;
-        packets.push(m);
-        board.add(m);
-    }
+    const points = new THREE.Points(geom, mat);
+    scene.add(points);
 
     function resize() {
         const { clientWidth, clientHeight } = mount;
@@ -811,27 +849,17 @@ function initializeHeroThree() {
         camera.aspect = clientWidth / Math.max(1, clientHeight);
         camera.updateProjectionMatrix();
     }
-    // override previous resize binding for canvas
     window.addEventListener('resize', resize);
     resize();
 
-    let t = 0;
-    function animate() {
-        requestAnimationFrame(animate);
-        t += 0.01;
-        board.rotation.y = Math.sin(t * 0.2) * 0.15;
-        board.position.y = Math.sin(t * 0.6) * 0.2;
-        // animate packets along pseudo-traces
-        packets.forEach((p, idx) => {
-            const lane = (idx % 16) - 8;
-            const x = -9 + ( (p.userData.t * 3 + idx*0.2) % 18 );
-            const y = Math.sin((x + lane) * 0.6 + t*0.8) * 0.2 + Math.cos((x - lane) * 0.3 - t*0.5) * 0.15 + 0.06;
-            p.position.set(x, y, lane);
-            p.rotation.x = -Math.PI / 2.3;
-        });
+    function animate(time){
+        uniforms.uTime.value = (time||0)/1000.0;
+        points.rotation.y += 0.0012;
+        points.rotation.x = Math.sin(uniforms.uTime.value*0.3)*0.08;
         renderer.render(scene, camera);
+        requestAnimationFrame(animate);
     }
-    animate();
+    requestAnimationFrame(animate);
 }
 
 // Lazy loading for images

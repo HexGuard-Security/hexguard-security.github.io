@@ -294,6 +294,13 @@ section {
     margin-right: 10px;
 }
 
+.firmwire-logo-medium {
+    height: 100px;
+    width: auto;
+    vertical-align: -6px;
+    margin-right: 10px;
+}
+
 .product-showcase {
     display: grid;
     grid-template-columns: 1fr 1fr;
