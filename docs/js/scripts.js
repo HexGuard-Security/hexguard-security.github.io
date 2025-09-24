@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFormHandlers();
     initializeScrollEffects();
     initializeTerminalAnimation();
+    enhanceTerminalBadges();
 });
 
 // Navigation functionality
@@ -142,6 +143,20 @@ function initializeTerminalAnimation() {
         });
         terminalObserver.observe(terminal);
     }
+}
+
+// Convert CWE codes in terminal lines into badges
+function enhanceTerminalBadges() {
+    const body = document.querySelector('.terminal-body');
+    if (!body) return;
+    const lines = body.querySelectorAll('.terminal-line');
+    lines.forEach(line => {
+        const html = line.innerHTML;
+        const replaced = html.replace(/\[(CWE-\d+)\]/g, '<span class="badge cwe">$1</span>');
+        if (replaced !== html) {
+            line.innerHTML = replaced;
+        }
+    });
 }
 
 // Form handlers
