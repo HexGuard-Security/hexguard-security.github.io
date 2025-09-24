@@ -1003,6 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
     registerServiceWorker();
     initializeHqMap();
     initializeHeroThree();
+    replaceLogosWithDiamond();
 });
 
 // Utility functions for external use
@@ -1047,6 +1048,39 @@ function initializeHqMap() {
     map.fitBounds(bounds, { padding: [40, 40] });
     // Zoom out slightly for wider regional context
     map.setZoom(map.getZoom() - 1);
+}
+
+// Replace all <img src="./img/logo.svg"> with a CSS/JS gradient wireframe diamond
+function replaceLogosWithDiamond() {
+    const selector = 'img[src$="logo.svg"], img[src$="logo.png"], img[src$="/logo.svg"], img[src$="/logo.png"]';
+    document.querySelectorAll(selector).forEach((img) => {
+        const size = Math.max(24, Math.min(64, img.width || 28));
+        const wrapper = document.createElement('span');
+        wrapper.className = 'hxg-logo';
+        wrapper.style.width = size + 'px';
+        wrapper.style.height = size + 'px';
+        // SVG wireframe diamond using current highlight gradient via defs
+        wrapper.innerHTML = `
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="HexGuard logo">
+  <defs>
+    <linearGradient id="hxgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0066ff"/>
+      <stop offset="100%" stop-color="#00d4aa"/>
+    </linearGradient>
+  </defs>
+  <g class="hxg-logo__spin" fill="none" stroke="url(#hxgGradient)" stroke-width="3" stroke-linejoin="round">
+    <!-- Diamond outline -->
+    <polygon points="50,2 95,50 50,98 5,50"/>
+    <!-- Inner wireframe -->
+    <line x1="50" y1="2" x2="50" y2="98"/>
+    <line x1="5" y1="50" x2="95" y2="50"/>
+    <line x1="27" y1="27" x2="73" y2="73"/>
+    <line x1="73" y1="27" x2="27" y2="73"/>
+    <polygon points="50,15 85,50 50,85 15,50" stroke-width="2"/>
+  </g>
+</svg>`;
+        img.replaceWith(wrapper);
+    });
 }
 
 // Add animations CSS

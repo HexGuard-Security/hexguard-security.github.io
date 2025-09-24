@@ -221,6 +221,30 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+/* CSS/JS Logo: gradient wireframe diamond */
+.hxg-logo {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    position: relative;
+}
+
+.hxg-logo svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.hxg-logo__spin {
+    transform-origin: 50% 50%;
+    animation: hxg-spin 12s linear infinite;
+}
+
+@keyframes hxg-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .hero-subtitle {
     font-size: 1.2rem;
     color: var(--text-secondary);
