@@ -13,21 +13,23 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a class="nav-brand" href="#home" aria-label="HexGuard Home">
-                <img src="img/logo.svg" alt="HexGuard" class="brand-image">
-                <span class="brand-text">HexGuard</span>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="#product">Product</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
+            <!-- legacy navbar hidden via CSS; floating pill nav used instead -->
         </div>
     </nav>
+
+    <!-- Floating Nav (pill-style) -->
+    <div class="floating-nav" role="navigation" aria-label="Primary">
+        <a href="#home" class="floating-nav__brand" aria-label="HexGuard Home">
+            <img src="img/logo.svg" alt="HexGuard" class="floating-nav__logo">
+            <span class="floating-nav__text">HexGuard</span>
+        </a>
+        <div class="floating-nav__links">
+            <a href="#product">Product</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -487,15 +489,7 @@
 
     <!-- Mini Floating Footer -->
     <div class="mini-footer" role="contentinfo" aria-label="Quick footer">
-        <a href="#home" class="mini-footer__brand" aria-label="HexGuard Home">
-            <img src="img/logo.svg" alt="HexGuard" class="mini-footer__logo">
-            <span class="mini-footer__text">HexGuard</span>
-        </a>
-        <div class="mini-footer__links">
-            <a href="#pricing">Pricing</a>
-            <a href="#contact">Contact</a>
-            <a href="#product">Product</a>
-        </div>
+        <span class="mini-footer__copyright">© 2024 HexGuard</span>
     </div>
 
     <!-- Footer -->

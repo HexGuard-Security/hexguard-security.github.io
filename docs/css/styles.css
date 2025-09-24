@@ -40,21 +40,12 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(10, 15, 28, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    border: 0;
     z-index: 1000;
-    transition: var(--transition);
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+.nav-container { display: none; }
 
 .nav-brand {
     display: flex;
@@ -220,8 +211,8 @@ body {
 /* Hero logo animation */
 .hero-logo-wrap {
     position: relative;
-    width: 280px;
-    height: 280px;
+    width: 500px;
+    height: 500px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -960,32 +951,13 @@ section {
     padding: 8px 14px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     z-index: 999;
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.mini-footer__brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-}
-
-.mini-footer__logo {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.12);
-    padding: 3px;
-}
-
-.mini-footer__text {
-    color: var(--text-primary);
-    font-weight: 700;
-    font-size: 0.95rem;
-}
+.mini-footer__copyright { color: var(--text-secondary); font-size: 0.9rem; }
 
 .mini-footer__links a {
     color: var(--text-secondary);
@@ -1004,6 +976,53 @@ section {
     pointer-events: none;
     transform: translateX(-50%) translateY(10px);
 }
+
+/* Floating Nav (pill) */
+.floating-nav {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 15, 28, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 1001;
+}
+
+.floating-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.floating-nav__logo {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 3px;
+}
+
+.floating-nav__text {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.floating-nav__links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin: 0 6px;
+}
+
+.floating-nav__links a:hover { color: var(--text-primary); }
 
 .footer-content {
     display: grid;
