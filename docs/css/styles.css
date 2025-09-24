@@ -306,8 +306,8 @@ body {
     position: absolute;
     right: 2rem;
     bottom: 2rem;
-    width: min(360px, 42vw);
-    height: min(360px, 42vw);
+    width: min(432px, 50vw);
+    height: min(432px, 50vw);
     z-index: 1;
 }
 
