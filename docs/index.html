@@ -104,7 +104,6 @@
                         </div>
                         <div class="terminal-body">
                             <div class="terminal-line">$ firmwire analyze --compliance=RED,IEC62443 iot_device.bin</div>
-                            <div class="terminal-line typing">Initializing Firmwire Security Analyzer v3.2.1...</div>
                             <div class="terminal-line">✓ Binary loaded: iot_device.bin (2.4MB)</div>
                             <div class="terminal-line">✓ Architecture detected: ARM Cortex-M4F (Thumb-2)</div>
                             <div class="terminal-line">✓ Bootloader identified: STM32 System Memory</div>
@@ -112,11 +111,11 @@
                             <div class="terminal-line">✓ Application code: 0x08000000-0x0801FFFF</div>
                             <div class="terminal-line">✓ Configuration data: 0x08020000-0x08023FFF</div>
                             <div class="terminal-line">⚡ Running SAST engine with 847 security rules...</div>
-                            <div class="terminal-line critical">🔴 CRITICAL: Buffer overflow in WiFi_ParseCredentials() [CWE-120]</div>
-                            <div class="terminal-line high">🟠 HIGH: Hardcoded AES key in flash memory [CWE-798]</div>
-                            <div class="terminal-line medium">🟡 MEDIUM: Unencrypted sensitive data transmission [CWE-319]</div>
-                            <div class="terminal-line">✓ Analysis completed in 4.7s | 5 vulnerabilities found</div>
-                            <div class="terminal-line">📁 Reports saved to: ./reports/iot_device_20240324_143052/</div>
+                            <div class="terminal-line critical">CRITICAL: Buffer overflow in WiFi_ParseCredentials() [CWE-120]</div>
+                            <div class="terminal-line high">HIGH: Hardcoded AES key in flash memory [CWE-798]</div>
+                            <div class="terminal-line medium">MEDIUM: Unencrypted sensitive data transmission [CWE-319]</div>
+                            <div class="terminal-line">Analysis completed in 4.7s | 5 vulnerabilities found</div>
+                            <div class="terminal-line">Reports saved to: ./reports/iot_device_20240324_143052/</div>
                         </div>
                     </div>
                 </div>
@@ -188,32 +187,32 @@
     <section id="pricing" class="pricing-section">
         <div class="container">
             <div class="section-header">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your security needs</p>
+                <h2>On‑prem Licenses, Simple & Transparent</h2>
+                <p>Downloadable desktop/CLI. No SaaS. Air‑gapped friendly.</p>
             </div>
             
             <div class="pricing-cards">
                 <div class="pricing-card personal">
                     <div class="pricing-header">
-                        <h3>Personal</h3>
+                        <h3>Personal (Non‑Commercial)</h3>
                         <div class="price">
                             <span class="currency">$</span>
                             <span class="amount">0</span>
-                            <span class="period">/month</span>
+                            <span class="period">free</span>
                         </div>
                     </div>
                     <div class="pricing-features">
                         <div class="feature">
                             <i class="fas fa-check"></i>
-                            <span>Personal use only</span>
+                            <span>Personal use only (no commercial/for‑profit use)</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
-                            <span>Up to 10 scans/day</span>
+                            <span>Up to 10 analyses/day</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
-                            <span>Basic vulnerability detection</span>
+                            <span>Core vulnerability detection</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
@@ -221,6 +220,36 @@
                         </div>
                     </div>
                     <button class="pricing-btn" onclick="downloadFirmwire()">Download Free</button>
+                </div>
+
+                <div class="pricing-card personal">
+                    <div class="pricing-header">
+                        <h3>Edu (University)</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">0</span>
+                            <span class="period">free</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Everything in Business</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Active .edu or university email required</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Non‑commercial academic use only</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Department/course or research affiliation</span>
+                        </div>
+                    </div>
+                    <button class="pricing-btn" onclick="contactSales()">Apply for Edu</button>
                 </div>
                 
                 <div class="pricing-card business featured">
@@ -230,7 +259,7 @@
                         <div class="price">
                             <span class="currency">$</span>
                             <span class="amount">299</span>
-                            <span class="period">/month</span>
+                            <span class="period">per seat</span>
                         </div>
                     </div>
                     <div class="pricing-features">
@@ -240,7 +269,7 @@
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
-                            <span>Unlimited scans</span>
+                            <span>Unlimited analyses</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
@@ -252,11 +281,11 @@
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
-                            <span>API access</span>
+                            <span>Offline operation (no internet required)</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
-                            <span>Custom integrations</span>
+                            <span>CI/CD integration for on‑prem pipelines</span>
                         </div>
                     </div>
                     <button class="pricing-btn" onclick="contactSales()">Contact Sales</button>
@@ -276,7 +305,7 @@
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
-                            <span>On-premise deployment</span>
+                            <span>On‑prem deployment & air‑gapped updates</span>
                         </div>
                         <div class="feature">
                             <i class="fas fa-check"></i>
@@ -296,7 +325,7 @@
             </div>
             
             <div class="pricing-note">
-                <p><i class="fas fa-info-circle"></i> All plans include regular updates and access to our vulnerability database</p>
+                <p><i class="fas fa-info-circle"></i> All licenses are for downloadable software; updates are delivered as offline packages.</p>
             </div>
         </div>
     </section>
