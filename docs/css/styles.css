@@ -172,7 +172,7 @@ body {
     margin: 0 auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.35fr 0.65fr;
     gap: 4rem;
     align-items: center;
     position: relative;
@@ -249,11 +249,10 @@ body {
 .hero-visual { overflow: visible; }
 
 #hero-sphere {
-    width: 100vw;
-    max-width: none;
-    height: 640px;
+    width: 100%;
+    height: 520px;
     display: block;
-    margin-left: calc((100vw - 100%) / -2);
+    margin-left: 0;
 }
 
 /* Section Styling */
