@@ -649,15 +649,20 @@ function initializeBugField() {
     const faces = field.querySelectorAll('.cube .face');
     faces.forEach(face => {
         if (face.children.length === 0) {
-            const cells = 16 * 16;
+            const grid = parseInt(getComputedStyle(face).getPropertyValue('--grid')) || 28;
+            const cells = grid * grid;
             for (let i = 0; i < cells; i++) {
                 const spec = document.createElement('div');
                 spec.className = 'spec';
-                // random blue shade
-                const hue = 210 + Math.floor(Math.random() * 30); // 210-240
-                const sat = 70 + Math.floor(Math.random() * 20);  // 70-90%
-                const light = 30 + Math.floor(Math.random() * 20); // 30-50%
-                spec.style.background = `hsl(${hue} ${sat}% ${light}%)`;
+                // aqua/cyan darker shades aligned with site theme
+                const hue = 182 + Math.floor(Math.random() * 16);   // 182-198
+                const sat = 65 + Math.floor(Math.random() * 30);    // 65-95%
+                const light = 22 + Math.floor(Math.random() * 20);  // 22-42%
+                const light2 = Math.min(50, light + 6);
+                spec.style.background = `linear-gradient(135deg, hsl(${hue} ${sat}% ${light}%), hsl(${hue} ${sat}% ${light2}%))`;
+                // subtle staggered pulse
+                spec.style.animationDuration = `${1.6 + Math.random() * 1.4}s`;
+                spec.style.animationDelay = `${Math.random() * 1.2}s`;
                 face.appendChild(spec);
             }
         }
