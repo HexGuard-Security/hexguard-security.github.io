@@ -661,6 +661,13 @@ section {
     }
 }
 
+/* Four columns on very wide screens to keep all plans in one row */
+@media (min-width: 1280px) {
+    .pricing-cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
 .pricing-note {
     text-align: center;
     color: var(--text-secondary);
