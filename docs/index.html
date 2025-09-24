@@ -57,7 +57,7 @@
                 <img src="img/logo.svg" alt="Firmwire" class="firmwire-logo-medium">
 
                 <h2>
-                    Introducing <span class="product-name">Firmwire</span>
+                    Introducing <span class="product-name">firmwire</span>
                 </h2>
                 <p>The most advanced firmware analysis tool for embedded devices. Our patent awaitng technology will revolutionize the way you analyze firmware.</p>
             </div>
@@ -103,12 +103,20 @@
                             <span class="terminal-title">firmwire-cli</span>
                         </div>
                         <div class="terminal-body">
-                            <div class="terminal-line">$ firmwire analyze firmware.bin</div>
-                            <div class="terminal-line typing">Analyzing firmware...</div>
-                            <div class="terminal-line">✓ Binary unpacked successfully</div>
-                            <div class="terminal-line">✓ Architecture detected: ARM Cortex-M</div>
-                            <div class="terminal-line">⚠ Found 3 high-severity vulnerabilities</div>
-                            <div class="terminal-line">📊 Analysis complete in 2.3s</div>
+                            <div class="terminal-line">$ firmwire analyze --compliance=RED,IEC62443 iot_device.bin</div>
+                            <div class="terminal-line typing">Initializing Firmwire Security Analyzer v3.2.1...</div>
+                            <div class="terminal-line">✓ Binary loaded: iot_device.bin (2.4MB)</div>
+                            <div class="terminal-line">✓ Architecture detected: ARM Cortex-M4F (Thumb-2)</div>
+                            <div class="terminal-line">✓ Bootloader identified: STM32 System Memory</div>
+                            <div class="terminal-line">⚡ Extracting firmware components...</div>
+                            <div class="terminal-line">✓ Application code: 0x08000000-0x0801FFFF</div>
+                            <div class="terminal-line">✓ Configuration data: 0x08020000-0x08023FFF</div>
+                            <div class="terminal-line">⚡ Running SAST engine with 847 security rules...</div>
+                            <div class="terminal-line critical">🔴 CRITICAL: Buffer overflow in WiFi_ParseCredentials() [CWE-120]</div>
+                            <div class="terminal-line high">🟠 HIGH: Hardcoded AES key in flash memory [CWE-798]</div>
+                            <div class="terminal-line medium">🟡 MEDIUM: Unencrypted sensitive data transmission [CWE-319]</div>
+                            <div class="terminal-line">✓ Analysis completed in 4.7s | 5 vulnerabilities found</div>
+                            <div class="terminal-line">📁 Reports saved to: ./reports/iot_device_20240324_143052/</div>
                         </div>
                     </div>
                 </div>
@@ -151,10 +159,11 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-file-alt"></i>
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Detailed Reports</h3>
-                    <p>Comprehensive security reports with risk ratings, remediation guidance, and compliance mappings.</p>
+                    <h3>Supported Compliance</h3>
+                    <p>Map findings to key frameworks to accelerate sign‑off and audits:</p>
+                    <p>IEC 62443 • CRA (EU) • RED (Radio Equipment Directive) • ISO/IEC 27001 • NIST 800‑53 • CIS Benchmarks</p>
                 </div>
                 
                 <div class="feature-card">
@@ -167,10 +176,10 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-plug"></i>
                     </div>
-                    <h3>Real-time Analysis</h3>
-                    <p>Fast analysis engine processes firmware samples in real-time with minimal resource consumption.</p>
+                    <h3>CI/CD Integrations</h3>
+                    <p>Drop‑in integrations with Jenkins, GitHub Actions, GitLab CI, and Azure Pipelines. Plug into DevSecOps stacks like SonarQube, Snyk, DefectDojo, and Slack/MS Teams for streamlined triage.</p>
                 </div>
             </div>
         </div>
