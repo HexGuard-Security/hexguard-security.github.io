@@ -432,7 +432,7 @@ section {
 
 /* Pricing Section */
 .pricing-section {
-    background: linear-gradient(135deg, rgba(26, 31, 46, 0.8), rgba(10, 15, 28, 0.9));
+    background: linear-gradient(135deg, rgba(26, 31, 46, 0.85), rgba(10, 15, 28, 0.95));
 }
 
 .pricing-cards {
@@ -440,26 +440,32 @@ section {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
+    align-items: stretch;
 }
 
 .pricing-card {
     background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 2.5rem;
-    text-align: center;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.12);
     transition: var(--transition);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 .pricing-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
+    border-color: rgba(0, 102, 255, 0.35);
 }
 
 .pricing-card.featured {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
+    border-color: rgba(0, 102, 255, 0.6);
+    box-shadow: 0 10px 40px rgba(0, 102, 255, 0.25);
+    background: linear-gradient(180deg, rgba(0, 102, 255, 0.08), rgba(0, 212, 170, 0.06) 60%, rgba(26, 31, 46, 0.6));
 }
 
 .featured-badge {
@@ -469,40 +475,46 @@ section {
     transform: translateX(-50%);
     background: var(--accent-gradient);
     color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    padding: 0.4rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.35);
 }
 
 .pricing-header h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
     color: var(--text-primary);
 }
 
 .price {
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
 }
 
 .currency {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     vertical-align: top;
+    opacity: 0.85;
 }
 
 .amount {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--primary-color);
+    font-size: 2.6rem;
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .period {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
 }
 
 .custom {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
@@ -513,32 +525,37 @@ section {
 .pricing-features {
     text-align: left;
     margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
 }
 
 .pricing-features .feature {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 1rem;
     color: var(--text-secondary);
+    padding: 0.5rem 0.25rem;
 }
 
 .pricing-features .feature i {
     color: var(--success-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .pricing-btn {
     width: 100%;
-    padding: 1rem;
+    padding: 0.9rem 1.25rem;
     background: var(--accent-gradient);
     color: white;
     border: none;
     border-radius: var(--border-radius);
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
+    margin-top: 0.5rem;
 }
 
 .pricing-btn:hover {
