@@ -111,38 +111,59 @@ function initializeAnimations() {
 
 // Terminal animation
 function initializeTerminalAnimation() {
-    const terminalLines = document.querySelectorAll('.terminal-line');
-    let currentLine = 0;
-    
-    function showNextLine() {
-        if (currentLine < terminalLines.length) {
-            terminalLines[currentLine].style.opacity = '1';
-            terminalLines[currentLine].style.transform = 'translateX(0)';
-            currentLine++;
-            setTimeout(showNextLine, 800);
-        }
+    const body = document.querySelector('.terminal-body');
+    if (!body) return;
+    const lines = Array.from(body.querySelectorAll('.terminal-line'));
+
+    // replace blinking pseudo-caret with a controlled caret element at end
+    function appendCaret(line) {
+        const old = line.querySelector('.terminal-caret');
+        if (old) old.remove();
+        const caret = document.createElement('span');
+        caret.className = 'terminal-caret';
+        line.appendChild(caret);
     }
-    
-    // Hide all lines initially
-    terminalLines.forEach(line => {
-        line.style.opacity = '0';
-        line.style.transform = 'translateX(-20px)';
-        line.style.transition = 'all 0.3s ease-out';
+
+    // random intelligent delays: base + jitter, longer on "⚡" steps and before results
+    function delayFor(text, idx) {
+        const base = 220 + Math.random()*180;
+        let factor = 1;
+        if (/⚡|Running|Extracting/i.test(text)) factor = 1.7;
+        if (/CRITICAL|HIGH|MEDIUM|Reports saved|completed/i.test(text)) factor = 1.4;
+        // small additional pause every few lines
+        if (idx % 3 === 0) factor += 0.2;
+        return base * factor;
+    }
+
+    // initialize hidden state
+    lines.forEach(l => {
+        l.style.opacity = '0';
+        l.style.transform = 'translateX(-12px)';
+        l.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
     });
-    
-    // Start animation when terminal comes into view
+
     const terminal = document.querySelector('.terminal-window');
-    if (terminal) {
-        const terminalObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => showNextLine(), 500);
-                    terminalObserver.unobserve(entry.target);
-                }
+    if (!terminal) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            observer.unobserve(entry.target);
+            // play animation
+            let t = 350; // initial delay
+            lines.forEach((line, idx) => {
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                    line.style.transform = 'translateX(0)';
+                    // move caret to current line end
+                    lines.forEach(l => { const c=l.querySelector('.terminal-caret'); if(c) c.remove(); });
+                    appendCaret(line);
+                }, t);
+                t += delayFor(line.textContent || '', idx);
             });
         });
-        terminalObserver.observe(terminal);
-    }
+    }, { threshold: 0.2 });
+    observer.observe(terminal);
 }
 
 // Convert CWE codes in terminal lines into badges
