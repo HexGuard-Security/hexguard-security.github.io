@@ -168,41 +168,26 @@ function initializeFormHandlers() {
     });
 }
 
-// Contact form handler
+// Contact form handler -> WhatsApp deep link
 function handleContactForm(e) {
     e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    
-    // Show loading state
-    const submitBtn = e.target.querySelector('.submit-btn');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    submitBtn.disabled = true;
-    
-    // Simulate form submission
-    setTimeout(() => {
-        // Reset button
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-        submitBtn.style.background = '#2ed573';
-        
-        // Reset form
-        e.target.reset();
-        document.querySelectorAll('.form-group').forEach(group => {
-            group.classList.remove('focused');
-        });
-        
-        // Show success message
-        showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-        
-        // Reset button after delay
-        setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.background = '';
-        }, 2000);
-    }, 1500);
+
+    const name = (document.getElementById('name')?.value || '').trim();
+    const message = (document.getElementById('message')?.value || '').trim();
+
+    if (!name || !message) {
+        showNotification('Please provide your name and a message.', 'warning');
+        return;
+    }
+
+    const phone = '916366934469'; // E.164 without plus for wa.me
+    const text = `Hi HexGuard, I am ${name}.%0A%0A${encodeURIComponent(message)}`;
+    const url = `https://wa.me/${phone}?text=${text}`;
+
+    // Open WhatsApp link
+    window.open(url, '_blank');
+
+    trackEvent('contact_whatsapp', { name_length: name.length, message_length: message.length });
 }
 
 // Download functionality
