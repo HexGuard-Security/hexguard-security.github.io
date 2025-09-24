@@ -1102,9 +1102,11 @@ function initializeMiniParticleSphere(canvas) {
     const radius = Math.min(width, height) * 0.45;
 
     // Particle count scales with logo size to keep density consistent
+    // Boost density and reduce size ONLY for the hero logo placement
+    const isHeroLogo = canvas.parentElement && canvas.parentElement.parentElement && canvas.parentElement.parentElement.id === 'hero-logo';
     const sphereArea = Math.PI * (radius * radius);
-    const density = 0.095; // particles per px^2 (tuned for HD look)
-    const numParticles = Math.max(220, Math.min(1800, Math.round(sphereArea * density * Math.min(2, dpr))));
+    const density = isHeroLogo ? 0.16 : 0.095; // particles per px^2
+    const numParticles = Math.max(220, Math.min(isHeroLogo ? 3600 : 1800, Math.round(sphereArea * density * Math.min(2, dpr))));
     const particles = [];
     for (let i = 0; i < numParticles; i++) {
         // Fibonacci sphere distribution
@@ -1176,16 +1178,17 @@ function initializeMiniParticleSphere(canvas) {
         const idleX = Math.sin(t * 0.6) * 0.12;
         const idleY = Math.cos(t * 0.4) * 0.12;
 
-        // particle size scales with logo radius; slightly larger for visibility
-        const baseSize = Math.max(0.34, radius * 0.013);
+        // particle size scales with logo radius
+        // Hero logo: keep dots tinier for a hyper-dense look
+        const baseSize = isHeroLogo ? Math.max(0.22, radius * 0.009) : Math.max(0.34, radius * 0.013);
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             const rp = rotatePoint(p, rotX + idleX, rotY + idleY);
             const depth = (rp.z + 1) * 0.5; // 0..1
             const px = centerX + rp.x * radius;
             const py = centerY + rp.y * radius;
-            // increased slightly and fixed accidental typo
-            const size = baseSize * (0.75 + depth * 1.05);
+            // Hero: slightly smaller multiplier; elsewhere: prior visibility bump
+            const size = (isHeroLogo ? (baseSize * (0.68 + depth * 0.9)) : (baseSize * (0.75 + depth * 1.05)));
             ctx.fillStyle = colorAt(i / particles.length);
             ctx.globalAlpha = 0.58 + depth * 0.32;
             ctx.beginPath();
