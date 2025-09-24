@@ -248,9 +248,10 @@ body {
 .bug-field {
     position: relative;
     width: 100%;
-    height: 380px;
+    height: 420px;
     margin: 0 auto;
     overflow: hidden;
+    perspective: 900px;
 }
 
 .bug {
@@ -260,6 +261,49 @@ body {
     pointer-events: none;
     filter: drop-shadow(0 4px 10px rgba(0,0,0,0.35));
     transition: transform 0.2s linear;
+}
+
+/* 3D cube */
+.cube {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 320px;
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%) rotateX(20deg) rotateY(25deg);
+    animation: cubeSpin 18s linear infinite;
+}
+
+.cube .face {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+    gap: 0;
+    overflow: hidden;
+    backface-visibility: hidden;
+}
+
+.cube .face .spec {
+    width: 100%;
+    height: 100%;
+}
+
+.face.front  { transform: translateZ(160px); }
+.face.back   { transform: rotateY(180deg) translateZ(160px); }
+.face.right  { transform: rotateY(90deg) translateZ(160px); }
+.face.left   { transform: rotateY(-90deg) translateZ(160px); }
+.face.top    { transform: rotateX(90deg) translateZ(160px); }
+.face.bottom { transform: rotateX(-90deg) translateZ(160px); }
+
+@keyframes cubeSpin {
+    0%   { transform: translate(-50%, -50%) rotateX(20deg) rotateY(0deg) rotateZ(0deg); }
+    33%  { transform: translate(-50%, -50%) rotateX(380deg) rotateY(120deg) rotateZ(30deg); }
+    66%  { transform: translate(-50%, -50%) rotateX(740deg) rotateY(240deg) rotateZ(60deg); }
+    100% { transform: translate(-50%, -50%) rotateX(1100deg) rotateY(360deg) rotateZ(90deg); }
 }
 
 /* Section Styling */

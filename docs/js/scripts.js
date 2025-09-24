@@ -645,6 +645,24 @@ function initializeBugField() {
         bugs.push(spawnBug());
     }
 
+    // Build cube face specs with varying blue shades
+    const faces = field.querySelectorAll('.cube .face');
+    faces.forEach(face => {
+        if (face.children.length === 0) {
+            const cells = 16 * 16;
+            for (let i = 0; i < cells; i++) {
+                const spec = document.createElement('div');
+                spec.className = 'spec';
+                // random blue shade
+                const hue = 210 + Math.floor(Math.random() * 30); // 210-240
+                const sat = 70 + Math.floor(Math.random() * 20);  // 70-90%
+                const light = 30 + Math.floor(Math.random() * 20); // 30-50%
+                spec.style.background = `hsl(${hue} ${sat}% ${light}%)`;
+                face.appendChild(spec);
+            }
+        }
+    });
+
     function step(deltaSec) {
         const rect = field.getBoundingClientRect();
         bugs.forEach(b => {
@@ -660,7 +678,8 @@ function initializeBugField() {
             if (b.y < 0) { b.y = 0; b.angle = -b.angle; }
             if (b.y > maxY) { b.y = maxY; b.angle = -b.angle; }
 
-            const deg = (b.angle * 180 / Math.PI) + 90;
+            // The source bug image points toward top-left. Empirically offset ~225deg.
+            const deg = (b.angle * 180 / Math.PI) + 225;
             b.el.style.transform = `translate(${b.x}px, ${b.y}px) rotate(${deg}deg)`;
         });
     }
