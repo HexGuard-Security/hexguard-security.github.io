@@ -236,7 +236,9 @@ body {
 }
 
 .hxg-logo__spin {
-    transform-origin: 50% 50%;
+    /* spin around the bottom tip (like a top on a table) */
+    transform-origin: 50px 98px;
+    transform-box: fill-box;
     animation: hxg-spin 12s linear infinite;
 }
 
