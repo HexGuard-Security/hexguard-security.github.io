@@ -1040,11 +1040,13 @@ function initializeHqMap() {
     bkkMarker.bindPopup('<b>HexGuard HQ</b><br>Silom 3, Bang Rak, Bangkok');
 
     const blrMarker = L.marker(blrCoords).addTo(map);
-    blrMarker.bindPopup('<b>HexGuard Bengaluru</b><br>12th Cross, Electronic City Phase 1');
+    blrMarker.bindPopup('<b>HexGuard Security Pvt Ltd, Bengaluru</b><br>12th Cross, Electronic City Phase 1');
 
     // Fit to both offices
     const bounds = L.latLngBounds([bkkCoords, blrCoords]);
     map.fitBounds(bounds, { padding: [40, 40] });
+    // Zoom out slightly for wider regional context
+    map.setZoom(map.getZoom() - 1);
 }
 
 // Add animations CSS
