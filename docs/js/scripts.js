@@ -1154,13 +1154,15 @@ function initializeMiniParticleSphere(canvas) {
         const idleX = Math.sin(t * 0.6) * 0.12;
         const idleY = Math.cos(t * 0.4) * 0.12;
 
+        // particle size scales with logo radius so small logos use tiny particles
+        const baseSize = Math.max(0.28, radius * 0.028);
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             const rp = rotatePoint(p, rotX + idleX, rotY + idleY);
             const depth = (rp.z + 1) * 0.5; // 0..1
             const px = centerX + rp.x * radius;
             const py = centerY + rp.y * radius;
-            const size = 0.6 + depth * 0.9; // tiny sparkle
+            const size = baseSize * (0.6 + depth * 0.9); // tiny sparkle scaled to logo size
             ctx.fillStyle = colorAt(i / particles.length);
             ctx.globalAlpha = 0.65 + depth * 0.35;
             ctx.beginPath();
