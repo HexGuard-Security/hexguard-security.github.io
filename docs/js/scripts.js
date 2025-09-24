@@ -767,20 +767,13 @@ function initializeHeroSphere() {
     }
 
     let rotY = 0;
-    let mouse = { x: null, y: null, active: false };
-    const influence = 140; // moderate interaction radius
-    const maxForce = 70;   // gentler push
+    // autonomous stimulus that wanders over time (no mouse needed)
+    let stimT = 0;
+    const baseInfluence = 140; // base interaction radius
+    const baseForce = 70;      // base push
     const spring = 0.035;  // faster return to sphere
     const damping = 0.9;   // standard damping
 
-    function setMouse(e) {
-        const rect = canvas.getBoundingClientRect();
-        mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
-        mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
-        mouse.active = true;
-    }
-    canvas.addEventListener('mousemove', setMouse);
-    canvas.addEventListener('mouseleave', () => { mouse.active = false; });
 
     function render() {
         const { width, height } = canvas;
@@ -793,8 +786,13 @@ function initializeHeroSphere() {
         const cosY = Math.cos(rotY);
         const perspective = 500;
 
-        const mouseX = mouse.x != null ? mouse.x / devicePixelRatio : null;
-        const mouseY = mouse.y != null ? mouse.y / devicePixelRatio : null;
+        // compute autonomous stimulus in screen-space following a smooth path
+        stimT += 0.01;
+        const stimR = Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.55;
+        const stimX = (canvas.width / devicePixelRatio) / 2 + Math.cos(stimT * 0.7) * stimR * 0.6 + Math.sin(stimT * 1.3) * stimR * 0.2;
+        const stimY = (canvas.height / devicePixelRatio) / 2 + Math.sin(stimT * 0.9) * stimR * 0.4;
+        const influence = baseInfluence * (0.8 + 0.4 * Math.sin(stimT * 0.5));
+        const maxForce = baseForce * (0.8 + 0.5 * Math.sin(stimT * 0.8 + 1.2));
 
         const drawn = [];
         for (let i = 0; i < particles.length; i++) {
@@ -809,23 +807,21 @@ function initializeHeroSphere() {
             p.vy += -(p.oy) * spring;
             p.vz += -(p.oz) * spring;
 
-            // rotate for screen projection for mouse force calc
+            // rotate for screen projection for stimulus force calc
             const rx = x * cosY + z * sinY;
             const rz = -x * sinY + z * cosY;
-            if (mouse.active && mouseX != null) {
-                const scaleMouse = perspective / (perspective - rz);
-                const sx = cx + rx * scaleMouse;
-                const sy = cy + y * scaleMouse;
-                const dx = sx - mouseX;
-                const dy = sy - mouseY;
-                const dist = Math.hypot(dx, dy);
-                if (dist < influence) {
-                    const f = maxForce * (1 - dist / influence) * (1 - dist / influence);
-                    const nx = x / RADIUS, ny = y / RADIUS, nz = z / RADIUS;
-                    p.vx += nx * f * 0.03;
-                    p.vy += ny * f * 0.03;
-                    p.vz += nz * f * 0.03;
-                }
+            const scaleStim = perspective / (perspective - rz);
+            const sx = cx + rx * scaleStim;
+            const sy = cy + y * scaleStim;
+            const dx = sx - stimX;
+            const dy = sy - stimY;
+            const dist = Math.hypot(dx, dy);
+            if (dist < influence) {
+                const f = maxForce * (1 - dist / influence) * (1 - dist / influence);
+                const nx = x / RADIUS, ny = y / RADIUS, nz = z / RADIUS;
+                p.vx += nx * f * 0.03;
+                p.vy += ny * f * 0.03;
+                p.vz += nz * 0.03 * f;
             }
 
             // integrate
