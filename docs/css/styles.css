@@ -478,6 +478,11 @@ section {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
+@media (min-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
 
 .feature-card {
     background: var(--card-bg);
@@ -511,7 +516,7 @@ section {
 }
 
 .feature-card h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin-bottom: 1rem;
     color: var(--text-primary);
 }
@@ -519,6 +524,7 @@ section {
 .feature-card p {
     color: var(--text-secondary);
     line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 /* Pricing Section */
