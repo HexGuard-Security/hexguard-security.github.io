@@ -949,6 +949,11 @@ section {
     background: #0a0f1c;
 }
 
+/* Blue-tinted map theme */
+#hq-map .leaflet-tile {
+    filter: hue-rotate(190deg) saturate(1.25) brightness(0.95);
+}
+
 /* Contact Form */
 .contact-form {
     background: var(--card-bg);
