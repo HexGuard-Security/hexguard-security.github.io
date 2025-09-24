@@ -224,22 +224,15 @@ body {
 /* CSS/JS Logo: gradient wireframe diamond */
 .hxg-logo {
     display: inline-block;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     position: relative;
 }
 
-.hxg-logo svg {
+.hxg-logo canvas {
     display: block;
     width: 100%;
     height: 100%;
-}
-
-.hxg-logo__spin {
-    /* spin around the bottom tip (like a top on a table) */
-    transform-origin: 50px 98px;
-    transform-box: fill-box;
-    animation: hxg-spin 12s linear infinite;
 }
 
 @keyframes hxg-spin {

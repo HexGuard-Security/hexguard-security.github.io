@@ -1003,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
     registerServiceWorker();
     initializeHqMap();
     initializeHeroThree();
-    replaceLogosWithDiamond();
+    replaceLogosWithSphere();
 });
 
 // Utility functions for external use
@@ -1050,37 +1050,127 @@ function initializeHqMap() {
     map.setZoom(map.getZoom() - 1);
 }
 
-// Replace all <img src="./img/logo.svg"> with a CSS/JS gradient wireframe diamond
-function replaceLogosWithDiamond() {
+// Replace logo images with a tiny HD particle sphere logo (gradient, interactive)
+function replaceLogosWithSphere() {
     const selector = 'img[src$="logo.svg"], img[src$="logo.png"], img[src$="/logo.svg"], img[src$="/logo.png"]';
     document.querySelectorAll(selector).forEach((img) => {
-        const size = Math.max(24, Math.min(64, img.width || 28));
+        const size = Math.max(24, Math.min(80, img.width || 32));
         const wrapper = document.createElement('span');
         wrapper.className = 'hxg-logo';
         wrapper.style.width = size + 'px';
         wrapper.style.height = size + 'px';
-        // SVG wireframe diamond using current highlight gradient via defs
-        wrapper.innerHTML = `
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="HexGuard logo">
-  <defs>
-    <linearGradient id="hxgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0066ff"/>
-      <stop offset="100%" stop-color="#00d4aa"/>
-    </linearGradient>
-  </defs>
-  <g class="hxg-logo__spin" fill="none" stroke="url(#hxgGradient)" stroke-width="3" stroke-linejoin="round">
-    <!-- Diamond outline -->
-    <polygon points="50,2 95,50 50,98 5,50"/>
-    <!-- Inner wireframe -->
-    <line x1="50" y1="2" x2="50" y2="98"/>
-    <line x1="5" y1="50" x2="95" y2="50"/>
-    <line x1="27" y1="27" x2="73" y2="73"/>
-    <line x1="73" y1="27" x2="27" y2="73"/>
-    <polygon points="50,15 85,50 50,85 15,50" stroke-width="2"/>
-  </g>
-</svg>`;
+        const canvas = document.createElement('canvas');
+        wrapper.appendChild(canvas);
         img.replaceWith(wrapper);
+        initializeMiniParticleSphere(canvas);
     });
+}
+
+function initializeMiniParticleSphere(canvas) {
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const width = Math.max(28, rect.width);
+    const height = Math.max(28, rect.height);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) * 0.45;
+
+    const numParticles = Math.round(400 * Math.min(2, dpr));
+    const particles = [];
+    for (let i = 0; i < numParticles; i++) {
+        // Fibonacci sphere distribution
+        const t = i / numParticles;
+        const inc = Math.PI * (3 - Math.sqrt(5));
+        const y = 1 - 2 * t;
+        const r = Math.sqrt(1 - y * y);
+        const phi = i * inc;
+        const x = Math.cos(phi) * r;
+        const z = Math.sin(phi) * r;
+        particles.push({ x, y, z, bx: x, by: y, bz: z });
+    }
+
+    // Gradient colors (match highlight)
+    const c1 = { r: 0x00, g: 0x66, b: 0xff };
+    const c2 = { r: 0x00, g: 0xd4, b: 0xaa };
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function colorAt(t) {
+        const r = Math.round(lerp(c1.r, c2.r, t));
+        const g = Math.round(lerp(c1.g, c2.g, t));
+        const b = Math.round(lerp(c1.b, c2.b, t));
+        return `rgb(${r},${g},${b})`;
+    }
+
+    let rotY = 0;
+    let rotX = 0.25;
+    let targetRotY = 0;
+    let targetRotX = 0;
+    let mouseX = centerX;
+    let mouseY = centerY;
+    let hover = false;
+
+    const parent = canvas.parentElement;
+    parent.addEventListener('mousemove', (e) => {
+        const bounds = parent.getBoundingClientRect();
+        mouseX = e.clientX - bounds.left;
+        mouseY = e.clientY - bounds.top;
+        const nx = (mouseX / bounds.width) * 2 - 1;
+        const ny = (mouseY / bounds.height) * 2 - 1;
+        targetRotY = nx * 0.4;
+        targetRotX = -ny * 0.4;
+        hover = true;
+    });
+    parent.addEventListener('mouseleave', () => {
+        hover = false;
+        targetRotY = 0;
+        targetRotX = 0;
+    });
+
+    function rotatePoint(p, ax, ay) {
+        // Rotate around X then Y
+        let { x, y, z } = p;
+        const cosX = Math.cos(ax), sinX = Math.sin(ax);
+        let y1 = y * cosX - z * sinX;
+        let z1 = y * sinX + z * cosX;
+        const cosY = Math.cos(ay), sinY = Math.sin(ay);
+        let x2 = x * cosY + z1 * sinY;
+        let z2 = -x * sinY + z1 * cosY;
+        return { x: x2, y: y1, z: z2 };
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        rotY += (targetRotY - rotY) * 0.08;
+        rotX += (targetRotX - rotX) * 0.08;
+
+        // gentle idle motion
+        const t = performance.now() * 0.001;
+        const idleX = Math.sin(t * 0.6) * 0.12;
+        const idleY = Math.cos(t * 0.4) * 0.12;
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            const rp = rotatePoint(p, rotX + idleX, rotY + idleY);
+            const depth = (rp.z + 1) * 0.5; // 0..1
+            const px = centerX + rp.x * radius;
+            const py = centerY + rp.y * radius;
+            const size = 0.6 + depth * 0.9; // tiny sparkle
+            ctx.fillStyle = colorAt(i / particles.length);
+            ctx.globalAlpha = 0.65 + depth * 0.35;
+            ctx.beginPath();
+            ctx.arc(px, py, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+    }
+    draw();
 }
 
 // Add animations CSS
