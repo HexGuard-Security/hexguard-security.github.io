@@ -980,3 +980,22 @@ section {
 html {
     scroll-behavior: smooth;
 }
+
+/* Full-screen sections with scroll snapping */
+body {
+    scroll-snap-type: y mandatory;
+}
+
+.product-section,
+.features-section,
+.pricing-section,
+.download-section,
+.contact-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    /* account for fixed navbar height */
+    padding-top: 72px;
+}
