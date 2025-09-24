@@ -1030,14 +1030,14 @@ function initializeHqMap() {
         scrollWheelZoom: false
     }).setView(bkkCoords, 5);
 
-    // Light base tiles, tinted blue via CSS for site theme
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    // Dark base tiles, tinted aqua/cyan via overlay to match site theme
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
     }).addTo(map);
 
     // Markers
     const bkkMarker = L.marker(bkkCoords).addTo(map);
-    bkkMarker.bindPopup('<b>HexGuard HQ</b><br>Silom 3, Bang Rak, Bangkok');
+    bkkMarker.bindPopup('<b>HexGuard HQ</b><br>Silom 3, Bang Rak, Bangkok - 10500');
 
     const blrMarker = L.marker(blrCoords).addTo(map);
     blrMarker.bindPopup('<b>HexGuard Security Pvt Ltd, Bengaluru</b><br>12th Cross, Electronic City Phase 1, Bengaluru - 560100');

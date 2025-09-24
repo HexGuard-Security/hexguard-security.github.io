@@ -962,7 +962,22 @@ section {
 
 /* Blue-tinted map theme */
 #hq-map .leaflet-tile {
-    filter: hue-rotate(195deg) saturate(1.35) brightness(0.92) contrast(1.05);
+    filter: hue-rotate(185deg) saturate(1.2) brightness(0.9) contrast(1.05);
+}
+
+/* Aqua/cyan overlay to harmonize map with site theme */
+#hq-map {
+    position: relative;
+}
+
+#hq-map::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(120% 120% at 20% 10%, rgba(0, 212, 170, 0.18), transparent 50%),
+                radial-gradient(120% 120% at 80% 90%, rgba(0, 102, 255, 0.12), transparent 50%);
+    mix-blend-mode: screen;
 }
 
 /* Contact Form */
