@@ -962,7 +962,7 @@ section {
 
 /* Blue-tinted map theme */
 #hq-map .leaflet-tile {
-    filter: hue-rotate(190deg) saturate(1.25) brightness(0.95);
+    filter: hue-rotate(195deg) saturate(1.35) brightness(0.92) contrast(1.05);
 }
 
 /* Contact Form */
