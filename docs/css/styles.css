@@ -70,7 +70,7 @@ body {
 
 .floating-nav__text {
     color: var(--text-primary);
-    font-weight: 700;
+    font-weight: 300;
     font-size: 0.95rem;
 }
 
@@ -294,11 +294,32 @@ body {
 /* Hero logo animation */
 /* Hero bug field */
 /* Particle sphere canvas */
-.hero-visual { overflow: visible; }
+.hero-visual { overflow: visible; position: relative; }
 
 #hero-three {
     width: 100%;
     height: 520px;
+}
+
+/* Hero logo sphere container in the empty right area */
+#hero-logo {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    width: min(360px, 42vw);
+    height: min(360px, 42vw);
+    z-index: 1;
+}
+
+#hero-logo .hxg-logo,
+#hero-logo canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+@media (max-width: 900px) {
+    #hero-logo { display: none; }
 }
 
 /* Section Styling */

@@ -1005,6 +1005,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeHeroThree();
     replaceLogosWithSphere();
     startDynamicFavicon();
+    injectHeroLogoSphere();
 });
 
 // Utility functions for external use
@@ -1065,6 +1066,23 @@ function replaceLogosWithSphere() {
         img.replaceWith(wrapper);
         initializeMiniParticleSphere(canvas);
     });
+}
+
+// Inject a large logo sphere into the hero right area
+function injectHeroLogoSphere() {
+    const mount = document.getElementById('hero-logo');
+    if (!mount) return;
+    // Create a wrapper like small logos but larger
+    const wrapper = document.createElement('span');
+    wrapper.className = 'hxg-logo';
+    wrapper.style.width = '100%';
+    wrapper.style.height = '100%';
+    const canvas = document.createElement('canvas');
+    wrapper.appendChild(canvas);
+    mount.appendChild(wrapper);
+
+    // Initialize with same renderer but size will be read from wrapper
+    initializeMiniParticleSphere(canvas);
 }
 
 function initializeMiniParticleSphere(canvas) {
