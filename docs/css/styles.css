@@ -248,11 +248,9 @@ body {
 /* Particle sphere canvas */
 .hero-visual { overflow: visible; }
 
-#hero-sphere {
+#hero-three {
     width: 100%;
     height: 520px;
-    display: block;
-    margin-left: 0;
 }
 
 /* Section Styling */

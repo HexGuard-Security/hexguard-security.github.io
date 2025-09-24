@@ -726,115 +726,112 @@ function addSpotlightStyles() {
     document.head.appendChild(style);
 }
 
-// Particle sphere in hero
-function initializeHeroSphere() {
-    const canvas = document.getElementById('hero-sphere');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+// Three.js firmware-themed hero visualization
+function initializeHeroThree() {
+    const mount = document.getElementById('hero-three');
+    if (!mount || !window.THREE) return;
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x0a0f1c, 20, 120);
+    const camera = new THREE.PerspectiveCamera(45, 2, 0.1, 1000);
+    camera.position.set(0, 8, 26);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    mount.appendChild(renderer.domElement);
+
+    const light = new THREE.DirectionalLight(0x66ccff, 1.0);
+    light.position.set(5, 10, 7);
+    scene.add(light);
+    scene.add(new THREE.AmbientLight(0x1e2a3a, 0.6));
+
+    // PCB-like plane with grid traces
+    const board = new THREE.Group();
+    scene.add(board);
+
+    const boardGeom = new THREE.PlaneGeometry(18, 12, 72, 48);
+    const boardMat = new THREE.MeshStandardMaterial({ color: 0x0f2430, metalness: 0.2, roughness: 0.8, side: THREE.DoubleSide });
+    const boardMesh = new THREE.Mesh(boardGeom, boardMat);
+    boardMesh.rotation.x = -Math.PI / 2.3;
+    board.add(boardMesh);
+
+    // Traces as glowing lines
+    const traceMat = new THREE.LineBasicMaterial({ color: 0x00d4aa, transparent: true, opacity: 0.8 });
+    for (let i = -8; i <= 8; i += 1) {
+        const pathGeom = new THREE.BufferGeometry();
+        const pts = [];
+        for (let x = -9; x <= 9; x += 0.5) {
+            const y = Math.sin((x + i) * 0.6) * 0.2 + Math.cos((x - i) * 0.3) * 0.15;
+            pts.push(new THREE.Vector3(x, y + 0.02, i));
+        }
+        pathGeom.setFromPoints(pts);
+        const line = new THREE.Line(pathGeom, traceMat);
+        line.rotation.x = -Math.PI / 2.3;
+        board.add(line);
+    }
+
+    // IC chips as boxes with emissive pins
+    const chips = new THREE.Group();
+    board.add(chips);
+    const chipMat = new THREE.MeshStandardMaterial({ color: 0x1a2b3a, metalness: 0.3, roughness: 0.5, emissive: 0x002a2a, emissiveIntensity: 0.35 });
+    const chipPositions = [ [-3, 0.4, -1], [4, 0.4, 2.5], [1.5, 0.4, -4] ];
+    chipPositions.forEach(([x, h, z]) => {
+        const chip = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.8, 2.4), chipMat);
+        chip.position.set(x, 0.5, z);
+        chip.rotation.x = -Math.PI / 2.3;
+        chips.add(chip);
+        // pins
+        const pinMat = new THREE.MeshStandardMaterial({ color: 0x0bd1b2, emissive: 0x004a4a, emissiveIntensity: 0.6, metalness: 0.7, roughness: 0.2 });
+        for (let i = -1.3; i <= 1.3; i += 0.2) {
+            const pin = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.35), pinMat);
+            pin.position.set(x + i, 0.38, z + 1.25);
+            pin.rotation.x = -Math.PI / 2.3;
+            board.add(pin);
+            const pin2 = pin.clone();
+            pin2.position.set(x + i, 0.38, z - 1.25);
+            board.add(pin2);
+        }
+    });
+
+    // Flowing data packets as moving sprites
+    const packetGeom = new THREE.SphereGeometry(0.06, 8, 8);
+    const packetMat = new THREE.MeshBasicMaterial({ color: 0x00d4aa });
+    const packets = [];
+    for (let i = 0; i < 120; i++) {
+        const m = new THREE.Mesh(packetGeom, packetMat.clone());
+        m.material.color.setHSL(0.5 + Math.random()*0.1, 1, 0.6 + Math.random()*0.2);
+        m.userData.t = Math.random() * Math.PI * 2;
+        m.userData.speed = 0.6 + Math.random() * 0.8;
+        packets.push(m);
+        board.add(m);
+    }
 
     function resize() {
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * devicePixelRatio;
-        canvas.height = rect.height * devicePixelRatio;
-        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        const { clientWidth, clientHeight } = mount;
+        renderer.setSize(clientWidth, clientHeight, false);
+        camera.aspect = clientWidth / Math.max(1, clientHeight);
+        camera.updateProjectionMatrix();
     }
-    resize();
+    // override previous resize binding for canvas
     window.addEventListener('resize', resize);
+    resize();
 
-    const particles = [];
-    const NUM = 2200;
-    function computeRadius() {
-        // Reduce size for smaller sphere
-        return Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.7;
+    let t = 0;
+    function animate() {
+        requestAnimationFrame(animate);
+        t += 0.01;
+        board.rotation.y = Math.sin(t * 0.2) * 0.15;
+        board.position.y = Math.sin(t * 0.6) * 0.2;
+        // animate packets along pseudo-traces
+        packets.forEach((p, idx) => {
+            const lane = (idx % 16) - 8;
+            const x = -9 + ( (p.userData.t * 3 + idx*0.2) % 18 );
+            const y = Math.sin((x + lane) * 0.6 + t*0.8) * 0.2 + Math.cos((x - lane) * 0.3 - t*0.5) * 0.15 + 0.06;
+            p.position.set(x, y, lane);
+            p.rotation.x = -Math.PI / 2.3;
+        });
+        renderer.render(scene, camera);
     }
-    let RADIUS = computeRadius();
-
-    function themedColor() {
-        const hue = 182 + Math.floor(Math.random() * 16);
-        const sat = 70 + Math.floor(Math.random() * 20);
-        const light = 45 + Math.floor(Math.random() * 10);
-        return `hsl(${hue} ${sat}% ${light}%)`;
-    }
-
-    for (let i = 0; i < NUM; i++) {
-        const t = i / NUM;
-        const phi = Math.acos(1 - 2 * t);
-        const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-        const bx = RADIUS * Math.sin(phi) * Math.cos(theta);
-        const by = RADIUS * Math.sin(phi) * Math.sin(theta);
-        const bz = RADIUS * Math.cos(phi);
-        particles.push({ bx, by, bz, ox: 0, oy: 0, oz: 0, vx: 0, vy: 0, vz: 0, color: themedColor(), size: 0.6 + Math.random() * 0.7, tw: Math.random() * Math.PI * 2, tws: 0.8 + Math.random() * 1.2 });
-    }
-
-    let rotY = 0, rotX = 0;
-    let time = 0;
-    // noise-driven morphing parameters (organic)
-    const noiseScale = 1.4;
-    const noiseSpeed = 0.22;
-    const noiseAmp = 18;
-    const spring = 0.08;
-    const damping = 0.9;
-
-
-    function render() {
-        const { width, height } = canvas;
-        ctx.clearRect(0, 0, width, height);
-        const cx = width / 2 / devicePixelRatio;
-        const cy = height / 2 / devicePixelRatio;
-
-        time += noiseSpeed / 60;
-        rotY += 0.0035;
-        rotX += 0.0015;
-        const sinY = Math.sin(rotY), cosY = Math.cos(rotY);
-        const sinX = Math.sin(rotX), cosX = Math.cos(rotX);
-        const perspective = 520;
-
-        const drawn = [];
-        for (let i = 0; i < particles.length; i++) {
-            const p = particles[i];
-            // noise-driven target offset
-            const n = (function(nx, ny, nz){
-                // simple pseudo 3D noise via trig blend (lighter than simplex here due to patching limits)
-                return Math.sin(nx + time) * Math.cos(ny - time*0.8) * Math.sin(nz + time*1.3);
-            })(p.bx * 0.01, p.by * 0.01, p.bz * 0.01);
-            const target = noiseAmp * n;
-            p.vx += 0; p.vy += 0; p.vz += 0; // keep velocities for consistency
-            // integrate radial offset using spring/damping
-            if (p.off === undefined) p.off = 0, p.voff = 0;
-            p.voff += (target - p.off) * spring;
-            p.voff *= damping;
-            p.off += p.voff;
-
-            // object-space position from unit direction and offset
-            const dirLen = Math.hypot(p.bx, Math.hypot(p.by, p.bz));
-            const ux = p.bx / dirLen, uy = p.by / dirLen, uz = p.bz / dirLen;
-            let x = (RADIUS + p.off) * ux;
-            let y = (RADIUS + p.off) * uy;
-            let z = (RADIUS + p.off) * uz;
-
-            // rotate about X then Y for presentational motion
-            let ry = y * cosX - z * sinX;
-            let rz1 = y * sinX + z * cosX;
-            let rx = x * cosY + rz1 * sinY;
-            let rzz = -x * sinY + rz1 * cosY;
-            const scale = perspective / (perspective - rzz);
-            const twinkle = 0.65 + 0.35 * Math.sin(p.tw += 0.03 * p.tws);
-            drawn.push({ sx: cx + rx * scale, sy: cy + ry * scale, s: p.size * scale, color: p.color, alpha: 0.7 * twinkle, z: rzz });
-        }
-
-        drawn.sort((a,b) => a.z - b.z);
-        for (let i = 0; i < drawn.length; i++) {
-            const pt = drawn[i];
-            ctx.beginPath();
-            ctx.fillStyle = pt.color;
-            ctx.globalAlpha = pt.alpha;
-            ctx.arc(pt.sx, pt.sy, pt.s, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        ctx.globalAlpha = 1;
-        requestAnimationFrame(render);
-    }
-    render();
+    animate();
 }
 
 // Lazy loading for images
@@ -887,7 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeLazyLoading();
     registerServiceWorker();
     initializeHqMap();
-    initializeHeroSphere();
+    initializeHeroThree();
 });
 
 // Utility functions for external use
