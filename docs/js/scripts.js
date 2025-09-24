@@ -767,10 +767,16 @@ function initializeHeroSphere() {
     }
 
     let rotY = 0;
-    // autonomous stimulus that wanders over time (no mouse needed)
-    let stimT = 0;
-    const baseInfluence = 140; // base interaction radius
-    const baseForce = 70;      // base push
+    // autonomous stimulus(s) parameters
+    const baseInfluence = 160; // base interaction radius
+    const baseForce = 90;      // base push
+    const STIM_COUNT = 6;
+    const stims = Array.from({ length: STIM_COUNT }).map((_, i) => ({
+        t: Math.random() * Math.PI * 2,
+        speed: 0.007 + Math.random() * 0.006,
+        phase: Math.random() * Math.PI * 2,
+        radiusFactor: 0.5 + Math.random() * 0.4
+    }));
     const spring = 0.035;  // faster return to sphere
     const damping = 0.9;   // standard damping
 
@@ -786,13 +792,22 @@ function initializeHeroSphere() {
         const cosY = Math.cos(rotY);
         const perspective = 500;
 
-        // compute autonomous stimulus in screen-space following a smooth path
-        stimT += 0.01;
-        const stimR = Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.55;
-        const stimX = (canvas.width / devicePixelRatio) / 2 + Math.cos(stimT * 0.7) * stimR * 0.6 + Math.sin(stimT * 1.3) * stimR * 0.2;
-        const stimY = (canvas.height / devicePixelRatio) / 2 + Math.sin(stimT * 0.9) * stimR * 0.4;
-        const influence = baseInfluence * (0.8 + 0.4 * Math.sin(stimT * 0.5));
-        const maxForce = baseForce * (0.8 + 0.5 * Math.sin(stimT * 0.8 + 1.2));
+        // compute multiple autonomous stimuli screen positions following smooth paths
+        const centerX = (canvas.width / devicePixelRatio) / 2;
+        const centerY = (canvas.height / devicePixelRatio) / 2;
+        const stimBaseR = Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.6;
+        const stimPositions = [];
+        for (let i = 0; i < STIM_COUNT; i++) {
+            const s = stims[i];
+            s.t += s.speed;
+            const r = stimBaseR * s.radiusFactor;
+            const sx = centerX + Math.cos(s.t * (0.6 + 0.2 * i)) * r * (0.5 + 0.1 * i)
+                                  + Math.sin(s.t * (0.9 + 0.15 * i) + s.phase) * r * 0.25;
+            const sy = centerY + Math.sin(s.t * (0.7 + 0.18 * i)) * r * (0.35 + 0.08 * i);
+            const infl = baseInfluence * (0.85 + 0.5 * Math.sin(s.t * 0.6 + s.phase));
+            const force = baseForce * (0.8 + 0.7 * Math.sin(s.t * 0.9 + 0.8));
+            stimPositions.push({ sx, sy, influence: infl, maxForce: force });
+        }
 
         const drawn = [];
         for (let i = 0; i < particles.length; i++) {
@@ -813,15 +828,18 @@ function initializeHeroSphere() {
             const scaleStim = perspective / (perspective - rz);
             const sx = cx + rx * scaleStim;
             const sy = cy + y * scaleStim;
-            const dx = sx - stimX;
-            const dy = sy - stimY;
-            const dist = Math.hypot(dx, dy);
-            if (dist < influence) {
-                const f = maxForce * (1 - dist / influence) * (1 - dist / influence);
-                const nx = x / RADIUS, ny = y / RADIUS, nz = z / RADIUS;
-                p.vx += nx * f * 0.03;
-                p.vy += ny * f * 0.03;
-                p.vz += nz * 0.03 * f;
+            for (let si = 0; si < stimPositions.length; si++) {
+                const sp = stimPositions[si];
+                const dx = sx - sp.sx;
+                const dy = sy - sp.sy;
+                const dist = Math.hypot(dx, dy);
+                if (dist < sp.influence) {
+                    const f = sp.maxForce * (1 - dist / sp.influence) * (1 - dist / sp.influence);
+                    const nx = x / RADIUS, ny = y / RADIUS, nz = z / RADIUS;
+                    p.vx += nx * f * 0.03;
+                    p.vy += ny * f * 0.03;
+                    p.vz += nz * 0.03 * f;
+                }
             }
 
             // integrate
@@ -833,7 +851,7 @@ function initializeHeroSphere() {
             const rrx = x * cosY + z * sinY;
             const rrz = -x * sinY + z * cosY;
             const scale = perspective / (perspective - rrz);
-            const twinkle = 0.7 + 0.3 * Math.sin(p.tw += 0.02 * p.tws);
+            const twinkle = 0.6 + 0.4 * Math.sin(p.tw += 0.03 * p.tws);
             drawn.push({ sx: cx + rrx * scale, sy: cy + y * scale, s: p.size * scale, color: p.color, alpha: 0.7 * twinkle, z: rrz });
         }
 
