@@ -27,6 +27,7 @@ body {
     color: var(--text-primary);
     background: var(--dark-bg);
     overflow-x: hidden;
+    font-weight: 300; /* thin site-wide default */
 }
 
 .container {
@@ -293,7 +294,7 @@ section {
 
 .section-header h2 {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 1rem;
 }
 
@@ -1196,6 +1197,38 @@ section {
 
 .footer-bottom p {
     margin-bottom: 0.5rem;
+}
+
+/* Typography weight adjustments (thin site-wide) */
+p,
+li,
+a,
+label,
+small,
+table,
+td,
+th,
+.card p,
+.feature-card p,
+.pricing-card p,
+.download-item p {
+    font-weight: 300;
+}
+
+h1,
+.hero-title {
+    font-weight: 600;
+}
+
+h2,
+.section-header h2 {
+    font-weight: 600;
+}
+
+h3,
+.feature-card h3,
+.pricing-card h3 {
+    font-weight: 500;
 }
 
 /* Responsive Design */
