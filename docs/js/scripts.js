@@ -1338,9 +1338,13 @@ function startDynamicFavicon() {
         rotX = 0.22 + Math.sin(t * 0.6) * 0.06;
 
         ctx.clearRect(0, 0, size, size);
-        // darker base to improve contrast at 16x16 downscale
-        ctx.fillStyle = 'rgba(0,0,0,0.0)';
-        ctx.fillRect(0, 0, size, size);
+        // solid black circular background for better visibility
+        ctx.save();
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
 
         // keep favicon dots a touch larger so they survive downscaling
         const baseSize = Math.max(0.26, radius * 0.012);
