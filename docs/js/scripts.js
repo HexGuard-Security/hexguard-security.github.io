@@ -1259,8 +1259,8 @@ function initializeMiniParticleSphere(canvas) {
         const idleY = Math.cos(t * 0.4) * 0.12;
 
         // particle size scales with logo radius
-        // Hero logo: keep dots even tinier for a hyper-dense look
-        const baseSize = isHeroLogo ? Math.max(0.18, radius * 0.008) : Math.max(0.34, radius * 0.013);
+        // Hero logo: make dots even tinier for a hyper-dense look
+        const baseSize = isHeroLogo ? Math.max(0.14, radius * 0.0065) : Math.max(0.34, radius * 0.013);
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             const rp = rotatePoint(p, rotX + idleX, rotY + idleY);
@@ -1268,7 +1268,7 @@ function initializeMiniParticleSphere(canvas) {
             const px = centerX + rp.x * radius;
             const py = centerY + rp.y * radius;
             // Hero: smaller multiplier; elsewhere: prior visibility bump
-            const size = (isHeroLogo ? (baseSize * (0.62 + depth * 0.85)) : (baseSize * (0.75 + depth * 1.05)));
+            const size = (isHeroLogo ? (baseSize * (0.58 + depth * 0.78)) : (baseSize * (0.75 + depth * 1.05)));
             ctx.fillStyle = colorAt(i / particles.length);
             ctx.globalAlpha = 0.58 + depth * 0.32;
             ctx.beginPath();
