@@ -772,10 +772,12 @@ function initializeHeroThree() {
     const uniforms = {
         uTime: { value: 0 },
         uRadius: { value: radius },
-        uAmp: { value: 2.4 },
-        uNoiseScale: { value: 1.2 },
-        uPrimary: { value: new THREE.Color('#00d4aa') },
-        uSecondary: { value: new THREE.Color('#0066ff') }
+        uAmp: { value: 2.2 },
+        uNoiseScale: { value: 1.15 },
+        uPulse: { value: 0.0 },
+        uScanY: { value: 0.0 },
+        uScanW: { value: 0.15 },
+        uScanI: { value: 0.35 }
     };
 
     const vertexShader = `
@@ -785,7 +787,9 @@ function initializeHeroThree() {
         uniform float uRadius;
         uniform float uAmp;
         uniform float uNoiseScale;
+        uniform float uPulse;
         varying vec3 vColor;
+        varying float vScanMix;
 
         // Simple 3D noise (value noise blend)
         float hash(vec3 p){ return fract(sin(dot(p, vec3(127.1,311.7, 74.7))) * 43758.5453123); }
@@ -809,10 +813,12 @@ function initializeHeroThree() {
           // layered noise for organic morph
           float n1 = noise(base * (uNoiseScale*0.9) + vec3(0.0, t, 0.0));
           float n2 = noise(base * (uNoiseScale*1.6) + vec3(t*0.7, 0.0, -t*0.5));
-          float disp = (n1*0.6 + n2*0.4 - 0.5) * uAmp;
+          float disp = (n1*0.6 + n2*0.4 - 0.5) * uAmp * (1.0 + 0.5*uPulse);
           vec3 pos = normalize(base) * (uRadius + disp);
           // subtle drift across surface
           pos += vec3(sin(t+base.y*3.0), cos(t*0.6+base.z*2.5), sin(t*0.8+base.x*2.0)) * 0.15;
+          // scanline mix factor based on world-space Y (approx via pos.y in model space)
+          vScanMix = pos.y;
           vColor = color;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
           gl_PointSize = 1.6 + disp*0.3;
@@ -822,11 +828,14 @@ function initializeHeroThree() {
     const fragmentShader = `
         precision mediump float;
         varying vec3 vColor;
+        uniform float uScanY; uniform float uScanW; uniform float uScanI;
+        varying float vScanMix;
         void main(){
           float d = length(gl_PointCoord - 0.5);
           if(d>0.5) discard;
           float alpha = smoothstep(0.5, 0.0, d) * 0.95;
-          vec3 col = vColor;
+          float scan = smoothstep(uScanY - uScanW, uScanY, vScanMix) * smoothstep(uScanY + uScanW, uScanY, vScanMix);
+          vec3 col = mix(vColor, vec3(0.0, 1.0, 0.85), scan * uScanI);
           gl_FragColor = vec4(col, alpha);
         }
     `;
@@ -854,8 +863,12 @@ function initializeHeroThree() {
 
     function animate(time){
         uniforms.uTime.value = (time||0)/1000.0;
+        // slow parallax rotation
         points.rotation.y += 0.0012;
         points.rotation.x = Math.sin(uniforms.uTime.value*0.3)*0.08;
+        // breathing pulse and scan sweep
+        uniforms.uPulse.value = (sin(uniforms.uTime.value*0.9)+1.0)*0.5;
+        uniforms.uScanY.value = sin(uniforms.uTime.value*0.5)*0.6; // sweep up/down
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
     }
