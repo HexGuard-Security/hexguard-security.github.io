@@ -742,7 +742,7 @@ function initializeHeroSphere() {
     window.addEventListener('resize', resize);
 
     const particles = [];
-    const NUM = 2000;
+    const NUM = 2200;
     function computeRadius() {
         // Reduce size for smaller sphere
         return Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.7;
@@ -766,19 +766,14 @@ function initializeHeroSphere() {
         particles.push({ bx, by, bz, ox: 0, oy: 0, oz: 0, vx: 0, vy: 0, vz: 0, color: themedColor(), size: 0.6 + Math.random() * 0.7, tw: Math.random() * Math.PI * 2, tws: 0.8 + Math.random() * 1.2 });
     }
 
-    let rotY = 0;
-    // autonomous stimulus(s) parameters
-    const baseInfluence = 160; // base interaction radius
-    const baseForce = 90;      // base push
-    const STIM_COUNT = 6;
-    const stims = Array.from({ length: STIM_COUNT }).map((_, i) => ({
-        t: Math.random() * Math.PI * 2,
-        speed: 0.007 + Math.random() * 0.006,
-        phase: Math.random() * Math.PI * 2,
-        radiusFactor: 0.5 + Math.random() * 0.4
-    }));
-    const spring = 0.035;  // faster return to sphere
-    const damping = 0.9;   // standard damping
+    let rotY = 0, rotX = 0;
+    let time = 0;
+    // noise-driven morphing parameters (organic)
+    const noiseScale = 1.4;
+    const noiseSpeed = 0.22;
+    const noiseAmp = 18;
+    const spring = 0.08;
+    const damping = 0.9;
 
 
     function render() {
@@ -787,72 +782,44 @@ function initializeHeroSphere() {
         const cx = width / 2 / devicePixelRatio;
         const cy = height / 2 / devicePixelRatio;
 
-        rotY += 0.004;
-        const sinY = Math.sin(rotY);
-        const cosY = Math.cos(rotY);
-        const perspective = 500;
-
-        // compute multiple autonomous stimuli screen positions following smooth paths
-        const centerX = (canvas.width / devicePixelRatio) / 2;
-        const centerY = (canvas.height / devicePixelRatio) / 2;
-        const stimBaseR = Math.min(canvas.width, canvas.height) / (2 * devicePixelRatio) * 0.6;
-        const stimPositions = [];
-        for (let i = 0; i < STIM_COUNT; i++) {
-            const s = stims[i];
-            s.t += s.speed;
-            const r = stimBaseR * s.radiusFactor;
-            const sx = centerX + Math.cos(s.t * (0.6 + 0.2 * i)) * r * (0.5 + 0.1 * i)
-                                  + Math.sin(s.t * (0.9 + 0.15 * i) + s.phase) * r * 0.25;
-            const sy = centerY + Math.sin(s.t * (0.7 + 0.18 * i)) * r * (0.35 + 0.08 * i);
-            const infl = baseInfluence * (0.85 + 0.5 * Math.sin(s.t * 0.6 + s.phase));
-            const force = baseForce * (0.8 + 0.7 * Math.sin(s.t * 0.9 + 0.8));
-            stimPositions.push({ sx, sy, influence: infl, maxForce: force });
-        }
+        time += noiseSpeed / 60;
+        rotY += 0.0035;
+        rotX += 0.0015;
+        const sinY = Math.sin(rotY), cosY = Math.cos(rotY);
+        const sinX = Math.sin(rotX), cosX = Math.cos(rotX);
+        const perspective = 520;
 
         const drawn = [];
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
-            // current object-space position
-            let x = p.bx + p.ox;
-            let y = p.by + p.oy;
-            let z = p.bz + p.oz;
+            // noise-driven target offset
+            const n = (function(nx, ny, nz){
+                // simple pseudo 3D noise via trig blend (lighter than simplex here due to patching limits)
+                return Math.sin(nx + time) * Math.cos(ny - time*0.8) * Math.sin(nz + time*1.3);
+            })(p.bx * 0.01, p.by * 0.01, p.bz * 0.01);
+            const target = noiseAmp * n;
+            p.vx += 0; p.vy += 0; p.vz += 0; // keep velocities for consistency
+            // integrate radial offset using spring/damping
+            if (p.off === undefined) p.off = 0, p.voff = 0;
+            p.voff += (target - p.off) * spring;
+            p.voff *= damping;
+            p.off += p.voff;
 
-            // spring to base
-            p.vx += -(p.ox) * spring;
-            p.vy += -(p.oy) * spring;
-            p.vz += -(p.oz) * spring;
+            // object-space position from unit direction and offset
+            const dirLen = Math.hypot(p.bx, Math.hypot(p.by, p.bz));
+            const ux = p.bx / dirLen, uy = p.by / dirLen, uz = p.bz / dirLen;
+            let x = (RADIUS + p.off) * ux;
+            let y = (RADIUS + p.off) * uy;
+            let z = (RADIUS + p.off) * uz;
 
-            // rotate for screen projection for stimulus force calc
-            const rx = x * cosY + z * sinY;
-            const rz = -x * sinY + z * cosY;
-            const scaleStim = perspective / (perspective - rz);
-            const sx = cx + rx * scaleStim;
-            const sy = cy + y * scaleStim;
-            for (let si = 0; si < stimPositions.length; si++) {
-                const sp = stimPositions[si];
-                const dx = sx - sp.sx;
-                const dy = sy - sp.sy;
-                const dist = Math.hypot(dx, dy);
-                if (dist < sp.influence) {
-                    const f = sp.maxForce * (1 - dist / sp.influence) * (1 - dist / sp.influence);
-                    const nx = x / RADIUS, ny = y / RADIUS, nz = z / RADIUS;
-                    p.vx += nx * f * 0.03;
-                    p.vy += ny * f * 0.03;
-                    p.vz += nz * 0.03 * f;
-                }
-            }
-
-            // integrate
-            p.vx *= damping; p.vy *= damping; p.vz *= damping;
-            p.ox += p.vx; p.oy += p.vy; p.oz += p.vz;
-
-            // final projection
-            x = p.bx + p.ox; y = p.by + p.oy; z = p.bz + p.oz;
-            const rrx = x * cosY + z * sinY;
-            const rrz = -x * sinY + z * cosY;
-            const scale = perspective / (perspective - rrz);
-            const twinkle = 0.6 + 0.4 * Math.sin(p.tw += 0.03 * p.tws);
-            drawn.push({ sx: cx + rrx * scale, sy: cy + y * scale, s: p.size * scale, color: p.color, alpha: 0.7 * twinkle, z: rrz });
+            // rotate about X then Y for presentational motion
+            let ry = y * cosX - z * sinX;
+            let rz1 = y * sinX + z * cosX;
+            let rx = x * cosY + rz1 * sinY;
+            let rzz = -x * sinY + rz1 * cosY;
+            const scale = perspective / (perspective - rzz);
+            const twinkle = 0.65 + 0.35 * Math.sin(p.tw += 0.03 * p.tws);
+            drawn.push({ sx: cx + rx * scale, sy: cy + ry * scale, s: p.size * scale, color: p.color, alpha: 0.7 * twinkle, z: rzz });
         }
 
         drawn.sort((a,b) => a.z - b.z);
