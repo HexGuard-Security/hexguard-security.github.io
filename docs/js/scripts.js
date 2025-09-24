@@ -816,7 +816,7 @@ function initializeHeroThree() {
     mount.appendChild(renderer.domElement);
 
     // Modern particle aesthetic (timeless) using shader-driven points
-    const COUNT = 24000;
+    const COUNT = 52000;
     const positions = new Float32Array(COUNT * 3);
     const base = new Float32Array(COUNT * 3); // unit sphere base positions
     const colors = new Float32Array(COUNT * 3);
@@ -898,7 +898,7 @@ function initializeHeroThree() {
           vScanMix = pos.y;
           vColor = color;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-          gl_PointSize = 1.6 + disp*0.3;
+          gl_PointSize = 0.9 + disp*0.2;
           gl_PointSize *= (300.0 / - (modelViewMatrix * vec4(pos,1.0)).z);
         }
     `;
@@ -1004,6 +1004,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeHqMap();
     initializeHeroThree();
     replaceLogosWithSphere();
+    startDynamicFavicon();
 });
 
 // Utility functions for external use
@@ -1082,7 +1083,10 @@ function initializeMiniParticleSphere(canvas) {
     const centerY = height / 2;
     const radius = Math.min(width, height) * 0.45;
 
-    const numParticles = Math.round(400 * Math.min(2, dpr));
+    // Particle count scales with logo size to keep density consistent
+    const sphereArea = Math.PI * (radius * radius);
+    const density = 0.095; // particles per px^2 (tuned for HD look)
+    const numParticles = Math.max(220, Math.min(1800, Math.round(sphereArea * density * Math.min(2, dpr))));
     const particles = [];
     for (let i = 0; i < numParticles; i++) {
         // Fibonacci sphere distribution
@@ -1154,17 +1158,17 @@ function initializeMiniParticleSphere(canvas) {
         const idleX = Math.sin(t * 0.6) * 0.12;
         const idleY = Math.cos(t * 0.4) * 0.12;
 
-        // particle size scales with logo radius so small logos use tiny particles
-        const baseSize = Math.max(0.28, radius * 0.028);
+        // particle size scales with logo radius; keep them tiny even on big logos
+        const baseSize = Math.max(0.24, radius * 0.010);
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             const rp = rotatePoint(p, rotX + idleX, rotY + idleY);
             const depth = (rp.z + 1) * 0.5; // 0..1
             const px = centerX + rp.x * radius;
             const py = centerY + rp.y * radius;
-            const size = baseSize * (0.6 + depth * 0.9); // tiny sparkle scaled to logo size
+            const size = baseSize * (0.6 + depth * 0.9);
             ctx.fillStyle = colorAt(i / particles.length);
-            ctx.globalAlpha = 0.65 + depth * 0.35;
+            ctx.globalAlpha = 0.58 + depth * 0.32;
             ctx.beginPath();
             ctx.arc(px, py, size, 0, Math.PI * 2);
             ctx.fill();
@@ -1173,6 +1177,114 @@ function initializeMiniParticleSphere(canvas) {
         requestAnimationFrame(draw);
     }
     draw();
+}
+
+// Dynamic favicon: renders the same particle sphere to an offscreen canvas
+function startDynamicFavicon() {
+    const size = 64; // CSS pixels
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(size * dpr);
+    canvas.height = Math.round(size * dpr);
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const centerX = size / 2;
+    const centerY = size / 2;
+    const radius = (size * 0.45);
+
+    // density similar to mini sphere but slightly reduced for favicon perf
+    const sphereArea = Math.PI * (radius * radius);
+    const density = 0.085;
+    const count = Math.max(200, Math.min(1400, Math.round(sphereArea * density * dpr)));
+    const particles = [];
+    for (let i = 0; i < count; i++) {
+        const t = i / count;
+        const inc = Math.PI * (3 - Math.sqrt(5));
+        const y = 1 - 2 * t;
+        const r = Math.sqrt(1 - y * y);
+        const phi = i * inc;
+        const x = Math.cos(phi) * r;
+        const z = Math.sin(phi) * r;
+        particles.push({ x, y, z });
+    }
+
+    const c1 = { r: 0x00, g: 0x66, b: 0xff };
+    const c2 = { r: 0x00, g: 0xd4, b: 0xaa };
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const colorAt = (t) => `rgb(${Math.round(lerp(c1.r, c2.r, t))},${Math.round(lerp(c1.g, c2.g, t))},${Math.round(lerp(c1.b, c2.b, t))})`;
+
+    let rotY = 0.0;
+    let rotX = 0.25;
+    const rotate = (p, ax, ay) => {
+        let { x, y, z } = p;
+        const cosX = Math.cos(ax), sinX = Math.sin(ax);
+        const y1 = y * cosX - z * sinX;
+        const z1 = y * sinX + z * cosX;
+        const cosY = Math.cos(ay), sinY = Math.sin(ay);
+        const x2 = x * cosY + z1 * sinY;
+        const z2 = -x * sinY + z1 * cosY;
+        return { x: x2, y: y1, z: z2 };
+    };
+
+    let lastUpdate = 0;
+    const updateIntervalMs = 400; // throttle favicon updates
+    function drawFavicon(now) {
+        // animate slowly
+        const t = (now || 0) * 0.001;
+        rotY += 0.005;
+        rotX = 0.22 + Math.sin(t * 0.6) * 0.06;
+
+        ctx.clearRect(0, 0, size, size);
+        // darker base to improve contrast at 16x16 downscale
+        ctx.fillStyle = 'rgba(0,0,0,0.0)';
+        ctx.fillRect(0, 0, size, size);
+
+        const baseSize = Math.max(0.22, radius * 0.010);
+        const drawn = [];
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            const rp = rotate(p, rotX, rotY);
+            drawn.push({
+                x: centerX + rp.x * radius,
+                y: centerY + rp.y * radius,
+                z: rp.z,
+                c: colorAt(i / particles.length),
+                s: baseSize * (0.6 + (rp.z + 1) * 0.45)
+            });
+        }
+        drawn.sort((a, b) => a.z - b.z);
+        for (let i = 0; i < drawn.length; i++) {
+            const d = drawn[i];
+            ctx.fillStyle = d.c;
+            ctx.globalAlpha = 0.6 + (d.z + 1) * 0.2;
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, d.s, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        // Throttle data URL updates for performance
+        if (!lastUpdate || (now - lastUpdate) > updateIntervalMs) {
+            const url = canvas.toDataURL('image/png');
+            let link = document.querySelector('link[rel="icon"]');
+            if (!link) {
+                link = document.createElement('link');
+                link.rel = 'icon';
+                document.head.appendChild(link);
+            }
+            link.type = 'image/png';
+            link.href = url;
+            lastUpdate = now;
+        }
+
+        if (!document.hidden) requestAnimationFrame(drawFavicon);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) requestAnimationFrame(drawFavicon);
+    });
+    requestAnimationFrame(drawFavicon);
 }
 
 // Add animations CSS
