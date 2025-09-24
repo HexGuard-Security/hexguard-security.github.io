@@ -1063,6 +1063,12 @@ section {
     font-size: 0.95rem;
 }
 
+.mini-footer > span {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    letter-spacing: 0.01em;
+}
+
 .mini-footer__links a {
     color: var(--text-secondary);
     text-decoration: none;
