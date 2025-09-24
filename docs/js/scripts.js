@@ -1006,6 +1006,7 @@ document.addEventListener('DOMContentLoaded', () => {
     replaceLogosWithSphere();
     startDynamicFavicon();
     injectHeroLogoSphere();
+    initializeFullpageSnapScroll();
 });
 
 // Utility functions for external use
@@ -1083,6 +1084,85 @@ function injectHeroLogoSphere() {
 
     // Initialize with same renderer but size will be read from wrapper
     initializeMiniParticleSphere(canvas);
+}
+
+// Smooth fullpage snap: wheel/keys/swipe jump to next/prev section and center
+function initializeFullpageSnapScroll() {
+    const sections = Array.from(document.querySelectorAll('section'));
+    if (sections.length === 0) return;
+
+    // Ensure sections occupy full viewport height for consistent snapping
+    sections.forEach(sec => {
+        sec.style.minHeight = '100vh';
+        sec.style.scrollSnapAlign = 'start';
+        sec.style.scrollSnapStop = 'always';
+    });
+
+    let isAnimating = false;
+    let lastTouchY = null;
+
+    function currentSectionIndex() {
+        const viewportCenter = window.scrollY + window.innerHeight / 2;
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        for (let i = 0; i < sections.length; i++) {
+            const rect = sections[i].getBoundingClientRect();
+            const center = rect.top + window.scrollY + rect.height / 2;
+            const dist = Math.abs(center - viewportCenter);
+            if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+        }
+        return bestIdx;
+    }
+
+    function snapToIndex(idx) {
+        if (isAnimating) return;
+        idx = Math.max(0, Math.min(sections.length - 1, idx));
+        isAnimating = true;
+        sections[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => { isAnimating = false; }, 800);
+    }
+
+    function onWheel(e) {
+        if (isAnimating) { e.preventDefault(); return; }
+        // Allow pinch-zoom and trackpad horizontal scrolling to pass
+        if (e.ctrlKey) return;
+        const dy = e.deltaY;
+        if (Math.abs(dy) < 6) return; // ignore micro scrolls
+        e.preventDefault();
+        const idx = currentSectionIndex();
+        if (dy > 0) snapToIndex(idx + 1); else snapToIndex(idx - 1);
+    }
+
+    function onKey(e) {
+        if (isAnimating) { e.preventDefault(); return; }
+        const idx = currentSectionIndex();
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+            e.preventDefault(); snapToIndex(idx + 1);
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+            e.preventDefault(); snapToIndex(idx - 1);
+        } else if (e.key === 'Home') { e.preventDefault(); snapToIndex(0); }
+        else if (e.key === 'End') { e.preventDefault(); snapToIndex(sections.length - 1); }
+    }
+
+    function onTouchStart(e) { if (e.touches && e.touches[0]) lastTouchY = e.touches[0].clientY; }
+    function onTouchMove(e) {
+        if (lastTouchY == null) return;
+        const y = e.touches[0].clientY;
+        const dy = y - lastTouchY;
+        if (Math.abs(dy) > 40 && !isAnimating) {
+            e.preventDefault();
+            const idx = currentSectionIndex();
+            if (dy < 0) snapToIndex(idx + 1); else snapToIndex(idx - 1);
+            lastTouchY = null;
+        }
+    }
+    function onTouchEnd() { lastTouchY = null; }
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('keydown', onKey, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
 }
 
 function initializeMiniParticleSphere(canvas) {
