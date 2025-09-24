@@ -416,6 +416,24 @@ section {
     color: #cccccc;
 }
 
+.terminal-line.critical {
+    color: #ff4757;
+    text-shadow: 0 0 8px rgba(255, 71, 87, 0.35);
+    font-weight: 700;
+}
+
+.terminal-line.high {
+    color: #ffa502;
+    text-shadow: 0 0 6px rgba(255, 165, 2, 0.25);
+    font-weight: 600;
+}
+
+.terminal-line.medium {
+    color: #ffd166;
+    text-shadow: 0 0 5px rgba(255, 209, 102, 0.2);
+    font-weight: 600;
+}
+
 .typing::after {
     content: '|';
     animation: blink 1s infinite;
