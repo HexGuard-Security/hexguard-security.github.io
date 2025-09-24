@@ -749,8 +749,8 @@ section {
 
 .contact-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: 3rem;
 }
 
 .contact-info h2 {
@@ -843,13 +843,13 @@ section {
 /* Contact Form */
 .contact-form {
     background: var(--card-bg);
-    padding: 2.5rem;
+    padding: 1.75rem;
     border-radius: var(--border-radius);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .form-group {
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
     position: relative;
 }
 
