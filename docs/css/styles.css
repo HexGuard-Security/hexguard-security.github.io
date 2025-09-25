@@ -946,10 +946,17 @@ section {
     background-repeat: no-repeat;
     filter: grayscale(100%);
     transition: var(--transition);
+    overflow: hidden;
 }
 
 .team-card:hover .avatar {
     filter: grayscale(0%);
+}
+
+/* Default avatar tweaks to avoid visible square edges */
+.avatar.default {
+    background-size: 120% auto; /* zoom-in to hide hard edges/padding inside the image */
+    background-color: var(--card-bg);
 }
 
 .member-info h3 {
