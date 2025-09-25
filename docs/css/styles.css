@@ -895,6 +895,158 @@ section {
     background: linear-gradient(135deg, rgba(26, 31, 46, 0.8), rgba(10, 15, 28, 0.9));
 }
 
+/* Team Section */
+.team-section {
+    background: var(--dark-bg);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.team-card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 20%, rgba(0, 102, 255, 0.18), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(0, 212, 170, 0.12), transparent 40%);
+    opacity: 0.6;
+}
+
+.team-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 102, 255, 0.35);
+    box-shadow: var(--shadow-lg);
+}
+
+.avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    display: inline-block;
+    margin-bottom: 1rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: grayscale(100%);
+    transition: var(--transition);
+}
+
+.team-card:hover .avatar {
+    filter: grayscale(0%);
+}
+
+.member-info h3 {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.member-info .role {
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.member-info .bio {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.member-tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.badge.project {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.badge.role-badge {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Project color accents */
+.badge.project.firmwire,
+.chip.project.firmwire {
+    background: rgba(0, 102, 255, 0.12);
+    border-color: rgba(0, 102, 255, 0.45);
+}
+
+.badge.project.leaksnitch,
+.chip.project.leaksnitch {
+    background: rgba(0, 212, 170, 0.12);
+    border-color: rgba(0, 212, 170, 0.45);
+}
+
+/* Farsight project accent (purple) */
+.badge.project.farsight,
+.chip.project.farsight {
+    background: rgba(138, 43, 226, 0.12);
+    border-color: rgba(138, 43, 226, 0.45);
+}
+
+/* Contributors strip */
+.contributors-strip {
+    margin-top: 2.5rem;
+    background: rgba(15, 22, 38, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.contributors {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.strip-label {
+    color: var(--text-secondary);
+    margin-right: 0.25rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+}
+
+.chip.person {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.contributors .divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.14);
+    margin: 0 6px;
+}
+
 .contact-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1387,6 +1539,10 @@ h3,
         gap: 1rem;
     }
     
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
     .install-commands {
         flex-direction: column;
         gap: 0.5rem;
