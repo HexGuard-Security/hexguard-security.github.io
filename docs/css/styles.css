@@ -1547,6 +1547,38 @@ h3,
         flex-direction: column;
         gap: 0.5rem;
     }
+
+    /* Section padding reduce */
+    section { padding: 4rem 0; }
+
+    /* Hero tightening for mobile */
+    .hero { min-height: auto; padding: 4rem 0 3rem; }
+    .hero-kicker { justify-content: center; }
+    .firmwire-mark { height: 4rem; width: 4rem; }
+    .firmwire-text { font-size: 3rem; }
+    .hero-subtitle-title { font-size: 1.6rem; }
+    .hero-subtitle { font-size: 1rem; margin-bottom: 1.5rem; }
+    .hero-buttons { justify-content: center; }
+
+    /* Team adjustments */
+    .team-grid { gap: 1rem; }
+    .team-card { padding: 1rem; }
+    .avatar { width: 72px; height: 72px; }
+
+    /* Floating nav compact */
+    .floating-nav { padding: 6px 10px; gap: 10px; }
+    .floating-nav__text { font-size: 0.9rem; }
+    .floating-nav__links a { font-size: 0.9rem; margin: 0 4px; }
+
+    /* Mini footer spacing */
+    .mini-footer { padding: 6px 10px; gap: 10px; bottom: 12px; }
+
+    /* Map smaller */
+    #hq-map { height: 280px; }
+
+    /* Downloads: horizontal scroll */
+    .downloads-table-wrapper { overflow-x: auto; }
+    .downloads-table { min-width: 720px; }
 }
 
 @media (max-width: 480px) {
@@ -1565,6 +1597,14 @@ h3,
     .pricing-card {
         padding: 1.5rem;
     }
+
+    /* Extra small tightening */
+    .firmwire-text { font-size: 2.4rem; }
+    .hero-subtitle-title { font-size: 1.4rem; }
+    .avatar { width: 64px; height: 64px; }
+    .team-card { padding: 0.9rem; }
+    .mini-footer__links a { margin: 0 4px; }
+    #hq-map { height: 220px; }
 }
 
 /* Smooth scrolling */
@@ -1589,4 +1629,14 @@ body {
     scroll-snap-stop: always;
     /* account for fixed navbar height */
     padding-top: 72px;
+}
+
+/* Disable scroll snapping on small screens for smoother UX */
+@media (max-width: 768px) {
+    body { scroll-snap-type: none; }
+    .product-section,
+    .features-section,
+    .pricing-section,
+    .download-section,
+    .contact-section { scroll-snap-align: unset; scroll-snap-stop: normal; padding-top: 56px; }
 }
