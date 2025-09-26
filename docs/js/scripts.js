@@ -1,12 +1,34 @@
-// DOM Content Loaded
+// DOM Content Loaded - Single initialization
 document.addEventListener('DOMContentLoaded', function() {
-    initializeNavigation();
-    initializeAnimations();
-    initializeFormHandlers();
-    initializeScrollEffects();
-    initializeTerminalAnimation();
-    enhanceTerminalBadges();
-    shuffleTeamCards();
+    try {
+        initializeNavigation();
+        initializeAnimations();
+        initializeFormHandlers();
+        initializeScrollEffects();
+        initializeTerminalAnimation();
+        enhanceTerminalBadges();
+        shuffleTeamCards();
+        loadThemePreference();
+        initializeKeyboardNavigation();
+        initializePerformanceMonitoring();
+        initializeErrorHandling();
+        initializeFeatureSpotlight();
+        initializeOlderVersions();
+        addSpotlightStyles();
+        initializeLazyLoading();
+        registerServiceWorker();
+        initializeHqMap();
+        initializeHeroThree();
+        replaceLogosWithSphere();
+        startDynamicFavicon();
+        injectHeroLogoSphere();
+        initializeFullpageSnapScroll();
+        initializeRecruitAvatarLogo();
+        initializeDefaultAvatarLogos();
+        initializeFeatureIconLogos();
+    } catch (error) {
+        console.error('Initialization error:', error);
+    }
 });
 
 // Navigation functionality
@@ -15,7 +37,7 @@ function initializeNavigation() {
     const navMenu = document.querySelector('.nav-menu');
     const navbar = document.querySelector('.navbar');
     
-    console.log('Navigation elements found:', { navToggle, navMenu, navbar });
+    // Navigation elements found
     
     // Mobile navigation toggle
     if (navToggle && navMenu) {
@@ -107,22 +129,13 @@ function initializeAnimations() {
                     });
                 }
                 
-                // Stagger animation for pricing cards
-                if (entry.target.classList.contains('pricing-card')) {
-                    const cards = entry.target.parentNode.querySelectorAll('.pricing-card');
-                    cards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.style.transform = 'translateY(0)';
-                            card.style.opacity = '1';
-                        }, index * 150);
-                    });
-                }
+                // Pricing cards removed
             }
         });
     }, observerOptions);
     
     // Observe elements for animation
-    document.querySelectorAll('.feature-card, .pricing-card, .section-header').forEach(el => {
+    document.querySelectorAll('.feature-card, .section-header').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'all 0.6s ease-out';
@@ -320,7 +333,7 @@ function downloadFirmwire(platform = 'default') {
 }
 
 // Enhance older versions details to scroll into view when opened
-document.addEventListener('DOMContentLoaded', function() {
+function initializeOlderVersions() {
     const details = document.querySelector('.older-versions details');
     if (details) {
         details.addEventListener('toggle', function() {
@@ -329,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
+}
 
 // Contact sales functionality
 function contactSales() {
@@ -346,7 +359,7 @@ function contactSales() {
     }, 500);
     
     trackEvent('contact_sales', {
-        source: 'pricing_page'
+        source: 'contact_page'
     });
 }
 
@@ -497,15 +510,7 @@ function animateSecurityGrid() {
 
 // (old grid animation disabled)
 
-// Pricing calculator (if needed for enterprise)
-function calculateEnterprisePrice(users, features) {
-    // Placeholder for enterprise pricing calculation
-    const basePrice = 299;
-    const userMultiplier = Math.max(1, Math.floor(users / 10));
-    const featureMultiplier = features.length * 0.1 + 1;
-    
-    return Math.round(basePrice * userMultiplier * featureMultiplier);
-}
+// Pricing calculator removed
 
 // Feature comparison toggle
 function toggleFeatureComparison() {
@@ -973,6 +978,11 @@ function initializeHeroThree() {
         requestAnimationFrame(animate);
     }
     requestAnimationFrame(animate);
+    
+    // Add loaded class to prevent loading artifacts
+    setTimeout(() => {
+        mount.classList.add('loaded');
+    }, 100);
 }
 
 // Lazy loading for images
@@ -1014,26 +1024,7 @@ function registerServiceWorker() {
     }
 }
 
-// Initialize all functionality
-document.addEventListener('DOMContentLoaded', () => {
-    loadThemePreference();
-    initializeKeyboardNavigation();
-    initializePerformanceMonitoring();
-    initializeErrorHandling();
-    initializeFeatureSpotlight();
-    addSpotlightStyles();
-    initializeLazyLoading();
-    registerServiceWorker();
-    initializeHqMap();
-    initializeHeroThree();
-    replaceLogosWithSphere();
-    startDynamicFavicon();
-    injectHeroLogoSphere();
-    initializeFullpageSnapScroll();
-    initializeRecruitAvatarLogo();
-    initializeDefaultAvatarLogos();
-    initializeFeatureIconLogos();
-});
+// These functions are now called in the main DOMContentLoaded listener above
 
 // Utility functions for external use
 window.HexGuard = {
@@ -1107,6 +1098,11 @@ function injectHeroLogoSphere() {
     const canvas = document.createElement('canvas');
     wrapper.appendChild(canvas);
     mount.appendChild(wrapper);
+    
+    // Add loaded class to prevent loading artifacts
+    setTimeout(() => {
+        mount.classList.add('loaded');
+    }, 200);
 
     // Initialize with same renderer but size will be read from wrapper
     initializeMiniParticleSphere(canvas);

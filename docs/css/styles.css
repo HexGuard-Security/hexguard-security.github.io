@@ -199,12 +199,7 @@ body {
     width: 100%;
 }
 
-.nav-toggle {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-primary);
-}
+/* Duplicate removed - nav-toggle styles defined above */
 
 /* Hero Section */
 .hero {
@@ -359,6 +354,12 @@ body {
 #hero-three {
     width: 100%;
     height: 520px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+#hero-three.loaded {
+    opacity: 1;
 }
 
 /* Hero logo sphere container in the empty right area */
@@ -369,6 +370,12 @@ body {
     width: min(432px, 50vw);
     height: min(432px, 50vw);
     z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#hero-logo.loaded {
+    opacity: 1;
 }
 
 #hero-logo .hxg-logo,
@@ -633,20 +640,8 @@ section {
     font-size: 0.95rem;
 }
 
-/* Pricing Section */
-.pricing-section {
-    background: linear-gradient(135deg, rgba(26, 31, 46, 0.85), rgba(10, 15, 28, 0.95));
-}
 
-.pricing-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-    align-items: stretch;
-}
 
-.pricing-card {
     background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 2.5rem;
@@ -659,13 +654,11 @@ section {
     min-height: 100%;
 }
 
-.pricing-card:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
     border-color: rgba(0, 102, 255, 0.35);
 }
 
-.pricing-card.featured {
     border-color: rgba(0, 102, 255, 0.6);
     box-shadow: 0 10px 40px rgba(0, 102, 255, 0.25);
     background: linear-gradient(180deg, rgba(0, 102, 255, 0.08), rgba(0, 212, 170, 0.06) 60%, rgba(26, 31, 46, 0.6));
@@ -673,7 +666,6 @@ section {
 
 /* Education now uses .featured styling like Business */
 
-.featured-badge {
     position: absolute;
     top: -12px;
     left: 50%;
@@ -688,23 +680,19 @@ section {
     box-shadow: 0 6px 20px rgba(0, 102, 255, 0.35);
 }
 
-.pricing-header h3 {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
 }
 
-.price {
     margin-bottom: 1.75rem;
 }
 
-.currency {
     font-size: 1.1rem;
     vertical-align: top;
     opacity: 0.85;
 }
 
-.amount {
     font-size: 2.6rem;
     font-weight: 800;
     background: var(--accent-gradient);
@@ -713,12 +701,10 @@ section {
     -webkit-text-fill-color: transparent;
 }
 
-.period {
     font-size: 0.95rem;
     color: var(--text-secondary);
 }
 
-.custom {
     font-size: 1.8rem;
     font-weight: 700;
     background: var(--accent-gradient);
@@ -727,7 +713,6 @@ section {
     -webkit-text-fill-color: transparent;
 }
 
-.pricing-features {
     text-align: left;
     margin-bottom: 2rem;
     display: flex;
@@ -736,7 +721,6 @@ section {
     flex: 1;
 }
 
-.pricing-features .feature {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -744,12 +728,10 @@ section {
     padding: 0.5rem 0.25rem;
 }
 
-.pricing-features .feature i {
     color: var(--success-color);
     font-size: 1rem;
 }
 
-.pricing-btn {
     width: 100%;
     padding: 0.9rem 1.25rem;
     background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.82));
@@ -764,32 +746,27 @@ section {
     box-shadow: 0 8px 22px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(10,15,28,0.05);
 }
 
-.pricing-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 28px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(10,15,28,0.06);
 }
 
 /* Force a single row of three tiles on larger screens */
 @media (min-width: 1024px) {
-    .pricing-cards {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 /* Keep 2x2 layout even on very wide screens */
 @media (min-width: 1280px) {
-    .pricing-cards {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-.pricing-note {
     text-align: center;
     color: var(--text-secondary);
     font-size: 0.95rem;
 }
 
-.pricing-note i {
     color: var(--primary-color);
     margin-right: 0.5rem;
 }
@@ -1457,12 +1434,10 @@ section {
 
 /* Improve button text readability */
 .btn-primary,
-.pricing-btn,
 .submit-btn {
     color: #0a0f1c;
 }
 .btn-primary i,
-.pricing-btn i,
 .submit-btn i {
     color: inherit;
 }
@@ -1660,7 +1635,6 @@ td,
 th,
 .card p,
 .feature-card p,
-.pricing-card p,
 .download-item p {
     font-weight: 300;
 }
@@ -1677,7 +1651,6 @@ h2,
 
 h3,
 .feature-card h3,
-.pricing-card h3 {
     font-weight: 500;
 }
 
@@ -1784,10 +1757,7 @@ h3,
         border-radius: 8px;
     }
     
-    /* Hide hero logo on mobile */
-    #hero-logo {
-        display: none;
-    }
+    /* Hero logo hidden on mobile - duplicate removed */
     
     #hero-three {
         height: 200px;
@@ -1817,46 +1787,36 @@ h3,
         padding: 2rem 1.5rem;
     }
     
-    /* Pricing mobile - more compact */
-    .pricing-cards {
         grid-template-columns: 1fr;
         gap: 1rem;
         margin-bottom: 2rem;
     }
     
-    .pricing-card {
         padding: 1.5rem 1rem;
         margin-bottom: 0.5rem;
     }
     
-    .pricing-header h3 {
         font-size: 1.2rem;
         margin-bottom: 0.3rem;
     }
     
-    .price {
         margin-bottom: 1rem;
     }
     
-    .amount {
         font-size: 2rem;
     }
     
-    .pricing-features {
         margin-bottom: 1.5rem;
     }
     
-    .pricing-features .feature {
         padding: 0.3rem 0;
         font-size: 0.9rem;
     }
     
-    .pricing-btn {
         padding: 0.8rem 1rem;
         font-size: 0.9rem;
     }
     
-    .featured-badge {
         font-size: 0.75rem;
         padding: 0.3rem 0.8rem;
     }
@@ -2137,7 +2097,6 @@ h3,
         font-size: 0.9rem;
     }
     
-    .pricing-card {
         padding: 1.5rem;
     }
     
@@ -2232,7 +2191,6 @@ html {
 
 .product-section,
 .features-section,
-.pricing-section,
 .download-section,
 .contact-section {
     min-height: 100vh;
