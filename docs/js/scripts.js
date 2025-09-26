@@ -832,8 +832,9 @@ function initializeHeroThree() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     mount.appendChild(renderer.domElement);
 
-    // Modern particle aesthetic (timeless) using shader-driven points
-    const COUNT = 52000;
+    // Check if mobile for smaller, denser animation
+    const isMobile = window.innerWidth <= 768;
+    const COUNT = isMobile ? 35000 : 52000; // Smaller count for mobile
     const positions = new Float32Array(COUNT * 3);
     const base = new Float32Array(COUNT * 3); // unit sphere base positions
     const colors = new Float32Array(COUNT * 3);
@@ -866,8 +867,8 @@ function initializeHeroThree() {
     const uniforms = {
         uTime: { value: 0 },
         uRadius: { value: radius },
-        uAmp: { value: 2.2 },
-        uNoiseScale: { value: 1.15 },
+        uAmp: { value: isMobile ? 1.8 : 2.2 }, // Smaller amplitude for mobile
+        uNoiseScale: { value: isMobile ? 1.3 : 1.15 }, // Denser noise for mobile
         uPulse: { value: 0.0 },
         uScanY: { value: 0.0 },
         uScanW: { value: 0.15 },
@@ -957,8 +958,9 @@ function initializeHeroThree() {
 
     function animate(time){
         uniforms.uTime.value = (time||0)/1000.0;
-        // slow parallax rotation
-        points.rotation.y += 0.0012;
+        // Adjust rotation speed for mobile
+        const rotationSpeed = isMobile ? 0.0018 : 0.0012;
+        points.rotation.y += rotationSpeed;
         points.rotation.x = Math.sin(uniforms.uTime.value*0.3)*0.08;
         // breathing pulse and scan sweep
         uniforms.uPulse.value = (sin(uniforms.uTime.value*0.9)+1.0)*0.5;
