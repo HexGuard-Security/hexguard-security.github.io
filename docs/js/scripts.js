@@ -15,6 +15,8 @@ function initializeNavigation() {
     const navMenu = document.querySelector('.nav-menu');
     const navbar = document.querySelector('.navbar');
     
+    console.log('Navigation elements found:', { navToggle, navMenu, navbar });
+    
     // Mobile navigation toggle
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
