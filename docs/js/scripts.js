@@ -1240,12 +1240,30 @@ function initializeFullpageSnapScroll() {
     }
     function onTouchEnd() { lastTouchY = null; }
 
-    // Disabled custom scroll behavior to allow natural scrolling
-    // window.addEventListener('wheel', onWheel, { passive: false });
-    // window.addEventListener('keydown', onKey, { passive: false });
-    // window.addEventListener('touchstart', onTouchStart, { passive: true });
-    // window.addEventListener('touchmove', onTouchMove, { passive: false });
-    // window.addEventListener('touchend', onTouchEnd, { passive: true });
+    // Enable custom scroll behavior only on desktop
+    function setupScrollBehavior() {
+        // Remove existing listeners
+        window.removeEventListener('wheel', onWheel);
+        window.removeEventListener('keydown', onKey);
+        window.removeEventListener('touchstart', onTouchStart);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('touchend', onTouchEnd);
+        
+        // Add listeners only on desktop
+        if (window.innerWidth > 768) {
+            window.addEventListener('wheel', onWheel, { passive: false });
+            window.addEventListener('keydown', onKey, { passive: false });
+            window.addEventListener('touchstart', onTouchStart, { passive: true });
+            window.addEventListener('touchmove', onTouchMove, { passive: false });
+            window.addEventListener('touchend', onTouchEnd, { passive: true });
+        }
+    }
+    
+    // Initial setup
+    setupScrollBehavior();
+    
+    // Re-setup on resize
+    window.addEventListener('resize', setupScrollBehavior);
 }
 
 function initializeMiniParticleSphere(canvas) {

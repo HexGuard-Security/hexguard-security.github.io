@@ -2223,10 +2223,12 @@ html {
     }
 }
 
-/* Full-screen sections with scroll snapping - disabled for natural scrolling */
-/* body {
-    scroll-snap-type: y proximity;
-} */
+/* Full-screen sections with scroll snapping - desktop only */
+@media (min-width: 769px) {
+    body {
+        scroll-snap-type: y mandatory;
+    }
+}
 
 .product-section,
 .features-section,
@@ -2236,8 +2238,8 @@ html {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    /* scroll-snap-align: start; */
-    /* scroll-snap-stop: always; */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     /* account for fixed navbar height */
     padding-top: 72px;
 }
