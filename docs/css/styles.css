@@ -376,7 +376,7 @@ body {
     display: block;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     #hero-logo { display: none; }
 }
 
@@ -2198,10 +2198,29 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Full-screen sections with scroll snapping */
-body {
-    scroll-snap-type: y mandatory;
+/* Ensure smooth scrolling works across all browsers */
+* {
+    scroll-behavior: smooth;
 }
+
+/* Fallback for browsers that don't support smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Full-screen sections with scroll snapping - disabled for natural scrolling */
+/* body {
+    scroll-snap-type: y proximity;
+} */
 
 .product-section,
 .features-section,
@@ -2211,8 +2230,8 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    /* scroll-snap-align: start; */
+    /* scroll-snap-stop: always; */
     /* account for fixed navbar height */
     padding-top: 72px;
 }
