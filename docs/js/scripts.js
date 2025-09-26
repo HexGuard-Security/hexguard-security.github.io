@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollEffects();
     initializeTerminalAnimation();
     enhanceTerminalBadges();
+    shuffleTeamCards();
 });
 
 // Navigation functionality
@@ -1007,6 +1008,9 @@ document.addEventListener('DOMContentLoaded', () => {
     startDynamicFavicon();
     injectHeroLogoSphere();
     initializeFullpageSnapScroll();
+    initializeRecruitAvatarLogo();
+    initializeDefaultAvatarLogos();
+    initializeFeatureIconLogos();
 });
 
 // Utility functions for external use
@@ -1084,6 +1088,62 @@ function injectHeroLogoSphere() {
 
     // Initialize with same renderer but size will be read from wrapper
     initializeMiniParticleSphere(canvas);
+}
+
+// Initialize the circular logo sphere inside the recruit avatar
+function initializeRecruitAvatarLogo() {
+    const avatar = document.getElementById('avatar-recruit');
+    if (!avatar) return;
+    const canvas = avatar.querySelector('canvas');
+    if (!canvas) return;
+    initializeMiniParticleSphere(canvas);
+}
+
+// Replace all default avatars with the circular logo sphere
+function initializeDefaultAvatarLogos() {
+    const avatars = document.querySelectorAll('.avatar.default');
+    avatars.forEach((avatar) => {
+        // If already converted, skip
+        if (avatar.classList.contains('logo-avatar')) return;
+        // Clear any raster background image
+        avatar.style.backgroundImage = 'none';
+        // Mark as logo avatar to disable grayscale and background
+        avatar.classList.add('logo-avatar');
+        // Inject logo sphere canvas
+        const wrapper = document.createElement('span');
+        wrapper.className = 'hxg-logo';
+        wrapper.style.width = '100%';
+        wrapper.style.height = '100%';
+        wrapper.style.display = 'block';
+        const canvas = document.createElement('canvas');
+        wrapper.appendChild(canvas);
+        // Remove existing children (if any image placeholders)
+        while (avatar.firstChild) avatar.removeChild(avatar.firstChild);
+        avatar.appendChild(wrapper);
+        initializeMiniParticleSphere(canvas);
+    });
+}
+
+// Replace feature card circular icons with the particle logo sphere
+function initializeFeatureIconLogos() {
+    const icons = document.querySelectorAll('.feature-card .feature-icon');
+    if (!icons || icons.length === 0) return;
+    icons.forEach((icon) => {
+        // Skip if already converted
+        if (icon.dataset.logoInjected === 'true') return;
+        icon.dataset.logoInjected = 'true';
+        // Clean any existing inner content while preserving sizing of container
+        while (icon.firstChild) icon.removeChild(icon.firstChild);
+        const wrapper = document.createElement('span');
+        wrapper.className = 'hxg-logo';
+        wrapper.style.width = '100%';
+        wrapper.style.height = '100%';
+        wrapper.style.display = 'block';
+        const canvas = document.createElement('canvas');
+        wrapper.appendChild(canvas);
+        icon.appendChild(wrapper);
+        initializeMiniParticleSphere(canvas);
+    });
 }
 
 // Smooth fullpage snap: wheel/keys/swipe jump to next/prev section and center
@@ -1485,3 +1545,42 @@ const animationStyles = `
 const styleSheet = document.createElement('style');
 styleSheet.textContent = animationStyles;
 document.head.appendChild(styleSheet);
+
+// Team cards shuffle functionality
+let teamCardsShuffled = false;
+
+function shuffleTeamCards() {
+    if (teamCardsShuffled) return; // Prevent double execution
+    
+    const teamGrid = document.querySelector('.team-grid');
+    if (!teamGrid) return;
+    
+    const cards = Array.from(teamGrid.children);
+    const lastCard = cards[cards.length - 1]; // "This could be you" card
+    
+    // Remove the last card temporarily
+    if (lastCard) {
+        lastCard.remove();
+    }
+    
+    // Shuffle the remaining cards using Fisher-Yates algorithm
+    for (let i = cards.length - 2; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    
+    // Clear the grid and re-append shuffled cards
+    teamGrid.innerHTML = '';
+    
+    // Add shuffled cards (excluding the last one)
+    for (let i = 0; i < cards.length - 1; i++) {
+        teamGrid.appendChild(cards[i]);
+    }
+    
+    // Add the "This could be you" card back at the end
+    if (lastCard) {
+        teamGrid.appendChild(lastCard);
+    }
+    
+    teamCardsShuffled = true; // Mark as completed
+}
