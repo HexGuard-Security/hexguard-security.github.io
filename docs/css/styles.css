@@ -2009,17 +2009,25 @@ h3,
     }
     
     .mini-footer {
-        left: 10px;
-        right: 10px;
-        transform: none;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
         width: auto;
+        max-width: calc(100vw - 20px);
         padding: 6px 12px;
         flex-wrap: wrap;
         gap: 8px;
     }
     
     .mini-footer__links {
-        display: none;
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .mini-footer__links .social {
+        width: 20px;
+        height: 20px;
+        font-size: 0.8rem;
     }
     
     .install-commands {
@@ -2166,6 +2174,85 @@ html {
 /* Ensure smooth scrolling works across all browsers */
 * {
     scroll-behavior: smooth;
+}
+
+/* Prevent loading artifacts and sporadic motion */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth transitions for all elements */
+* {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Prevent layout shifts during loading */
+img, canvas, video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+body {
+    visibility: hidden;
+}
+
+body.loaded {
+    visibility: visible;
+}
+
+/* Cross-browser compatibility fixes */
+@supports not (backdrop-filter: blur(12px)) {
+    .floating-nav,
+    .mini-footer {
+        background: rgba(10, 15, 28, 0.95);
+    }
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-backdrop-filter: blur(12px)) {
+    .floating-nav,
+    .mini-footer {
+        -webkit-backdrop-filter: blur(12px);
+    }
+}
+
+/* Firefox-specific fixes */
+@-moz-document url-prefix() {
+    .floating-nav,
+    .mini-footer {
+        background: rgba(10, 15, 28, 0.95);
+    }
+}
+
+/* IE/Edge compatibility */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .floating-nav,
+    .mini-footer {
+        background: rgba(10, 15, 28, 0.95);
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 /* Fallback for browsers that don't support smooth scrolling */

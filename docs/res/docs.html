@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmwire Documentation - HexGuard</title>
+    <link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <style>
+        /* Documentation specific styles */
+        .docs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        .docs-sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        
+        .docs-sidebar h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .docs-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .docs-nav li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .docs-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            display: block;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .docs-nav a:hover,
+        .docs-nav a.active {
+            color: var(--text-primary);
+            background: rgba(0, 102, 255, 0.1);
+        }
+        
+        .docs-content {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        
+        .docs-section {
+            margin-bottom: 3rem;
+        }
+        
+        .docs-section h2 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .docs-section h3 {
+            color: var(--text-primary);
+            margin: 2rem 0 1rem 0;
+        }
+        
+        .docs-section h4 {
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+        
+        .docs-section p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .docs-section ul,
+        .docs-section ol {
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .docs-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            color: var(--text-primary);
+        }
+        
+        .code-inline {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+        
+        .alert-info {
+            background: rgba(0, 102, 255, 0.1);
+            border-color: var(--primary-color);
+            color: var(--text-primary);
+        }
+        
+        .alert-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+            color: var(--text-primary);
+        }
+        
+        .alert-success {
+            background: rgba(40, 167, 69, 0.1);
+            border-color: #28a745;
+            color: var(--text-primary);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .feature-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .toc {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .toc h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+        
+        .toc a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .toc a:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .docs-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .docs-sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            
+            .docs-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Nav (pill-style) -->
+    <div class="floating-nav" role="navigation" aria-label="Primary">
+        <a href="../index.html" class="floating-nav__brand" aria-label="HexGuard Home">
+            <img src="../img/logo.svg" alt="HexGuard" class="floating-nav__logo">
+            <span class="floating-nav__text">HexGuard</span>
+        </a>
+        <div class="floating-nav__links">
+            <a href="../index.html#team">Team</a>
+            <a href="../index.html#product">Product</a>
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#contact">Contact</a>
+            <a href="docs.html" class="active">Docs</a>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav-menu" role="navigation" aria-label="Mobile navigation">
+        <a href="../index.html#team">Team</a>
+        <a href="../index.html#product">Product</a>
+        <a href="../index.html#features">Features</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="docs.html" class="active">Docs</a>
+    </nav>
+    
+    <div class="docs-container">
+        <!-- Sidebar Navigation -->
+        <nav class="docs-sidebar">
+            <h3>Documentation</h3>
+            <ul class="docs-nav">
+                <li><a href="#getting-started" class="active">Getting Started</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#quick-start">Quick Start</a></li>
+                <li><a href="#command-reference">Command Reference</a></li>
+                <li><a href="#configuration">Configuration</a></li>
+                <li><a href="#analysis-types">Analysis Types</a></li>
+                <li><a href="#compliance">Compliance</a></li>
+                <li><a href="#api-reference">API Reference</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="docs-content">
+            <div class="docs-section" id="getting-started">
+                <h1>Firmwire Documentation</h1>
+                <p>Welcome to the comprehensive documentation for Firmwire, the advanced firmware analysis tool for embedded devices. This guide will help you get started with Firmwire and make the most of its powerful features.</p>
+                
+                <div class="toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#quick-start">Quick Start Guide</a></li>
+                        <li><a href="#command-reference">Command Reference</a></li>
+                        <li><a href="#configuration">Configuration Options</a></li>
+                        <li><a href="#analysis-types">Analysis Types</a></li>
+                        <li><a href="#compliance">Compliance Standards</a></li>
+                        <li><a href="#api-reference">API Reference</a></li>
+                        <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="docs-section" id="installation">
+                <h2>Installation</h2>
+                <p>Firmwire is available for Windows, macOS, and Linux. Choose your platform and follow the installation instructions below.</p>
+                
+                <h3>System Requirements</h3>
+                <ul>
+                    <li><strong>Operating System:</strong> Windows 10+, macOS 10.15+, or Linux (Ubuntu 18.04+)</li>
+                    <li><strong>RAM:</strong> Minimum 4GB, Recommended 8GB+</li>
+                    <li><strong>Storage:</strong> 500MB free space</li>
+                    <li><strong>CPU:</strong> x64 architecture</li>
+                </ul>
+
+                <h3>Windows Installation</h3>
+                <div class="code-block">
+                    <pre># Download the installer
+# Run the installer as administrator
+firmwire-setup-v1.2.0.exe
+
+# Verify installation
+firmwire --version</pre>
+                </div>
+
+                <h3>macOS Installation</h3>
+                <div class="code-block">
+                    <pre># Download the DMG file
+# Mount and drag to Applications folder
+# Or use Homebrew (coming soon)
+brew install firmwire</pre>
+                </div>
+
+                <h3>Linux Installation</h3>
+                <div class="code-block">
+                    <pre># Download the AppImage
+chmod +x firmwire-v1.2.0-x86_64.AppImage
+
+# Run directly
+./firmwire-v1.2.0-x86_64.AppImage --version
+
+# Or install system-wide
+sudo mv firmwire-v1.2.0-x86_64.AppImage /usr/local/bin/firmwire
+sudo chmod +x /usr/local/bin/firmwire</pre>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Note:</strong> On first run, you may need to allow the application through your firewall or security software.
+                </div>
+            </div>
+
+            <div class="docs-section" id="quick-start">
+                <h2>Quick Start Guide</h2>
+                <p>Get up and running with Firmwire in just a few minutes. This guide will walk you through your first firmware analysis.</p>
+
+                <h3>Basic Analysis</h3>
+                <p>The simplest way to analyze firmware is with the basic analyze command:</p>
+                <div class="code-block">
+                    <pre>firmwire analyze firmware.bin</pre>
+                </div>
+
+                <h3>Compliance Analysis</h3>
+                <p>For compliance-focused analysis, specify the standards you need to meet:</p>
+                <div class="code-block">
+                    <pre>firmwire analyze --compliance=RED,IEC62443 firmware.bin</pre>
+            </div>
+
+                <h3>Output Options</h3>
+                <p>Control the output format and location:</p>
+                <div class="code-block">
+                    <pre>firmwire analyze --output=./reports --format=json firmware.bin</pre>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>Success!</strong> Your first analysis is complete. Check the reports directory for detailed results.
+                </div>
+            </div>
+
+            <div class="docs-section" id="command-reference">
+                <h2>Command Reference</h2>
+                <p>Complete reference for all Firmwire commands and options.</p>
+
+                <h3>analyze</h3>
+                <p>Analyze firmware for vulnerabilities and compliance issues.</p>
+                <div class="code-block">
+                    <pre>firmwire analyze [OPTIONS] &lt;firmware_file&gt;
+
+Options:
+  --compliance=STANDARDS    Compliance standards (RED,IEC62443,CRA,GDPR)
+  --output=DIRECTORY       Output directory for reports
+  --format=FORMAT         Output format (json,xml,html,pdf)
+  --severity=LEVEL        Minimum severity level (low,medium,high,critical)
+  --rules=RULES_FILE      Custom rules file
+  --verbose               Verbose output
+  --quiet                 Quiet mode
+  --help                  Show help message</pre>
+                </div>
+
+                <h3>scan</h3>
+                <p>Quick vulnerability scan without detailed analysis.</p>
+                <div class="code-block">
+                    <pre>firmwire scan [OPTIONS] &lt;firmware_file&gt;
+
+Options:
+  --quick                 Fast scan mode
+  --deep                  Deep analysis mode
+  --crypto                Focus on cryptographic issues
+  --network               Focus on network security</pre>
+                </div>
+
+                <h3>report</h3>
+                <p>Generate reports from previous analysis results.</p>
+                <div class="code-block">
+                    <pre>firmwire report [OPTIONS] &lt;analysis_file&gt;
+
+Options:
+  --format=FORMAT         Output format (json,xml,html,pdf)
+  --template=TEMPLATE     Custom report template
+  --include=ITEMS         Include specific analysis items</pre>
+                </div>
+
+                <h3>config</h3>
+                <p>Manage Firmwire configuration.</p>
+                <div class="code-block">
+                    <pre>firmwire config [COMMAND]
+
+Commands:
+  init                    Initialize configuration
+  set KEY VALUE          Set configuration value
+  get KEY                Get configuration value
+  list                   List all configuration
+  reset                  Reset to defaults</pre>
+                </div>
+            </div>
+
+            <div class="docs-section" id="configuration">
+                <h2>Configuration</h2>
+                <p>Firmwire can be configured through command-line options, configuration files, or environment variables.</p>
+
+                <h3>Configuration File</h3>
+                <p>Create a <span class="code-inline">firmwire.conf</span> file in your home directory:</p>
+                <div class="code-block">
+                    <pre>[analysis]
+default_compliance = RED,IEC62443
+output_format = html
+severity_threshold = medium
+
+[reports]
+include_remediation = true
+include_compliance_mapping = true
+template = default
+
+[performance]
+max_threads = 4
+memory_limit = 2GB
+timeout = 300</pre>
+                </div>
+
+                <h3>Environment Variables</h3>
+                <div class="code-block">
+                    <pre>export FIRMWIRE_CONFIG_PATH=/path/to/config
+export FIRMWIRE_OUTPUT_DIR=/path/to/output
+export FIRMWIRE_LOG_LEVEL=debug</pre>
+            </div>
+            
+                <h3>Configuration Options</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Analysis Settings</h4>
+                        <p>Configure analysis depth, compliance standards, and output formats.</p>
+                            </div>
+                    <div class="feature-card">
+                        <h4>Performance Tuning</h4>
+                        <p>Adjust memory usage, thread count, and timeout settings.</p>
+                        </div>
+                    <div class="feature-card">
+                        <h4>Report Templates</h4>
+                        <p>Customize report appearance and content structure.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Rule Management</h4>
+                        <p>Enable/disable specific security rules and create custom rules.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="docs-section" id="analysis-types">
+                <h2>Analysis Types</h2>
+                <p>Firmwire supports multiple analysis types to suit different security assessment needs.</p>
+
+                <h3>Static Analysis (SAST)</h3>
+                <p>Analyzes firmware code without execution to identify potential vulnerabilities.</p>
+                <div class="code-block">
+                    <pre>firmwire analyze --type=sast firmware.bin</pre>
+                </div>
+                
+                <h3>Dynamic Analysis</h3>
+                <p>Analyzes firmware behavior during execution in a controlled environment.</p>
+                <div class="code-block">
+                    <pre>firmwire analyze --type=dynamic firmware.bin</pre>
+                </div>
+                
+                <h3>Cryptographic Analysis</h3>
+                <p>Focuses on cryptographic implementations and key management.</p>
+                <div class="code-block">
+                    <pre>firmwire analyze --type=crypto firmware.bin</pre>
+                </div>
+                
+                <h3>Network Security Analysis</h3>
+                <p>Analyzes network protocols and communication security.</p>
+                <div class="code-block">
+                    <pre>firmwire analyze --type=network firmware.bin</pre>
+                </div>
+                
+                <h3>Compliance Analysis</h3>
+                <p>Checks against specific compliance standards and regulations.</p>
+                <div class="code-block">
+                    <pre>firmwire analyze --compliance=RED,IEC62443,CRA firmware.bin</pre>
+                </div>
+            </div>
+
+            <div class="docs-section" id="compliance">
+                <h2>Compliance Standards</h2>
+                <p>Firmwire supports analysis against major compliance standards and regulations.</p>
+
+                <h3>Radio Equipment Directive (RED)</h3>
+                <p>European Union directive for radio equipment compliance.</p>
+                <ul>
+                    <li>Electromagnetic compatibility requirements</li>
+                    <li>Radio frequency spectrum usage</li>
+                    <li>Safety and health protection</li>
+                </ul>
+
+                <h3>IEC 62443</h3>
+                <p>International standard for industrial communication networks security.</p>
+                <ul>
+                    <li>Network security requirements</li>
+                    <li>Access control mechanisms</li>
+                    <li>Data integrity protection</li>
+                                </ul>
+
+                <h3>Cyber Resilience Act (CRA)</h3>
+                <p>EU regulation for cybersecurity requirements of products.</p>
+                <ul>
+                    <li>Security by design principles</li>
+                    <li>Vulnerability management</li>
+                    <li>Incident reporting requirements</li>
+                                </ul>
+
+                <h3>GDPR Compliance</h3>
+                <p>Data protection and privacy requirements.</p>
+                <ul>
+                    <li>Data encryption requirements</li>
+                    <li>Privacy by design</li>
+                    <li>Data breach notification</li>
+                                </ul>
+                            </div>
+
+            <div class="docs-section" id="api-reference">
+                <h2>API Reference</h2>
+                <p>Firmwire provides a RESTful API for integration with CI/CD pipelines and security workflows.</p>
+
+                <h3>Authentication</h3>
+                <div class="code-block">
+                    <pre>POST /api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "your_username",
+  "password": "your_password"
+}</pre>
+                </div>
+
+                <h3>Analysis Endpoints</h3>
+                <div class="code-block">
+                    <pre># Start analysis
+POST /api/v1/analysis/start
+Content-Type: multipart/form-data
+
+# Get analysis status
+GET /api/v1/analysis/{analysis_id}/status
+
+# Get analysis results
+GET /api/v1/analysis/{analysis_id}/results</pre>
+        </div>
+
+                <h3>Report Generation</h3>
+                <div class="code-block">
+                    <pre># Generate report
+POST /api/v1/reports/generate
+Content-Type: application/json
+
+{
+  "analysis_id": "analysis_123",
+  "format": "pdf",
+  "template": "compliance"
+}</pre>
+                        </div>
+                        
+                <h3>Webhook Integration</h3>
+                <div class="code-block">
+                    <pre># Configure webhook
+POST /api/v1/webhooks
+Content-Type: application/json
+
+{
+  "url": "https://your-system.com/webhook",
+  "events": ["analysis_complete", "vulnerability_found"]
+}</pre>
+                            </div>
+                        </div>
+                        
+            <div class="docs-section" id="troubleshooting">
+                <h2>Troubleshooting</h2>
+                <p>Common issues and their solutions.</p>
+
+                <h3>Installation Issues</h3>
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> "Permission denied" error on Linux<br>
+                    <strong>Solution:</strong> Make sure the AppImage is executable: <span class="code-inline">chmod +x firmwire.AppImage</span>
+                    </div>
+                    
+                <h3>Analysis Issues</h3>
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> Analysis fails with "Unsupported architecture"<br>
+                    <strong>Solution:</strong> Check if your firmware is supported. Use <span class="code-inline">firmwire info firmware.bin</span> to get architecture details.
+                </div>
+                
+                <h3>Performance Issues</h3>
+                <div class="alert alert-info">
+                    <strong>Issue:</strong> Analysis is slow<br>
+                    <strong>Solution:</strong> Increase memory limit and thread count in configuration.
+                    </div>
+                    
+                <h3>Common Error Messages</h3>
+                <ul>
+                    <li><strong>"File not found":</strong> Check the file path and permissions</li>
+                    <li><strong>"Invalid firmware format":</strong> Ensure the file is a valid firmware binary</li>
+                    <li><strong>"Out of memory":</strong> Reduce memory usage or increase system RAM</li>
+                    <li><strong>"Analysis timeout":</strong> Increase timeout value in configuration</li>
+                </ul>
+                    </div>
+                    
+            <div class="docs-section" id="examples">
+                <h2>Examples</h2>
+                <p>Real-world examples of using Firmwire for different scenarios.</p>
+
+                <h3>Basic IoT Device Analysis</h3>
+                <div class="code-block">
+                    <pre># Analyze a smart home device firmware
+firmwire analyze --compliance=RED smart_home_device.bin
+
+# Generate detailed report
+firmwire report --format=pdf analysis_results.json</pre>
+                    </div>
+                    
+                <h3>Industrial Control System</h3>
+                <div class="code-block">
+                    <pre># Analyze industrial firmware with IEC 62443 compliance
+firmwire analyze --compliance=IEC62443 --type=network industrial_firmware.bin
+
+# Focus on network security
+firmwire scan --network --deep industrial_firmware.bin</pre>
+                    </div>
+
+                <h3>Automated CI/CD Integration</h3>
+                <div class="code-block">
+                    <pre># In your CI/CD pipeline
+firmwire analyze --output=./security-reports --format=json firmware.bin
+if [ $? -eq 0 ]; then
+    echo "Security analysis passed"
+else
+    echo "Security issues found"
+    exit 1
+fi</pre>
+                </div>
+            </div>
+
+            <div class="docs-section" id="faq">
+                <h2>Frequently Asked Questions</h2>
+                
+                <h3>General Questions</h3>
+                <h4>What file formats does Firmwire support?</h4>
+                <p>Firmwire supports common firmware formats including ELF, PE, raw binary, and vendor-specific formats for major IoT and embedded platforms.</p>
+
+                <h4>How long does analysis typically take?</h4>
+                <p>Analysis time depends on firmware size and complexity. Small IoT devices (1-10MB) typically take 2-5 minutes, while larger industrial firmware (100MB+) may take 30-60 minutes.</p>
+
+                <h4>Can I analyze encrypted firmware?</h4>
+                <p>Firmwire can analyze encrypted firmware if you provide the decryption key or if the firmware uses standard encryption methods that can be automatically detected.</p>
+
+                <h3>Compliance Questions</h3>
+                <h4>Which compliance standards are supported?</h4>
+                <p>Firmwire supports RED, IEC 62443, CRA, GDPR, and other major compliance standards. Custom compliance rules can also be added.</p>
+
+                <h4>How accurate are compliance checks?</h4>
+                <p>Compliance checks are based on official standards documentation and are regularly updated. However, final compliance determination should be verified by qualified professionals.</p>
+
+                <h3>Technical Questions</h3>
+                <h4>Can I integrate Firmwire with my existing security tools?</h4>
+                <p>Yes, Firmwire provides REST APIs and webhook support for integration with SIEM systems, vulnerability management platforms, and CI/CD pipelines.</p>
+
+                <h4>Is there a limit on firmware file size?</h4>
+                <p>Firmwire can handle firmware files up to 2GB. For larger files, consider using the streaming analysis mode or splitting the firmware into components.</p>
+            </div>
+        </main>
+        </div>
+
+    <!-- Mini Floating Footer -->
+    <div class="mini-footer" role="contentinfo" aria-label="Quick footer">
+        <span class="mini-footer__copyright">© 2025 HexGuard</span>
+        <div class="mini-footer__links">
+            <a href="https://x.com/hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="social twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social linkedin"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/HexGuard-Security" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social github"><i class="fab fa-github"></i></a>
+            <a href="https://www.facebook.com/hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social youtube"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="../js/scripts.js"></script>
+    <script>
+        // Documentation-specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('.docs-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        // Update active link
+                        document.querySelectorAll('.docs-nav a').forEach(a => a.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Update active link on scroll
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('.docs-section');
+                const navLinks = document.querySelectorAll('.docs-nav a');
+                
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

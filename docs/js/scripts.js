@@ -1,6 +1,10 @@
 // DOM Content Loaded - Single initialization
 document.addEventListener('DOMContentLoaded', function() {
     try {
+        // Add loaded class to body to prevent FOUC
+        document.body.classList.add('loaded');
+        
+        // Initialize all components
         initializeNavigation();
         initializeAnimations();
         initializeFormHandlers();
@@ -26,8 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeRecruitAvatarLogo();
         initializeDefaultAvatarLogos();
         initializeFeatureIconLogos();
+        
+        // Add loaded class to prevent sporadic motion
+        setTimeout(() => {
+            document.body.classList.add('fully-loaded');
+        }, 100);
+        
     } catch (error) {
         console.error('Initialization error:', error);
+        // Still show content even if there are errors
+        document.body.classList.add('loaded');
     }
 });
 
