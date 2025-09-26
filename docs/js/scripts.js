@@ -21,6 +21,22 @@ function initializeNavigation() {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
         });
+        
+        // Close menu when clicking on a link
+        navMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        });
     }
     
     // Navbar scroll effect
