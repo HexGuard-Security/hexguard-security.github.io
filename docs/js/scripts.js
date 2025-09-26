@@ -40,13 +40,15 @@ function initializeNavigation() {
     }
     
     // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
     
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -963,8 +965,8 @@ function initializeHeroThree() {
         points.rotation.y += rotationSpeed;
         points.rotation.x = Math.sin(uniforms.uTime.value*0.3)*0.08;
         // breathing pulse and scan sweep
-        uniforms.uPulse.value = (sin(uniforms.uTime.value*0.9)+1.0)*0.5;
-        uniforms.uScanY.value = sin(uniforms.uTime.value*0.5)*0.6; // sweep up/down
+        uniforms.uPulse.value = (Math.sin(uniforms.uTime.value*0.9)+1.0)*0.5;
+        uniforms.uScanY.value = Math.sin(uniforms.uTime.value*0.5)*0.6; // sweep up/down
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
     }
