@@ -94,11 +94,9 @@
             background: rgba(0, 210, 170, 0.2);
         }
         
-        /* Hide navigation on smaller screens */
-        @media (max-width: 1200px) {
-            .docs-nav-floating {
-                display: none;
-            }
+        /* Hide navigation on all screens */
+        .docs-nav-floating {
+            display: none;
         }
         
         .docs-section {
@@ -437,6 +435,87 @@
         .y-label:nth-child(5)::after { content: " (20%)"; }
         .y-label:nth-child(6)::after { content: " (0%)"; }
         
+        /* Enhanced Table of Contents */
+        .toc {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .toc h4 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .toc-category {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .toc-category:hover {
+            background: rgba(0, 210, 170, 0.05);
+            border-color: rgba(0, 210, 170, 0.2);
+        }
+        
+        .toc-category h5 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 210, 170, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        
+        .toc-category ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .toc-category li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc-category a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .toc-category a:hover {
+            color: var(--text-primary);
+            background: rgba(0, 210, 170, 0.1);
+            padding-left: 0.5rem;
+        }
+        
+        .toc-category a img {
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .toc-category a:hover img {
+            opacity: 1;
+        }
+        
         .x-axis {
             display: flex;
             justify-content: space-between;
@@ -733,17 +812,33 @@
                 </div>
                 
                 <div class="toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#installation">Installation</a></li>
-                        <li><a href="#quick-start">Quick Start Guide</a></li>
-                        <li><a href="#command-reference">Command Reference</a></li>
-                        <li><a href="#configuration">Configuration Options</a></li>
-                        <li><a href="#analysis-types">Analysis Types</a></li>
-                        <li><a href="#compliance">Compliance Standards</a></li>
-                        <li><a href="#api-reference">API Reference</a></li>
-                        <li><a href="#troubleshooting">Troubleshooting</a></li>
-                    </ul>
+                    <h4><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Table of Contents</h4>
+                    <div class="toc-grid">
+                        <div class="toc-category">
+                            <h5>Getting Started</h5>
+                            <ul>
+                                <li><a href="#installation"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Installation</a></li>
+                                <li><a href="#quick-start"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Quick Start Guide</a></li>
+                                <li><a href="#command-reference"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Command Reference</a></li>
+                            </ul>
+                        </div>
+                        <div class="toc-category">
+                            <h5>Configuration</h5>
+                            <ul>
+                                <li><a href="#configuration"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Configuration Options</a></li>
+                                <li><a href="#analysis-types"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Analysis Types</a></li>
+                                <li><a href="#compliance"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Compliance Standards</a></li>
+                            </ul>
+                        </div>
+                        <div class="toc-category">
+                            <h5>Advanced</h5>
+                            <ul>
+                                <li><a href="#api-reference"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> API Reference</a></li>
+                                <li><a href="#troubleshooting"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Troubleshooting</a></li>
+                                <li><a href="#examples"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Examples</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
