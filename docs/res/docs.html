@@ -282,6 +282,159 @@
             margin: 0;
         }
         
+        /* Timeline Line Graph */
+        .timeline-line-graph {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+        
+        .graph-legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .line-graph-container {
+            position: relative;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .graph-axis {
+            position: relative;
+            height: 100%;
+            display: flex;
+        }
+        
+        .y-axis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 40px;
+            margin-right: 1rem;
+        }
+        
+        .y-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-align: right;
+        }
+        
+        .graph-area {
+            flex: 1;
+            position: relative;
+            height: 100%;
+        }
+        
+        .line-path {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .data-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .data-point:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+        
+        .detection-line .data-point {
+            background: #00d2aa;
+            box-shadow: 0 0 8px rgba(0, 210, 170, 0.5);
+        }
+        
+        .speed-line .data-point {
+            background: #00a8cc;
+            box-shadow: 0 0 8px rgba(0, 168, 204, 0.5);
+        }
+        
+        .fp-line .data-point {
+            background: #00ffcc;
+            box-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
+        }
+        
+        .x-axis {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-left: 48px;
+        }
+        
+        .x-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-align: center;
+            flex: 1;
+        }
+        
+        /* Connect data points with lines */
+        .detection-line::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 8.33%;
+            width: 83.34%;
+            height: 2px;
+            background: linear-gradient(90deg, #00d2aa, #00a8cc);
+            transform: rotate(-0.5deg);
+            z-index: -1;
+        }
+        
+        .speed-line::before {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 8.33%;
+            width: 83.34%;
+            height: 2px;
+            background: linear-gradient(90deg, #00a8cc, #00ffcc);
+            transform: rotate(-1deg);
+            z-index: -1;
+        }
+        
+        .fp-line::before {
+            content: '';
+            position: absolute;
+            top: 35%;
+            left: 8.33%;
+            width: 83.34%;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffcc, #00d2aa);
+            transform: rotate(-0.8deg);
+            z-index: -1;
+        }
+        
         /* Logo integration */
         .docs-logo {
             display: inline-flex;
@@ -791,29 +944,69 @@ export FIRMWIRE_LOG_LEVEL=debug</pre>
                 <h2><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Analysis Types</h2>
                 <p>Firmwire supports multiple analysis types to suit different security assessment needs.</p>
                 
-                <!-- Analysis Performance Comparison -->
+                <!-- Performance Timeline Graph -->
                 <div class="diagram">
-                    <h4><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Analysis Performance Comparison</h4>
-                    <div class="graph-container">
-                        <div class="graph-bar">
-                            <div class="graph-label">Static Analysis</div>
-                            <div class="graph-fill" style="width: 85%; background: linear-gradient(90deg, #00d2aa, #00a8cc);"></div>
-                            <div class="graph-value">85%</div>
+                    <h4><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Performance Over Time (Since May 2025)</h4>
+                    <div class="timeline-line-graph">
+                        <div class="graph-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #00d2aa;"></div>
+                                <span>Detection Accuracy</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #00a8cc;"></div>
+                                <span>Analysis Speed</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #00ffcc;"></div>
+                                <span>False Positive Rate</span>
+                            </div>
                         </div>
-                        <div class="graph-bar">
-                            <div class="graph-label">Dynamic Analysis</div>
-                            <div class="graph-fill" style="width: 95%; background: linear-gradient(90deg, #00d2aa, #00a8cc);"></div>
-                            <div class="graph-value">95%</div>
-                        </div>
-                        <div class="graph-bar">
-                            <div class="graph-label">Crypto Analysis</div>
-                            <div class="graph-fill" style="width: 78%; background: linear-gradient(90deg, #00d2aa, #00a8cc);"></div>
-                            <div class="graph-value">78%</div>
-                        </div>
-                        <div class="graph-bar">
-                            <div class="graph-label">Network Analysis</div>
-                            <div class="graph-fill" style="width: 82%; background: linear-gradient(90deg, #00d2aa, #00a8cc);"></div>
-                            <div class="graph-value">82%</div>
+                        <div class="line-graph-container">
+                            <div class="graph-axis">
+                                <div class="y-axis">
+                                    <div class="y-label">100%</div>
+                                    <div class="y-label">80%</div>
+                                    <div class="y-label">60%</div>
+                                    <div class="y-label">40%</div>
+                                    <div class="y-label">20%</div>
+                                    <div class="y-label">0%</div>
+                                </div>
+                                <div class="graph-area">
+                                    <div class="line-path detection-line">
+                                        <div class="data-point" style="left: 8.33%; top: 15%;" data-value="85%"></div>
+                                        <div class="data-point" style="left: 25%; top: 12%;" data-value="88%"></div>
+                                        <div class="data-point" style="left: 41.67%; top: 8%;" data-value="92%"></div>
+                                        <div class="data-point" style="left: 58.33%; top: 5%;" data-value="95%"></div>
+                                        <div class="data-point" style="left: 75%; top: 3%;" data-value="97%"></div>
+                                        <div class="data-point" style="left: 91.67%; top: 2%;" data-value="98%"></div>
+                                    </div>
+                                    <div class="line-path speed-line">
+                                        <div class="data-point" style="left: 8.33%; top: 25%;" data-value="75%"></div>
+                                        <div class="data-point" style="left: 25%; top: 20%;" data-value="80%"></div>
+                                        <div class="data-point" style="left: 41.67%; top: 15%;" data-value="85%"></div>
+                                        <div class="data-point" style="left: 58.33%; top: 10%;" data-value="90%"></div>
+                                        <div class="data-point" style="left: 75%; top: 8%;" data-value="92%"></div>
+                                        <div class="data-point" style="left: 91.67%; top: 5%;" data-value="95%"></div>
+                                    </div>
+                                    <div class="line-path fp-line">
+                                        <div class="data-point" style="left: 8.33%; top: 35%;" data-value="65%"></div>
+                                        <div class="data-point" style="left: 25%; top: 30%;" data-value="70%"></div>
+                                        <div class="data-point" style="left: 41.67%; top: 25%;" data-value="75%"></div>
+                                        <div class="data-point" style="left: 58.33%; top: 20%;" data-value="80%"></div>
+                                        <div class="data-point" style="left: 75%; top: 18%;" data-value="82%"></div>
+                                        <div class="data-point" style="left: 91.67%; top: 15%;" data-value="85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="x-axis">
+                                <div class="x-label">May 2025</div>
+                                <div class="x-label">Jun 2025</div>
+                                <div class="x-label">Jul 2025</div>
+                                <div class="x-label">Aug 2025</div>
+                                <div class="x-label">Sep 2025</div>
+                                <div class="x-label">Oct 2025</div>
+                            </div>
                         </div>
                     </div>
                 </div>
