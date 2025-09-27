@@ -990,86 +990,86 @@ export FIRMWIRE_LOG_LEVEL=debug</pre>
                                 </div>
                                 <div class="graph-area">
                                     <svg class="line-graph-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                        <!-- Detection Accuracy Line (normalized: 85-98% range) -->
-                                        <polyline points="8.33,15 25,12 41.67,8 58.33,5 75,3 91.67,2" 
+                                        <!-- Detection Accuracy Line (exponential curve: 85-98% range) -->
+                                        <polyline points="8.33,15 25,8 41.67,4 58.33,2 75,1 91.67,0.5" 
                                                  fill="none" 
                                                  stroke="#00d2aa" 
-                                                 stroke-width="0.8" 
+                                                 stroke-width="0.4" 
                                                  stroke-linecap="round" 
                                                  stroke-linejoin="round"/>
                                         
-                                        <!-- Analysis Speed Line (normalized: 75-95% range) -->
-                                        <polyline points="8.33,25 25,20 41.67,15 58.33,10 75,8 91.67,5" 
+                                        <!-- Analysis Speed Line (exponential curve: 75-95% range) -->
+                                        <polyline points="8.33,25 25,15 41.67,8 58.33,4 75,2 91.67,1" 
                                                  fill="none" 
                                                  stroke="#00a8cc" 
-                                                 stroke-width="0.8" 
+                                                 stroke-width="0.4" 
                                                  stroke-linecap="round" 
                                                  stroke-linejoin="round"/>
                                         
-                                        <!-- False Positive Rate Line (normalized: 65-85% range) -->
-                                        <polyline points="8.33,35 25,30 41.67,25 58.33,20 75,18 91.67,15" 
+                                        <!-- False Positive Rate Line (exponential curve: 65-85% range) -->
+                                        <polyline points="8.33,35 25,25 41.67,15 58.33,8 75,4 91.67,2" 
                                                  fill="none" 
                                                  stroke="#00ffcc" 
-                                                 stroke-width="0.8" 
+                                                 stroke-width="0.4" 
                                                  stroke-linecap="round" 
                                                  stroke-linejoin="round"/>
                                     </svg>
                                     
-                                    <!-- Data Points with Tooltips -->
+                                    <!-- Data Points with Tooltips (exponential curve) -->
                                     <div class="data-point detection-point" style="left: 8.33%; top: 15%;" data-value="85%" data-tooltip="May 2025: 85%">
                                         <div class="tooltip">85%</div>
                                     </div>
-                                    <div class="data-point detection-point" style="left: 25%; top: 12%;" data-value="88%" data-tooltip="Jun 2025: 88%">
+                                    <div class="data-point detection-point" style="left: 25%; top: 8%;" data-value="88%" data-tooltip="Jun 2025: 88%">
                                         <div class="tooltip">88%</div>
                                     </div>
-                                    <div class="data-point detection-point" style="left: 41.67%; top: 8%;" data-value="92%" data-tooltip="Jul 2025: 92%">
+                                    <div class="data-point detection-point" style="left: 41.67%; top: 4%;" data-value="92%" data-tooltip="Jul 2025: 92%">
                                         <div class="tooltip">92%</div>
                                     </div>
-                                    <div class="data-point detection-point" style="left: 58.33%; top: 5%;" data-value="95%" data-tooltip="Aug 2025: 95%">
+                                    <div class="data-point detection-point" style="left: 58.33%; top: 2%;" data-value="95%" data-tooltip="Aug 2025: 95%">
                                         <div class="tooltip">95%</div>
                                     </div>
-                                    <div class="data-point detection-point" style="left: 75%; top: 3%;" data-value="97%" data-tooltip="Sep 2025: 97%">
+                                    <div class="data-point detection-point" style="left: 75%; top: 1%;" data-value="97%" data-tooltip="Sep 2025: 97%">
                                         <div class="tooltip">97%</div>
                                     </div>
-                                    <div class="data-point detection-point" style="left: 91.67%; top: 2%;" data-value="98%" data-tooltip="Oct 2025: 98%">
+                                    <div class="data-point detection-point" style="left: 91.67%; top: 0.5%;" data-value="98%" data-tooltip="Oct 2025: 98%">
                                         <div class="tooltip">98%</div>
                                     </div>
                                     
                                     <div class="data-point speed-point" style="left: 8.33%; top: 25%;" data-value="75%" data-tooltip="May 2025: 75%">
                                         <div class="tooltip">75%</div>
                                     </div>
-                                    <div class="data-point speed-point" style="left: 25%; top: 20%;" data-value="80%" data-tooltip="Jun 2025: 80%">
+                                    <div class="data-point speed-point" style="left: 25%; top: 15%;" data-value="80%" data-tooltip="Jun 2025: 80%">
                                         <div class="tooltip">80%</div>
                                     </div>
-                                    <div class="data-point speed-point" style="left: 41.67%; top: 15%;" data-value="85%" data-tooltip="Jul 2025: 85%">
+                                    <div class="data-point speed-point" style="left: 41.67%; top: 8%;" data-value="85%" data-tooltip="Jul 2025: 85%">
                                         <div class="tooltip">85%</div>
                                     </div>
-                                    <div class="data-point speed-point" style="left: 58.33%; top: 10%;" data-value="90%" data-tooltip="Aug 2025: 90%">
+                                    <div class="data-point speed-point" style="left: 58.33%; top: 4%;" data-value="90%" data-tooltip="Aug 2025: 90%">
                                         <div class="tooltip">90%</div>
                                     </div>
-                                    <div class="data-point speed-point" style="left: 75%; top: 8%;" data-value="92%" data-tooltip="Sep 2025: 92%">
+                                    <div class="data-point speed-point" style="left: 75%; top: 2%;" data-value="92%" data-tooltip="Sep 2025: 92%">
                                         <div class="tooltip">92%</div>
                                     </div>
-                                    <div class="data-point speed-point" style="left: 91.67%; top: 5%;" data-value="95%" data-tooltip="Oct 2025: 95%">
+                                    <div class="data-point speed-point" style="left: 91.67%; top: 1%;" data-value="95%" data-tooltip="Oct 2025: 95%">
                                         <div class="tooltip">95%</div>
                                     </div>
                                     
                                     <div class="data-point fp-point" style="left: 8.33%; top: 35%;" data-value="65%" data-tooltip="May 2025: 65%">
                                         <div class="tooltip">65%</div>
                                     </div>
-                                    <div class="data-point fp-point" style="left: 25%; top: 30%;" data-value="70%" data-tooltip="Jun 2025: 70%">
+                                    <div class="data-point fp-point" style="left: 25%; top: 25%;" data-value="70%" data-tooltip="Jun 2025: 70%">
                                         <div class="tooltip">70%</div>
                                     </div>
-                                    <div class="data-point fp-point" style="left: 41.67%; top: 25%;" data-value="75%" data-tooltip="Jul 2025: 75%">
+                                    <div class="data-point fp-point" style="left: 41.67%; top: 15%;" data-value="75%" data-tooltip="Jul 2025: 75%">
                                         <div class="tooltip">75%</div>
                                     </div>
-                                    <div class="data-point fp-point" style="left: 58.33%; top: 20%;" data-value="80%" data-tooltip="Aug 2025: 80%">
+                                    <div class="data-point fp-point" style="left: 58.33%; top: 8%;" data-value="80%" data-tooltip="Aug 2025: 80%">
                                         <div class="tooltip">80%</div>
                                     </div>
-                                    <div class="data-point fp-point" style="left: 75%; top: 18%;" data-value="82%" data-tooltip="Sep 2025: 82%">
+                                    <div class="data-point fp-point" style="left: 75%; top: 4%;" data-value="82%" data-tooltip="Sep 2025: 82%">
                                         <div class="tooltip">82%</div>
                                     </div>
-                                    <div class="data-point fp-point" style="left: 91.67%; top: 15%;" data-value="85%" data-tooltip="Oct 2025: 85%">
+                                    <div class="data-point fp-point" style="left: 91.67%; top: 2%;" data-value="85%" data-tooltip="Oct 2025: 85%">
                                         <div class="tooltip">85%</div>
                                     </div>
                                 </div>
