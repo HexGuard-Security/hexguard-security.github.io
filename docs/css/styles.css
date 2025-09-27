@@ -935,13 +935,24 @@ section {
 /* Team Section */
 .team-section {
     background: var(--dark-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    /* account for fixed navbar height */
+    padding-top: 72px;
+}
+
+.team-section .container {
+    width: 100%;
 }
 
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
+    width: 100%;
 }
 
 .team-card {
@@ -1451,11 +1462,11 @@ section {
 
 /* Mini Floating Footer */
 .mini-footer {
-    position: fixed;
+    position: fixed !important;
     left: 50%;
     bottom: 16px;
     transform: translateX(-50%);
-    background: rgba(10, 15, 28, 0.85);
+    background: rgba(10, 15, 28, 0.95);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
@@ -1464,8 +1475,10 @@ section {
     align-items: center;
     gap: 14px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    z-index: 999;
+    z-index: 9999 !important;
     transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .mini-footer__brand {
@@ -1525,11 +1538,11 @@ section {
     background: rgba(255, 255, 255, 0.16);
 }
 
-/* Hide mini footer when full footer is visible */
+/* Keep mini footer always visible */
 .footer-visible .mini-footer {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-50%) translateY(10px);
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateX(-50%) !important;
 }
 
 .footer-content {
@@ -1822,6 +1835,12 @@ h3,
     }
     
     /* Team section mobile */
+    .team-section {
+        min-height: auto;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+    
     .team-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;

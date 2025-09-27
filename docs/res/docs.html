@@ -121,8 +121,8 @@
         
         /* Diagrams and graphs */
         .diagram {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             padding: 2rem;
             margin: 2rem 0;
@@ -180,8 +180,8 @@
         }
         
         .arch-component {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
             padding: 1.5rem;
             text-align: center;
@@ -257,8 +257,8 @@
         .timeline-step {
             text-align: center;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             transition: var(--transition);
         }
@@ -289,8 +289,8 @@
         }
         
         .metric-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             padding: 1.5rem;
             display: flex;
@@ -351,8 +351,8 @@
         .comparison-chart {
             margin-top: 2rem;
             padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
         }
         
@@ -422,85 +422,275 @@
             font-size: 0.9rem;
         }
         
-        /* Enhanced Table of Contents */
-        .toc {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
+        /* Modern Table of Contents */
+        .modern-toc {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
         
-        .toc h4 {
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+        .modern-toc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .toc-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .toc-title {
             display: flex;
             align-items: center;
-        }
-        
-        .toc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .toc-category {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: var(--transition);
-        }
-        
-        .toc-category:hover {
-            background: rgba(0, 210, 170, 0.05);
-            border-color: rgba(0, 210, 170, 0.2);
-        }
-        
-        .toc-category h5 {
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(0, 210, 170, 0.3);
-            padding-bottom: 0.5rem;
-        }
-        
-        .toc-category ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .toc-category li {
+            justify-content: center;
+            gap: 1rem;
             margin-bottom: 0.5rem;
         }
         
-        .toc-category a {
+        .toc-title i {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .toc-title h3 {
+            color: var(--text-primary);
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .toc-subtitle {
             color: var(--text-secondary);
-            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+        
+        .toc-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .toc-category-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toc-category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--secondary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .toc-category-card:hover {
+            background: rgba(0, 210, 170, 0.08);
+            border-color: rgba(0, 210, 170, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 210, 170, 0.2);
+        }
+        
+        .toc-category-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .category-header {
             display: flex;
             align-items: center;
-            padding: 0.5rem 0;
-            border-radius: 4px;
-            transition: var(--transition);
-            font-size: 0.9rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .toc-category a:hover {
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .category-header h4 {
             color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            flex: 1;
+        }
+        
+        .category-count {
+            background: rgba(0, 210, 170, 0.2);
+            color: var(--secondary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .category-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .toc-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toc-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 210, 170, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .toc-link:hover::before {
+            left: 100%;
+        }
+        
+        .toc-link:hover {
             background: rgba(0, 210, 170, 0.1);
-            padding-left: 0.5rem;
+            border-color: rgba(0, 210, 170, 0.3);
+            color: var(--text-primary);
+            transform: translateX(5px);
         }
         
-        .toc-category a img {
-            opacity: 0.7;
-            transition: var(--transition);
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 210, 170, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
         
-        .toc-category a:hover img {
-            opacity: 1;
+        .toc-link:hover .link-icon {
+            background: var(--secondary-color);
+            color: #000;
+            transform: scale(1.1);
+        }
+        
+        .link-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        
+        .link-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: inherit;
+        }
+        
+        .link-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            color: inherit;
+        }
+        
+        .link-arrow {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .toc-link:hover .link-arrow {
+            color: var(--secondary-color);
+            transform: translateX(3px);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .modern-toc {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .toc-title h3 {
+                font-size: 1.5rem;
+            }
+            
+            .toc-categories {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .toc-category-card {
+                padding: 1.5rem;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .category-header h4 {
+                font-size: 1.1rem;
+            }
+            
+            .toc-link {
+                padding: 0.8rem;
+            }
+            
+            .link-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
         }
         
         /* Analysis Pipeline Styles */
@@ -512,8 +702,8 @@
             gap: 1rem;
             margin: 2rem 0;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 16px;
         }
         
@@ -525,8 +715,8 @@
             flex: 1;
             min-width: 200px;
             padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             transition: var(--transition);
         }
@@ -595,8 +785,8 @@
         .capabilities-grid {
             margin-top: 2rem;
             padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
         }
         
@@ -615,8 +805,8 @@
         }
         
         .capability-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
@@ -814,8 +1004,8 @@
         }
         
         .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
             padding: 1.5rem;
         }
@@ -830,33 +1020,6 @@
             font-size: 0.9rem;
         }
         
-        .toc {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 2rem 0;
-        }
-        
-        .toc h4 {
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .toc ul {
-            margin: 0;
-            padding-left: 1rem;
-        }
-        
-        .toc a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        .toc a:hover {
-            color: var(--primary-color);
-        }
         
         @media (max-width: 768px) {
             .docs-container {
@@ -871,6 +1034,492 @@
             
             .docs-content {
                 padding: 1.5rem;
+            }
+        }
+        
+        /* Interactive Step-by-Step Guide Styles */
+        .interactive-guide {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .interactive-guide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+        
+        .guide-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Progress Indicator */
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 20%;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .step-indicator.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .step-indicator.completed {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: #000;
+        }
+        
+        /* Step Content */
+        .step-content {
+            position: relative;
+            min-height: 500px;
+            height: 500px;
+            overflow: hidden;
+        }
+        
+        .step-panel {
+            display: none;
+            animation: fadeInSlide 0.5s ease-out;
+        }
+        
+        .step-panel.active {
+            display: block;
+        }
+        
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .step-title h5 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .step-title p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .step-body {
+            padding-left: 4.5rem;
+        }
+        
+        .step-description {
+            margin-bottom: 2rem;
+        }
+        
+        .step-description p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        /* Step Features */
+        .step-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text-primary);
+        }
+        
+        .feature-item i {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+        
+        /* Demo Terminal */
+        .step-demo {
+            margin-top: 2rem;
+        }
+        
+        .demo-terminal {
+            background: rgba(10, 15, 28, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-header {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-title {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .terminal-body {
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .terminal-line.success {
+            color: var(--secondary-color);
+        }
+        
+        /* Analysis Methods */
+        .analysis-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .method-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.2);
+        }
+        
+        .method-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .method-card h6 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .method-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Vulnerability Types */
+        .vulnerability-types {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .vuln-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .vuln-item.critical {
+            background: rgba(255, 71, 87, 0.1);
+            border-color: rgba(255, 71, 87, 0.3);
+        }
+        
+        .vuln-item.high {
+            background: rgba(255, 165, 2, 0.1);
+            border-color: rgba(255, 165, 2, 0.3);
+        }
+        
+        .vuln-item.medium {
+            background: rgba(255, 209, 102, 0.1);
+            border-color: rgba(255, 209, 102, 0.3);
+        }
+        
+        .vuln-icon {
+            font-size: 2rem;
+        }
+        
+        .vuln-content h6 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .vuln-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Compliance Standards */
+        .compliance-standards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .standard-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .standard-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 10px 25px rgba(0, 212, 170, 0.2);
+        }
+        
+        .standard-badge {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .standard-item h6 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .standard-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Report Features */
+        .report-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .report-type {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .report-type:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.2);
+        }
+        
+        .report-type i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .report-type h6 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .report-type p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Navigation Controls */
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background: var(--secondary-color);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.3);
+        }
+        
+        .nav-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        
+        .nav-btn.complete-btn {
+            background: var(--secondary-color) !important;
+            color: #000 !important;
+        }
+        
+        .step-counter {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .interactive-guide {
+                padding: 1.5rem;
+            }
+            
+            .step-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .step-body {
+                padding-left: 0;
+            }
+            
+            .step-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .analysis-methods,
+            .vulnerability-types,
+            .compliance-standards,
+            .report-features {
+                grid-template-columns: 1fr;
+            }
+            
+            
+            .step-content {
+                height: auto;
+                min-height: 400px;
+            }
+            
+            .step-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -932,149 +1581,394 @@
                 </div>
                 <p>Welcome to the comprehensive documentation for <strong>Firmwire</strong>, the advanced firmware analysis tool for embedded devices. This guide will help you get started with Firmwire and make the most of its powerful features.</p>
                 
-                <div class="diagram">
+                <!-- Interactive Step-by-Step Guide -->
+                <div class="interactive-guide">
                     <h4><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Firmwire Analysis Pipeline</h4>
+                    <p class="guide-subtitle">Follow the interactive guide to understand how Firmwire analyzes your firmware</p>
                     
-                    <div class="analysis-pipeline">
-                        <div class="pipeline-stage">
-                            <div class="stage-icon">
-                                <img src="../img/logo.svg" alt="Upload" style="width: 32px; height: 32px;">
+                    <!-- Progress Indicator -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
                             </div>
-                            <div class="stage-content">
+                        <div class="progress-steps">
+                            <div class="step-indicator active" data-step="1">1</div>
+                            <div class="step-indicator" data-step="2">2</div>
+                            <div class="step-indicator" data-step="3">3</div>
+                            <div class="step-indicator" data-step="4">4</div>
+                            <div class="step-indicator" data-step="5">5</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step Content -->
+                    <div class="step-content">
+                        <!-- Step 1: Firmware Upload -->
+                        <div class="step-panel active" id="step-1">
+                            <div class="step-header">
+                                <div class="step-icon">
+                                    <i class="fas fa-upload"></i>
+                                </div>
+                                <div class="step-title">
                                 <h5>Firmware Upload</h5>
                                 <p>Binary Analysis & Format Detection</p>
-                                <div class="stage-features">
-                                    <span class="feature-tag">ELF/PE Support</span>
-                                    <span class="feature-tag">Raw Binary</span>
-                                    <span class="feature-tag">Vendor Formats</span>
+                                </div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-description">
+                                    <p>Firmwire begins by analyzing your firmware binary to understand its structure and format. Our intelligent detection system supports multiple formats and architectures.</p>
+                                </div>
+                                <div class="step-features">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>ELF/PE Support</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Raw Binary Analysis</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Vendor-Specific Formats</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Multi-Architecture Detection</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="pipeline-arrow">→</div>
-                        
-                        <div class="pipeline-stage">
-                            <div class="stage-icon">
-                                <img src="../img/logo.svg" alt="Analysis" style="width: 32px; height: 32px;">
+                        <!-- Step 2: Multi-Layer Analysis -->
+                        <div class="step-panel" id="step-2">
+                            <div class="step-header">
+                                <div class="step-icon">
+                                    <i class="fas fa-layer-group"></i>
                             </div>
-                            <div class="stage-content">
+                                <div class="step-title">
                                 <h5>Multi-Layer Analysis</h5>
                                 <p>Static & Dynamic Security Assessment</p>
-                                <div class="stage-features">
-                                    <span class="feature-tag">SAST</span>
-                                    <span class="feature-tag">DAST</span>
-                                    <span class="feature-tag">Crypto Analysis</span>
+                                </div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-description">
+                                    <p>Our analysis engine performs comprehensive security assessment using multiple techniques to identify potential vulnerabilities and security weaknesses.</p>
+                                </div>
+                                <div class="analysis-methods">
+                                    <div class="method-card">
+                                        <div class="method-icon">🔍</div>
+                                        <h6>Static Analysis (SAST)</h6>
+                                        <p>Code analysis without execution</p>
+                                    </div>
+                                    <div class="method-card">
+                                        <div class="method-icon">⚡</div>
+                                        <h6>Dynamic Analysis (DAST)</h6>
+                                        <p>Runtime behavior monitoring</p>
+                                    </div>
+                                    <div class="method-card">
+                                        <div class="method-icon">🔐</div>
+                                        <h6>Crypto Analysis</h6>
+                                        <p>Cryptographic implementation review</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="pipeline-arrow">→</div>
-                        
-                        <div class="pipeline-stage">
-                            <div class="stage-icon">
-                                <img src="../img/logo.svg" alt="Detection" style="width: 32px; height: 32px;">
+                        <!-- Step 3: Vulnerability Detection -->
+                        <div class="step-panel" id="step-3">
+                            <div class="step-header">
+                                <div class="step-icon">
+                                    <i class="fas fa-shield-alt"></i>
                             </div>
-                            <div class="stage-content">
+                                <div class="step-title">
                                 <h5>Vulnerability Detection</h5>
                                 <p>AI-Powered Threat Identification</p>
-                                <div class="stage-features">
-                                    <span class="feature-tag">Buffer Overflows</span>
-                                    <span class="feature-tag">Memory Leaks</span>
-                                    <span class="feature-tag">Injection Attacks</span>
+                                </div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-description">
+                                    <p>Our AI-powered detection engine identifies security vulnerabilities using advanced pattern recognition and machine learning algorithms.</p>
+                                </div>
+                                <div class="vulnerability-types">
+                                    <div class="vuln-item critical">
+                                        <div class="vuln-icon">🚨</div>
+                                        <div class="vuln-content">
+                                            <h6>Buffer Overflows</h6>
+                                            <p>Memory corruption vulnerabilities</p>
+                                        </div>
+                                    </div>
+                                    <div class="vuln-item high">
+                                        <div class="vuln-icon">💧</div>
+                                        <div class="vuln-content">
+                                            <h6>Memory Leaks</h6>
+                                            <p>Resource management issues</p>
+                                        </div>
+                                    </div>
+                                    <div class="vuln-item medium">
+                                        <div class="vuln-icon">💉</div>
+                                        <div class="vuln-content">
+                                            <h6>Injection Attacks</h6>
+                                            <p>Code injection vulnerabilities</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="pipeline-arrow">→</div>
-                        
-                        <div class="pipeline-stage">
-                            <div class="stage-icon">
-                                <img src="../img/logo.svg" alt="Compliance" style="width: 32px; height: 32px;">
+                        <!-- Step 4: Compliance Validation -->
+                        <div class="step-panel" id="step-4">
+                            <div class="step-header">
+                                <div class="step-icon">
+                                    <i class="fas fa-certificate"></i>
                             </div>
-                            <div class="stage-content">
+                                <div class="step-title">
                                 <h5>Compliance Validation</h5>
                                 <p>Standards & Regulatory Checks</p>
-                                <div class="stage-features">
-                                    <span class="feature-tag">RED</span>
-                                    <span class="feature-tag">IEC 62443</span>
-                                    <span class="feature-tag">CRA</span>
+                                </div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-description">
+                                    <p>Firmwire validates your firmware against industry standards and regulatory requirements to ensure compliance with security frameworks.</p>
+                                </div>
+                                <div class="compliance-standards">
+                                    <div class="standard-item">
+                                        <div class="standard-badge">RED</div>
+                                        <h6>Radio Equipment Directive</h6>
+                                        <p>EU regulatory compliance</p>
+                                    </div>
+                                    <div class="standard-item">
+                                        <div class="standard-badge">IEC</div>
+                                        <h6>IEC 62443</h6>
+                                        <p>Industrial cybersecurity standards</p>
+                                    </div>
+                                    <div class="standard-item">
+                                        <div class="standard-badge">CRA</div>
+                                        <h6>Cyber Resilience Act</h6>
+                                        <p>EU cybersecurity regulation</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="pipeline-arrow">→</div>
-                        
-                        <div class="pipeline-stage">
-                            <div class="stage-icon">
-                                <img src="../img/logo.svg" alt="Report" style="width: 32px; height: 32px;">
+                        <!-- Step 5: Intelligent Reporting -->
+                        <div class="step-panel" id="step-5">
+                            <div class="step-header">
+                                <div class="step-icon">
+                                    <i class="fas fa-file-alt"></i>
                             </div>
-                            <div class="stage-content">
+                                <div class="step-title">
                                 <h5>Intelligent Reporting</h5>
                                 <p>Comprehensive Security Assessment</p>
-                                <div class="stage-features">
-                                    <span class="feature-tag">PDF/JSON</span>
-                                    <span class="feature-tag">Executive Summary</span>
-                                    <span class="feature-tag">Remediation Guide</span>
                                 </div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-description">
+                                    <p>Generate detailed security reports with actionable insights, remediation guidance, and compliance mappings for stakeholders.</p>
+                        </div>
+                                <div class="report-features">
+                                    <div class="report-type">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <h6>PDF Reports</h6>
+                                        <p>Executive summaries and detailed analysis</p>
+                    </div>
+                                    <div class="report-type">
+                                        <i class="fas fa-code"></i>
+                                        <h6>JSON Export</h6>
+                                        <p>Machine-readable data for integration</p>
+                            </div>
+                                    <div class="report-type">
+                                        <i class="fas fa-tools"></i>
+                                        <h6>Remediation Guide</h6>
+                                        <p>Step-by-step fix recommendations</p>
+                            </div>
+                            </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Analysis Capabilities Grid -->
-                    <div class="capabilities-grid">
-                        <h5>Analysis Capabilities</h5>
-                        <div class="capability-cards">
-                            <div class="capability-card">
-                                <div class="capability-icon">🔍</div>
-                                <h6>Static Analysis</h6>
-                                <p>Code analysis without execution</p>
-                            </div>
-                            <div class="capability-card">
-                                <div class="capability-icon">⚡</div>
-                                <h6>Dynamic Analysis</h6>
-                                <p>Runtime behavior monitoring</p>
-                            </div>
-                            <div class="capability-card">
-                                <div class="capability-icon">🔐</div>
-                                <h6>Crypto Analysis</h6>
-                                <p>Cryptographic implementation review</p>
-                            </div>
-                            <div class="capability-card">
-                                <div class="capability-icon">🌐</div>
-                                <h6>Network Analysis</h6>
-                                <p>Communication protocol security</p>
-                            </div>
+                    <!-- Navigation Controls -->
+                    <div class="step-navigation">
+                        <button class="nav-btn prev-btn" id="prevBtn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                            Previous
+                        </button>
+                        <div class="step-counter">
+                            <span id="currentStep">1</span> of <span id="totalSteps">5</span>
                         </div>
+                        <button class="nav-btn next-btn" id="nextBtn">
+                            Next
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
                 
-                <div class="toc">
-                    <h4><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Table of Contents</h4>
-                    <div class="toc-grid">
-                        <div class="toc-category">
-                            <h5>Getting Started</h5>
-                            <ul>
-                                <li><a href="#installation"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Installation</a></li>
-                                <li><a href="#quick-start"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Quick Start Guide</a></li>
-                                <li><a href="#command-reference"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Command Reference</a></li>
-                            </ul>
+                <!-- Modern Table of Contents -->
+                <div class="modern-toc">
+                    <div class="toc-header">
+                        <div class="toc-title">
+                            <i class="fas fa-list-ul"></i>
+                            <h3>Table of Contents</h3>
                         </div>
-                        <div class="toc-category">
-                            <h5>Configuration</h5>
-                            <ul>
-                                <li><a href="#configuration"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Configuration Options</a></li>
-                                <li><a href="#analysis-types"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Analysis Types</a></li>
-                                <li><a href="#compliance"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Compliance Standards</a></li>
-                            </ul>
+                        <div class="toc-subtitle">Navigate through the documentation</div>
+                    </div>
+                    
+                    <div class="toc-categories">
+                        <!-- Getting Started -->
+                        <div class="toc-category-card">
+                            <div class="category-header">
+                                <div class="category-icon">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                                <h4>Getting Started</h4>
+                                <div class="category-count">3 topics</div>
+                            </div>
+                            <div class="category-links">
+                                <a href="#installation" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-download"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Installation</span>
+                                        <span class="link-desc">Set up Firmwire on your system</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                                <a href="#quick-start" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-play-circle"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Quick Start Guide</span>
+                                        <span class="link-desc">Get up and running in minutes</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                                <a href="#command-reference" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-terminal"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Command Reference</span>
+                                        <span class="link-desc">Complete CLI documentation</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <div class="toc-category">
-                            <h5>Advanced</h5>
-                            <ul>
-                                <li><a href="#api-reference"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> API Reference</a></li>
-                                <li><a href="#troubleshooting"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Troubleshooting</a></li>
-                                <li><a href="#examples"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> Examples</a></li>
-                                <li><a href="#faq"><img src="../img/logo.svg" alt="" style="width: 12px; height: 12px; margin-right: 0.5rem;"> FAQ</a></li>
-                            </ul>
+                        
+                        <!-- Configuration -->
+                        <div class="toc-category-card">
+                            <div class="category-header">
+                                <div class="category-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h4>Configuration</h4>
+                                <div class="category-count">3 topics</div>
+                            </div>
+                            <div class="category-links">
+                                <a href="#configuration" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-sliders-h"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Configuration Options</span>
+                                        <span class="link-desc">Customize your analysis settings</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                                <a href="#analysis-types" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Analysis Types</span>
+                                        <span class="link-desc">Different security analysis modes</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                                <a href="#compliance" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-certificate"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Compliance Standards</span>
+                                        <span class="link-desc">Meet regulatory requirements</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Advanced -->
+                        <div class="toc-category-card">
+                            <div class="category-header">
+                                <div class="category-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h4>Advanced</h4>
+                                <div class="category-count">4 topics</div>
+                            </div>
+                            <div class="category-links">
+                                <a href="#api-reference" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">API Reference</span>
+                                        <span class="link-desc">Integrate with your applications</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                                <a href="#troubleshooting" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-tools"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Troubleshooting</span>
+                                        <span class="link-desc">Solve common issues</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                                <a href="#examples" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">Examples</span>
+                                        <span class="link-desc">Real-world use cases</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                                <a href="#faq" class="toc-link">
+                                    <div class="link-icon">
+                                        <i class="fas fa-question-circle"></i>
+                                    </div>
+                                    <div class="link-content">
+                                        <span class="link-title">FAQ</span>
+                                        <span class="link-desc">Frequently asked questions</span>
+                                    </div>
+                                    <div class="link-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1738,7 +2632,244 @@ fi</pre>
             if (typeof initializeDefaultAvatarLogos === 'function') {
                 initializeDefaultAvatarLogos();
             }
+            
+            // Initialize Interactive Step-by-Step Guide
+            initializeInteractiveGuide();
         });
+        
+        // Interactive Step-by-Step Guide JavaScript
+        function initializeInteractiveGuide() {
+            const totalSteps = 5;
+            let currentStep = 1;
+            
+            const progressFill = document.getElementById('progressFill');
+            const currentStepSpan = document.getElementById('currentStep');
+            const totalStepsSpan = document.getElementById('totalSteps');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const stepIndicators = document.querySelectorAll('.step-indicator');
+            const stepPanels = document.querySelectorAll('.step-panel');
+            
+            // Set total steps
+            if (totalStepsSpan) {
+                totalStepsSpan.textContent = totalSteps;
+            }
+            
+            // Update progress and UI
+            function updateUI() {
+                // Update progress bar
+                if (progressFill) {
+                    const progress = (currentStep / totalSteps) * 100;
+                    progressFill.style.width = progress + '%';
+                }
+                
+                // Update step counter
+                if (currentStepSpan) {
+                    currentStepSpan.textContent = currentStep;
+                }
+                
+                // Update step indicators
+                stepIndicators.forEach((indicator, index) => {
+                    const stepNumber = index + 1;
+                    indicator.classList.remove('active', 'completed');
+                    
+                    if (stepNumber < currentStep) {
+                        indicator.classList.add('completed');
+                    } else if (stepNumber === currentStep) {
+                        indicator.classList.add('active');
+                    }
+                });
+                
+                // Update step panels
+                stepPanels.forEach((panel, index) => {
+                    panel.classList.remove('active');
+                    if (index + 1 === currentStep) {
+                        panel.classList.add('active');
+                    }
+                });
+                
+                // Update navigation buttons
+                if (prevBtn) {
+                    prevBtn.disabled = currentStep === 1;
+                }
+                
+                if (nextBtn) {
+                    if (currentStep === totalSteps) {
+                        nextBtn.innerHTML = '<i class="fas fa-check"></i> Complete';
+                        nextBtn.classList.add('complete-btn');
+                    } else {
+                        nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+                        nextBtn.classList.remove('complete-btn');
+                    }
+                }
+            }
+            
+            // Go to specific step
+            function goToStep(step) {
+                if (step >= 1 && step <= totalSteps) {
+                    currentStep = step;
+                    updateUI();
+                }
+            }
+            
+            // Next step
+            function nextStep() {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateUI();
+                } else {
+                    // Guide completed - could show completion message
+                    showCompletionMessage();
+                }
+            }
+            
+            // Previous step
+            function prevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateUI();
+                }
+            }
+            
+            // Show completion message
+            function showCompletionMessage() {
+                // Create a simple notification instead of a modal
+                const notification = document.createElement('div');
+                notification.className = 'completion-notification';
+                notification.innerHTML = `
+                    <div class="completion-content">
+                        <div class="completion-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="completion-text">
+                            <h4>Guide Complete!</h4>
+                            <p>You've learned how Firmwire analyzes firmware. Ready to get started?</p>
+                        </div>
+                        <button class="completion-close" onclick="this.closest('.completion-notification').remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                
+                // Add completion notification styles
+                const style = document.createElement('style');
+                style.textContent = `
+                    .completion-notification {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: var(--card-bg);
+                        border: 1px solid var(--secondary-color);
+                        border-radius: 12px;
+                        padding: 1rem;
+                        max-width: 400px;
+                        z-index: 1000;
+                        animation: slideInRight 0.3s ease;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    }
+                    
+                    .completion-content {
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                    }
+                    
+                    .completion-icon {
+                        font-size: 2rem;
+                        color: var(--secondary-color);
+                    }
+                    
+                    .completion-icon i {
+                        color: #000;
+                    }
+                    
+                    .completion-text h4 {
+                        color: var(--text-primary);
+                        margin: 0 0 0.5rem 0;
+                        font-size: 1.1rem;
+                    }
+                    
+                    .completion-text p {
+                        color: var(--text-secondary);
+                        margin: 0;
+                        font-size: 0.9rem;
+                    }
+                    
+                    .completion-close {
+                        background: none;
+                        border: none;
+                        color: var(--text-secondary);
+                        cursor: pointer;
+                        padding: 0.25rem;
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+                        margin-left: auto;
+                    }
+                    
+                    .completion-close:hover {
+                        background: rgba(255, 255, 255, 0.1);
+                        color: var(--text-primary);
+                    }
+                    
+                    @keyframes slideInRight {
+                        from { 
+                            transform: translateX(100%); 
+                            opacity: 0; 
+                        }
+                        to { 
+                            transform: translateX(0); 
+                            opacity: 1; 
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                document.body.appendChild(notification);
+                
+                // Auto-remove after 8 seconds
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.style.animation = 'slideInRight 0.3s ease reverse';
+                        setTimeout(() => {
+                            if (notification.parentNode) {
+                                notification.remove();
+                            }
+                        }, 300);
+                    }
+                }, 8000);
+            }
+            
+            // Event listeners
+            if (nextBtn) {
+                nextBtn.addEventListener('click', nextStep);
+            }
+            
+            if (prevBtn) {
+                prevBtn.addEventListener('click', prevStep);
+            }
+            
+            // Step indicator clicks
+            stepIndicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    goToStep(index + 1);
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    nextStep();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevStep();
+                }
+            });
+            
+            // Initialize UI
+            updateUI();
+        }
     </script>
+</body>
+</html>
 </body>
 </html>
