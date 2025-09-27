@@ -503,6 +503,166 @@
             opacity: 1;
         }
         
+        /* Analysis Pipeline Styles */
+        .analysis-pipeline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+        
+        .pipeline-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        
+        .pipeline-stage:hover {
+            background: rgba(0, 210, 170, 0.1);
+            border-color: rgba(0, 210, 170, 0.3);
+            transform: translateY(-4px);
+        }
+        
+        .stage-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(0, 210, 170, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stage-content h5 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .stage-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stage-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        
+        .feature-tag {
+            background: rgba(0, 210, 170, 0.2);
+            color: var(--text-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 210, 170, 0.3);
+        }
+        
+        .pipeline-arrow {
+            font-size: 2rem;
+            color: #00d2aa;
+            font-weight: bold;
+            margin: 0 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        /* Capabilities Grid */
+        .capabilities-grid {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+        }
+        
+        .capabilities-grid h5 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .capability-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .capability-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .capability-card:hover {
+            background: rgba(0, 210, 170, 0.1);
+            border-color: rgba(0, 210, 170, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .capability-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .capability-card h6 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .capability-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .analysis-pipeline {
+                flex-direction: column;
+            }
+            
+            .pipeline-arrow {
+                transform: rotate(90deg);
+                margin: 1rem 0;
+            }
+            
+            .pipeline-stage {
+                min-width: 100%;
+            }
+        }
+        
         .x-axis {
             display: flex;
             justify-content: space-between;
@@ -773,27 +933,117 @@
                 <p>Welcome to the comprehensive documentation for <strong>Firmwire</strong>, the advanced firmware analysis tool for embedded devices. This guide will help you get started with Firmwire and make the most of its powerful features.</p>
                 
                 <div class="diagram">
-
-                    <div class="flow-diagram">
-                        <div class="flow-step">
-                            <img src="../img/logo.svg" alt="Input" style="width: 24px; height: 24px; margin-bottom: 0.5rem;">
-                            <h5>Input</h5>
-                            <p>Firmware Binary</p>
+                    <h4><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Firmwire Analysis Pipeline</h4>
+                    
+                    <div class="analysis-pipeline">
+                        <div class="pipeline-stage">
+                            <div class="stage-icon">
+                                <img src="../img/logo.svg" alt="Upload" style="width: 32px; height: 32px;">
+                            </div>
+                            <div class="stage-content">
+                                <h5>Firmware Upload</h5>
+                                <p>Binary Analysis & Format Detection</p>
+                                <div class="stage-features">
+                                    <span class="feature-tag">ELF/PE Support</span>
+                                    <span class="feature-tag">Raw Binary</span>
+                                    <span class="feature-tag">Vendor Formats</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flow-step">
-                            <img src="../img/logo.svg" alt="Analysis" style="width: 24px; height: 24px; margin-bottom: 0.5rem;">
-                            <h5>Analysis</h5>
-                            <p>Static & Dynamic</p>
+                        
+                        <div class="pipeline-arrow">→</div>
+                        
+                        <div class="pipeline-stage">
+                            <div class="stage-icon">
+                                <img src="../img/logo.svg" alt="Analysis" style="width: 32px; height: 32px;">
+                            </div>
+                            <div class="stage-content">
+                                <h5>Multi-Layer Analysis</h5>
+                                <p>Static & Dynamic Security Assessment</p>
+                                <div class="stage-features">
+                                    <span class="feature-tag">SAST</span>
+                                    <span class="feature-tag">DAST</span>
+                                    <span class="feature-tag">Crypto Analysis</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flow-step">
-                            <img src="../img/logo.svg" alt="Detection" style="width: 24px; height: 24px; margin-bottom: 0.5rem;">
-                            <h5>Detection</h5>
-                            <p>Vulnerabilities</p>
+                        
+                        <div class="pipeline-arrow">→</div>
+                        
+                        <div class="pipeline-stage">
+                            <div class="stage-icon">
+                                <img src="../img/logo.svg" alt="Detection" style="width: 32px; height: 32px;">
+                            </div>
+                            <div class="stage-content">
+                                <h5>Vulnerability Detection</h5>
+                                <p>AI-Powered Threat Identification</p>
+                                <div class="stage-features">
+                                    <span class="feature-tag">Buffer Overflows</span>
+                                    <span class="feature-tag">Memory Leaks</span>
+                                    <span class="feature-tag">Injection Attacks</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flow-step">
-                            <img src="../img/logo.svg" alt="Report" style="width: 24px; height: 24px; margin-bottom: 0.5rem;">
-                            <h5>Report</h5>
-                            <p>Detailed Results</p>
+                        
+                        <div class="pipeline-arrow">→</div>
+                        
+                        <div class="pipeline-stage">
+                            <div class="stage-icon">
+                                <img src="../img/logo.svg" alt="Compliance" style="width: 32px; height: 32px;">
+                            </div>
+                            <div class="stage-content">
+                                <h5>Compliance Validation</h5>
+                                <p>Standards & Regulatory Checks</p>
+                                <div class="stage-features">
+                                    <span class="feature-tag">RED</span>
+                                    <span class="feature-tag">IEC 62443</span>
+                                    <span class="feature-tag">CRA</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pipeline-arrow">→</div>
+                        
+                        <div class="pipeline-stage">
+                            <div class="stage-icon">
+                                <img src="../img/logo.svg" alt="Report" style="width: 32px; height: 32px;">
+                            </div>
+                            <div class="stage-content">
+                                <h5>Intelligent Reporting</h5>
+                                <p>Comprehensive Security Assessment</p>
+                                <div class="stage-features">
+                                    <span class="feature-tag">PDF/JSON</span>
+                                    <span class="feature-tag">Executive Summary</span>
+                                    <span class="feature-tag">Remediation Guide</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analysis Capabilities Grid -->
+                    <div class="capabilities-grid">
+                        <h5>Analysis Capabilities</h5>
+                        <div class="capability-cards">
+                            <div class="capability-card">
+                                <div class="capability-icon">🔍</div>
+                                <h6>Static Analysis</h6>
+                                <p>Code analysis without execution</p>
+                            </div>
+                            <div class="capability-card">
+                                <div class="capability-icon">⚡</div>
+                                <h6>Dynamic Analysis</h6>
+                                <p>Runtime behavior monitoring</p>
+                            </div>
+                            <div class="capability-card">
+                                <div class="capability-icon">🔐</div>
+                                <h6>Crypto Analysis</h6>
+                                <p>Cryptographic implementation review</p>
+                            </div>
+                            <div class="capability-card">
+                                <div class="capability-icon">🌐</div>
+                                <h6>Network Analysis</h6>
+                                <p>Communication protocol security</p>
+                            </div>
                         </div>
                     </div>
                 </div>
