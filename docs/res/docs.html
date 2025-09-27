@@ -94,6 +94,13 @@
             background: rgba(0, 102, 255, 0.2);
         }
         
+        /* Hide navigation on smaller screens */
+        @media (max-width: 1200px) {
+            .docs-nav-floating {
+                display: none;
+            }
+        }
+        
         .docs-section {
             margin-bottom: 4rem;
             position: relative;
@@ -448,7 +455,8 @@
                 <p>Welcome to the comprehensive documentation for <strong>Firmwire</strong>, the advanced firmware analysis tool for embedded devices. This guide will help you get started with Firmwire and make the most of its powerful features.</p>
                 
                 <div class="diagram">
-                    <h4>Firmwire Analysis Flow</h4>
+                    ,br<h4>Firmwire Analysis Flow</h4>
+
                     <div class="flow-diagram">
                         <div class="flow-step">
                             <h5>Input</h5>
