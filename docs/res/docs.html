@@ -349,10 +349,13 @@
             height: 100%;
         }
         
-        .line-path {
+        .line-graph-svg {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            z-index: 1;
         }
         
         .data-point {
@@ -363,23 +366,24 @@
             transform: translate(-50%, -50%);
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 2;
         }
         
         .data-point:hover {
             transform: translate(-50%, -50%) scale(1.5);
         }
         
-        .detection-line .data-point {
+        .detection-point {
             background: #00d2aa;
             box-shadow: 0 0 8px rgba(0, 210, 170, 0.5);
         }
         
-        .speed-line .data-point {
+        .speed-point {
             background: #00a8cc;
             box-shadow: 0 0 8px rgba(0, 168, 204, 0.5);
         }
         
-        .fp-line .data-point {
+        .fp-point {
             background: #00ffcc;
             box-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
         }
@@ -398,42 +402,6 @@
             flex: 1;
         }
         
-        /* Connect data points with lines */
-        .detection-line::before {
-            content: '';
-            position: absolute;
-            top: 15%;
-            left: 8.33%;
-            width: 83.34%;
-            height: 2px;
-            background: linear-gradient(90deg, #00d2aa, #00a8cc);
-            transform: rotate(-0.5deg);
-            z-index: -1;
-        }
-        
-        .speed-line::before {
-            content: '';
-            position: absolute;
-            top: 25%;
-            left: 8.33%;
-            width: 83.34%;
-            height: 2px;
-            background: linear-gradient(90deg, #00a8cc, #00ffcc);
-            transform: rotate(-1deg);
-            z-index: -1;
-        }
-        
-        .fp-line::before {
-            content: '';
-            position: absolute;
-            top: 35%;
-            left: 8.33%;
-            width: 83.34%;
-            height: 2px;
-            background: linear-gradient(90deg, #00ffcc, #00d2aa);
-            transform: rotate(-0.8deg);
-            z-index: -1;
-        }
         
         /* Logo integration */
         .docs-logo {
@@ -690,7 +658,6 @@
                 <p>Welcome to the comprehensive documentation for <strong>Firmwire</strong>, the advanced firmware analysis tool for embedded devices. This guide will help you get started with Firmwire and make the most of its powerful features.</p>
                 
                 <div class="diagram">
-                    <h4 style="padding-bottom: 1.5rem;"><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Firmwire Analysis Flow</h4>
 
                     <div class="flow-diagram">
                         <div class="flow-step">
@@ -736,7 +703,7 @@
                 <p>Firmwire is available for Windows, macOS, and Linux. Choose your platform and follow the installation instructions below.</p>
                 
                 <div class="diagram">
-                    <h4><img src="../img/logo.svg" alt="Firmwire" style="width: 20px; height: 20px; margin-right: 0.5rem;"> Firmwire Architecture</h4>
+                    <h4> Firmwire Architecture</h4>
                     <div class="architecture-diagram">
                         <div class="arch-component">
                             <img src="../img/logo.svg" alt="CLI" style="width: 24px; height: 24px; margin-bottom: 0.5rem;">
@@ -973,30 +940,53 @@ export FIRMWIRE_LOG_LEVEL=debug</pre>
                                     <div class="y-label">0%</div>
                                 </div>
                                 <div class="graph-area">
-                                    <div class="line-path detection-line">
-                                        <div class="data-point" style="left: 8.33%; top: 15%;" data-value="85%"></div>
-                                        <div class="data-point" style="left: 25%; top: 12%;" data-value="88%"></div>
-                                        <div class="data-point" style="left: 41.67%; top: 8%;" data-value="92%"></div>
-                                        <div class="data-point" style="left: 58.33%; top: 5%;" data-value="95%"></div>
-                                        <div class="data-point" style="left: 75%; top: 3%;" data-value="97%"></div>
-                                        <div class="data-point" style="left: 91.67%; top: 2%;" data-value="98%"></div>
-                                    </div>
-                                    <div class="line-path speed-line">
-                                        <div class="data-point" style="left: 8.33%; top: 25%;" data-value="75%"></div>
-                                        <div class="data-point" style="left: 25%; top: 20%;" data-value="80%"></div>
-                                        <div class="data-point" style="left: 41.67%; top: 15%;" data-value="85%"></div>
-                                        <div class="data-point" style="left: 58.33%; top: 10%;" data-value="90%"></div>
-                                        <div class="data-point" style="left: 75%; top: 8%;" data-value="92%"></div>
-                                        <div class="data-point" style="left: 91.67%; top: 5%;" data-value="95%"></div>
-                                    </div>
-                                    <div class="line-path fp-line">
-                                        <div class="data-point" style="left: 8.33%; top: 35%;" data-value="65%"></div>
-                                        <div class="data-point" style="left: 25%; top: 30%;" data-value="70%"></div>
-                                        <div class="data-point" style="left: 41.67%; top: 25%;" data-value="75%"></div>
-                                        <div class="data-point" style="left: 58.33%; top: 20%;" data-value="80%"></div>
-                                        <div class="data-point" style="left: 75%; top: 18%;" data-value="82%"></div>
-                                        <div class="data-point" style="left: 91.67%; top: 15%;" data-value="85%"></div>
-                                    </div>
+                                    <svg class="line-graph-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                        <!-- Detection Accuracy Line -->
+                                        <polyline points="8.33,85 25,88 41.67,92 58.33,95 75,97 91.67,98" 
+                                                 fill="none" 
+                                                 stroke="#00d2aa" 
+                                                 stroke-width="0.5" 
+                                                 stroke-linecap="round" 
+                                                 stroke-linejoin="round"/>
+                                        
+                                        <!-- Analysis Speed Line -->
+                                        <polyline points="8.33,75 25,80 41.67,85 58.33,90 75,92 91.67,95" 
+                                                 fill="none" 
+                                                 stroke="#00a8cc" 
+                                                 stroke-width="0.5" 
+                                                 stroke-linecap="round" 
+                                                 stroke-linejoin="round"/>
+                                        
+                                        <!-- False Positive Rate Line -->
+                                        <polyline points="8.33,65 25,70 41.67,75 58.33,80 75,82 91.67,85" 
+                                                 fill="none" 
+                                                 stroke="#00ffcc" 
+                                                 stroke-width="0.5" 
+                                                 stroke-linecap="round" 
+                                                 stroke-linejoin="round"/>
+                                    </svg>
+                                    
+                                    <!-- Data Points -->
+                                    <div class="data-point detection-point" style="left: 8.33%; top: 15%;" data-value="85%"></div>
+                                    <div class="data-point detection-point" style="left: 25%; top: 12%;" data-value="88%"></div>
+                                    <div class="data-point detection-point" style="left: 41.67%; top: 8%;" data-value="92%"></div>
+                                    <div class="data-point detection-point" style="left: 58.33%; top: 5%;" data-value="95%"></div>
+                                    <div class="data-point detection-point" style="left: 75%; top: 3%;" data-value="97%"></div>
+                                    <div class="data-point detection-point" style="left: 91.67%; top: 2%;" data-value="98%"></div>
+                                    
+                                    <div class="data-point speed-point" style="left: 8.33%; top: 25%;" data-value="75%"></div>
+                                    <div class="data-point speed-point" style="left: 25%; top: 20%;" data-value="80%"></div>
+                                    <div class="data-point speed-point" style="left: 41.67%; top: 15%;" data-value="85%"></div>
+                                    <div class="data-point speed-point" style="left: 58.33%; top: 10%;" data-value="90%"></div>
+                                    <div class="data-point speed-point" style="left: 75%; top: 8%;" data-value="92%"></div>
+                                    <div class="data-point speed-point" style="left: 91.67%; top: 5%;" data-value="95%"></div>
+                                    
+                                    <div class="data-point fp-point" style="left: 8.33%; top: 35%;" data-value="65%"></div>
+                                    <div class="data-point fp-point" style="left: 25%; top: 30%;" data-value="70%"></div>
+                                    <div class="data-point fp-point" style="left: 41.67%; top: 25%;" data-value="75%"></div>
+                                    <div class="data-point fp-point" style="left: 58.33%; top: 20%;" data-value="80%"></div>
+                                    <div class="data-point fp-point" style="left: 75%; top: 18%;" data-value="82%"></div>
+                                    <div class="data-point fp-point" style="left: 91.67%; top: 15%;" data-value="85%"></div>
                                 </div>
                             </div>
                             <div class="x-axis">
