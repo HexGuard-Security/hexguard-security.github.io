@@ -1024,7 +1024,7 @@
         @media (max-width: 768px) {
             .docs-container {
                 grid-template-columns: 1fr;
-                padding: 1rem;
+            padding: 1rem;
             }
             
             .docs-sidebar {
@@ -1793,13 +1793,13 @@
                         </button>
                         <div class="step-counter">
                             <span id="currentStep">1</span> of <span id="totalSteps">5</span>
-                        </div>
+                            </div>
                         <button class="nav-btn next-btn" id="nextBtn">
                             Next
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                    </div>
-                </div>
+                            </div>
+                            </div>
                 
                 <!-- Modern Table of Contents -->
                 <div class="modern-toc">
@@ -1807,9 +1807,9 @@
                         <div class="toc-title">
                             <i class="fas fa-list-ul"></i>
                             <h3>Table of Contents</h3>
-                        </div>
+                            </div>
                         <div class="toc-subtitle">Navigate through the documentation</div>
-                    </div>
+                        </div>
                     
                     <div class="toc-categories">
                         <!-- Getting Started -->
@@ -1858,27 +1858,27 @@
                                         <i class="fas fa-chevron-right"></i>
                                     </div>
                                 </a>
-                            </div>
-                        </div>
-                        
+                    </div>
+                </div>
+                
                         <!-- Configuration -->
                         <div class="toc-category-card">
                             <div class="category-header">
                                 <div class="category-icon">
                                     <i class="fas fa-cogs"></i>
-                                </div>
+                        </div>
                                 <h4>Configuration</h4>
                                 <div class="category-count">3 topics</div>
-                            </div>
+                        </div>
                             <div class="category-links">
                                 <a href="#configuration" class="toc-link">
                                     <div class="link-icon">
                                         <i class="fas fa-sliders-h"></i>
-                                    </div>
+                        </div>
                                     <div class="link-content">
                                         <span class="link-title">Configuration Options</span>
                                         <span class="link-desc">Customize your analysis settings</span>
-                                    </div>
+                    </div>
                                     <div class="link-arrow">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>
@@ -2497,12 +2497,96 @@ Content-Type: application/json
                     </div>
                     
                 <h3>Common Error Messages</h3>
-                <ul>
-                    <li><strong>"File not found":</strong> Check the file path and permissions</li>
-                    <li><strong>"Invalid firmware format":</strong> Ensure the file is a valid firmware binary</li>
-                    <li><strong>"Out of memory":</strong> Reduce memory usage or increase system RAM</li>
-                    <li><strong>"Analysis timeout":</strong> Increase timeout value in configuration</li>
-                </ul>
+                
+                <div class="error-messages-grid">
+                    <div class="alert alert-danger">
+                        <div class="error-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>File not found</strong>
+                        </div>
+                        <div class="error-description">Check the file path and permissions</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Verify the file exists and you have read permissions
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <div class="error-header">
+                            <i class="fas fa-file-exclamation"></i>
+                            <strong>Invalid firmware format</strong>
+                        </div>
+                        <div class="error-description">Ensure the file is a valid firmware binary</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Check file format with <span class="code-inline">firmwire info filename.bin</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-danger">
+                        <div class="error-header">
+                            <i class="fas fa-memory"></i>
+                            <strong>Out of memory</strong>
+                        </div>
+                        <div class="error-description">Reduce memory usage or increase system RAM</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Use <span class="code-inline">--memory=4GB</span> or <span class="code-inline">--low-memory-mode</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <div class="error-header">
+                            <i class="fas fa-clock"></i>
+                            <strong>Analysis timeout</strong>
+                        </div>
+                        <div class="error-description">Increase timeout value in configuration</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Set <span class="code-inline">--timeout=3600</span> or use <span class="code-inline">--interactive-mode</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <div class="error-header">
+                            <i class="fas fa-ban"></i>
+                            <strong>Unsupported file type</strong>
+                        </div>
+                        <div class="error-description">Check if file format is supported or try different analysis mode</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Use <span class="code-inline">--force-analyze</span> or convert to supported format
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-danger">
+                        <div class="error-header">
+                            <i class="fas fa-database"></i>
+                            <strong>Database connection failed</strong>
+                        </div>
+                        <div class="error-description">Check database configuration and connectivity</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Verify database settings or use <span class="code-inline">--offline-mode</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <div class="error-header">
+                            <i class="fas fa-key"></i>
+                            <strong>License expired</strong>
+                        </div>
+                        <div class="error-description">Renew your license or contact support</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Update license with <span class="code-inline">firmwire license --update</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <div class="error-header">
+                            <i class="fas fa-cog"></i>
+                            <strong>Configuration file corrupted</strong>
+                        </div>
+                        <div class="error-description">Reset configuration to defaults</div>
+                        <div class="error-solution">
+                            <strong>Solution:</strong> Run <span class="code-inline">firmwire config --reset</span>
+                        </div>
+                    </div>
+                </div>
                     </div>
                     
             <div class="docs-section" id="examples">
@@ -2781,6 +2865,92 @@ fi</pre>
                     
                     .completion-icon i {
                         color: #000;
+                    }
+                    
+                    /* Error Messages Grid */
+                    .error-messages-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                        gap: 1rem;
+                        margin-top: 1rem;
+                    }
+                    
+                    .error-messages-grid .alert {
+                        padding: 1.25rem;
+                        border-radius: 8px;
+                        border-left: 4px solid;
+                        position: relative;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .error-messages-grid .alert:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+                    
+                    .error-messages-grid .alert-danger {
+                        background: rgba(220, 53, 69, 0.1);
+                        border-left-color: #dc3545;
+                        border: 1px solid rgba(220, 53, 69, 0.2);
+                    }
+                    
+                    .error-messages-grid .alert-warning {
+                        background: rgba(255, 193, 7, 0.1);
+                        border-left-color: #ffc107;
+                        border: 1px solid rgba(255, 193, 7, 0.2);
+                    }
+                    
+                    .error-messages-grid .alert-info {
+                        background: rgba(13, 202, 240, 0.1);
+                        border-left-color: #0dcaf0;
+                        border: 1px solid rgba(13, 202, 240, 0.2);
+                    }
+                    
+                    .error-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        margin-bottom: 0.5rem;
+                    }
+                    
+                    .error-header i {
+                        font-size: 1.1rem;
+                    }
+                    
+                    .error-header strong {
+                        font-size: 1rem;
+                        color: var(--text-primary);
+                    }
+                    
+                    .error-description {
+                        color: var(--text-secondary);
+                        margin-bottom: 0.75rem;
+                        font-size: 0.9rem;
+                        line-height: 1.4;
+                    }
+                    
+                    .error-solution {
+                        background: rgba(0, 0, 0, 0.1);
+                        padding: 0.75rem;
+                        border-radius: 6px;
+                        border-left: 3px solid var(--secondary-color);
+                    }
+                    
+                    .error-solution strong {
+                        color: var(--secondary-color);
+                        font-size: 0.85rem;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    }
+                    
+                    .error-solution .code-inline {
+                        background: rgba(0, 210, 170, 0.15);
+                        color: var(--secondary-color);
+                        padding: 0.2rem 0.4rem;
+                        border-radius: 4px;
+                        font-family: 'Courier New', monospace;
+                        font-size: 0.8rem;
+                        margin: 0 0.2rem;
                     }
                     
                     .completion-text h4 {
