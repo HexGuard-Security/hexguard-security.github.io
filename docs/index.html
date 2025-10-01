@@ -49,12 +49,12 @@
                 <h2 class="hero-subtitle-title">Secure your embedded devices with <span class="highlight">Intelligence</span></h2>
                 <p class="hero-subtitle">Advanced firmware analysis and vulnerability detection powered by cutting-edge technology to help you secure your embedded devices.</p>
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="scrollToSection('product')">
+               <!--      <button class="btn-primary" onclick="scrollToSection('product')">
                         <i class="fas fa-download"></i> Download Firmwire
                     </button>
                     <button class="btn-secondary" onclick="scrollToSection('features')">
                         <i class="fas fa-play"></i> See Demo
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <div class="hero-visual">
@@ -328,8 +328,7 @@
         </div>
     </section>
 
-
-    <!-- Download Section -->
+<!-- 
     <section class="download-section">
         <div class="container">
             <div class="download-content">
@@ -444,75 +443,174 @@
             </div>
         </div>
     </section>
-
+-->
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
-        <div class="container">
+        <div class="contact-container">
+            <div class="contact-hero">
+                <div class="contact-kicker">
+                    <i class="fas fa-paper-plane"></i>
+                    <span class="contact-kicker-text">Get in Touch</span>
+                </div>
+                <h2 class="contact-title">Ready to <span class="highlight">Secure</span> Your Firmware?</h2>
+                <p class="contact-subtitle">Have questions about Firmwire Analysis or need enterprise support? We're here to help you secure your embedded devices.</p>
+            </div>
+            
             <div class="contact-content">
                 <div class="contact-info">
-                    <h2 class="highlight">Get in Touch</h2>
-                    <p>Have questions about Firmwire Analysis or need enterprise support? We're here to help.</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h4>Email</h4>
-                                <p>support@hexguard.net</p>
-                            </div>
+                    <div class="contact-card">
+                        <div class="contact-card-header">
+                            <i class="fas fa-headset"></i>
+                            <h3>Support Channels</h3>
                         </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>+91 6366934469</p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Email Support</h4>
+                                    <p>support@hexguard.net</p>
+                                    <span class="contact-badge">24/7 Response</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <h4>Business Hours</h4>
-                                <p>Mon-Fri: 2AM-10AM UTC</p>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Phone Support</h4>
+                                    <p>+91 6366934469</p>
+                                    <span class="contact-badge">Business Hours</span>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Business Hours</h4>
+                                    <p>Mon-Fri: 2AM-10AM UTC</p>
+                                    <span class="contact-badge">ICT Timezone</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                <div class="social-links">
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <div class="social-card">
+                        <h4>Follow Our Journey</h4>
+                        <div class="social-links">
+                            <a href="#" aria-label="Twitter" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                            <a href="#" aria-label="LinkedIn" class="social-link">
+                                <i class="fab fa-linkedin"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="#" aria-label="GitHub" class="social-link">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" required>
-                        <label for="name">Full Name</label>
+                <div class="contact-form-container">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <i class="fas fa-comment-dots"></i>
+                            <h3>Send us a Message</h3>
+                            <p>We'll get back to you within 24 hours</p>
+                        </div>
+                        
+                        <form class="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="name" name="name" required>
+                                    <label for="name">Full Name</label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input type="email" id="email" name="email" required>
+                                    <label for="email">Email Address</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" id="company" name="company">
+                                <label for="company">Company (Optional)</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <select id="inquiry" name="inquiry" required>
+                                    <option value="">Select Inquiry Type</option>
+                                    <option value="general">General Question</option>
+                                    <option value="enterprise">Enterprise Support</option>
+                                    <option value="partnership">Partnership</option>
+                                    <option value="technical">Technical Support</option>
+                                </select>
+                                <label for="inquiry">Inquiry Type</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea id="message" name="message" required></textarea>
+                                <label for="message">Your Message</label>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>Send via WhatsApp</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </form>
                     </div>
-                    
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" required>
-                        <label for="email">Email Address</label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <textarea id="message" name="message" required></textarea>
-                        <label for="message">Message</label>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <i class="fab fa-whatsapp"></i>
-                        Send via WhatsApp
-                    </button>
-                </form>
+                </div>
+            </div>
 
-                <!-- Full-width map row spanning both columns -->
-                <div class="map-row">
-                    <div class="map-card">
-                        <h4><i class="fas fa-map-marker-alt"></i> HexGuard office locations</h4>
-                        <div id="hq-map" aria-label="Map showing HexGuard HQ in Silom 3, Bangkok"></div>
+            <!-- Office Addresses Section -->
+            <div class="office-section">
+                <div class="office-card">
+                    <div class="office-header">
+                        <i class="fas fa-building"></i>
+                        <h3>Our Offices</h3>
+                        <p>Visit us at our locations worldwide</p>
+                    </div>
+                    <div class="office-addresses">
+                        <div class="office-item">
+                            <div class="office-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="office-details">
+                                <h4>Headquarters</h4>
+                                <p>Silom 3, Bangkok, Thailand</p>
+                                <span class="office-badge">Main Office</span>
+                            </div>
+                        </div>
+                        
+                        <div class="office-item">
+                            <div class="office-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="office-details">
+                                <h4>Development Center</h4>
+                                <p>Bangalore, India</p>
+                                <span class="office-badge">R&D Hub</span>
+                            </div>
+                        </div>
+                        
+                        <div class="office-item">
+                            <div class="office-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="office-details">
+                                <h4>Regional Office</h4>
+                                <p>Singapore</p>
+                                <span class="office-badge">APAC</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lab 3 Replay Sandbox</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <link rel="stylesheet" href="../../assets/css/styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+  <header class="bg-slate-900 text-white p-6">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-2xl font-semibold">Lab 3 Replay Sandbox</h1>
+      <p class="text-slate-300 mt-1">replay captured iq files into local demod chain use file based loopback only</p>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto p-6 space-y-6">
+    <section class="bg-white shadow rounded p-6">
+      <h2 class="text-lg font-semibold">objective</h2>
+      <p class="mt-2 text-sm text-slate-700">demonstrate replay effects using offline playback and gnuradio loopback</p>
+    </section>
+
+    <section class="bg-white shadow rounded p-6">
+      <h2 class="text-lg font-semibold">steps</h2>
+
+      <h3 class="mt-3 font-medium">play iq file into demod chain</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>gnuradio-companion grc/lab2_flowgraph.grc
+# set file source to ../../samples/fpv_sample.f32
+# run flowgraph to observe demod output</code></pre>
+
+      <h3 class="mt-3 font-medium">offline replay to file sink</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>python3 -c "import shutil; shutil.copy('samples/fpv_sample.f32','work/replay_loop.f32')"</code></pre>
+
+      <h3 class="mt-3 font-medium">analysis</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>python3 scripts/tracker.py --input work/replay_loop.f32 --output work/replay_peaks.csv</code></pre>
+    </section>
+
+    <section class="bg-white shadow rounded p-6">
+      <h2 class="text-lg font-semibold">files</h2>
+      <ul class="mt-2 text-sm text-slate-700">
+        <li><a class="text-sky-600" href="../../scripts/tracker.py">scripts tracker py</a></li>
+        <li><a class="text-sky-600" href="../../samples/fpv_sample.f32">fpv sample f32</a></li>
+      </ul>
+
+      <h3 class="mt-3 font-medium">create files on mac</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>cd ~/Sites/hexguard.net/ctf/labs
+mkdir -p lab3 work
+cd lab3
+touch index.html
+</code></pre>
+    </section>
+
+    <footer class="text-sm text-slate-500">lab 3 content hosted at ctf labs lab3</footer>
+  </main>
+
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

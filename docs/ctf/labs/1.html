@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lab 1 Tello Recon</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <link rel="stylesheet" href="../../assets/css/styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+  <header class="bg-slate-900 text-white p-6">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-2xl font-semibold">Lab 1 Tello Recon</h1>
+      <p class="text-slate-300 mt-1">discover connect and command</p>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto p-6 space-y-6">
+    <section class="bg-white shadow rounded p-6">
+      <h2 class="text-lg font-semibold">objective</h2>
+      <p class="mt-2 text-sm text-slate-700">discover the drone network identify services and send basic commands using udp</p>
+    </section>
+
+    <section class="bg-white shadow rounded p-6">
+      <h2 class="text-lg font-semibold">requirements</h2>
+      <ul class="list-disc pl-6 mt-2 text-sm text-slate-700">
+        <li>laptop with python 3</li>
+        <li>wifi capable of connecting to 2.4 ghz ssid</li>
+        <li>dji tello drone</li>
+        <li>nmap wireshark or tshark</li>
+      </ul>
+    </section>
+
+    <section class="bg-white shadow rounded p-6">
+      <h2 class="text-lg font-semibold">steps</h2>
+
+      <h3 class="mt-3 font-medium">connect</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>nmcli dev wifi list
+nmcli dev wifi connect "TELLO-XXXXXX"</code></pre>
+
+      <h3 class="mt-3 font-medium">verify</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>ping 192.168.10.1
+nmap -sV -Pn 192.168.10.1
+sudo tshark -i wlan0 -Y "ip.addr == 192.168.10.1"</code></pre>
+
+      <h3 class="mt-3 font-medium">python control script</h3>
+      <pre class="language-python rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>import socket
+
+TELLO_IP = "192.168.10.1"
+TELLO_PORT = 8889
+LOCAL_PORT = 9000
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(("", LOCAL_PORT))
+
+def send(cmd):
+    sock.sendto(cmd.encode("utf-8"), (TELLO_IP, TELLO_PORT))
+    resp, _ = sock.recvfrom(1024)
+    print(cmd, resp.decode("utf-8"))
+
+send("command")
+send("takeoff")
+send("land")</code></pre>
+
+      <h3 class="mt-3 font-medium">run</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>python3 tello_control.py</code></pre>
+
+    </section>
+
+    <section class="bg-white shadow rounded p-6">
+      <h2 class="text-lg font-semibold">files</h2>
+      <ul class="mt-2 text-sm text-slate-700">
+        <li><a class="text-sky-600" href="../../samples/sitl_mav.pcap">sitl_mav.pcap</a> sample for later labs</li>
+        <li><a class="text-sky-600" href="tello_control.py">tello_control.py</a> starter script</li>
+      </ul>
+
+      <h3 class="mt-3 font-medium">create files on mac</h3>
+      <pre class="language-bash rounded bg-slate-900 text-white p-3 text-sm overflow-auto"><code>cd ~/Sites/hexguard.net/ctf/labs
+mkdir -p lab1
+cd lab1
+cat > tello_control.py <<'PY'
+import socket
+
+TELLO_IP = "192.168.10.1"
+TELLO_PORT = 8889
+LOCAL_PORT = 9000
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(("", LOCAL_PORT))
+
+def send(cmd):
+    sock.sendto(cmd.encode("utf-8"), (TELLO_IP, TELLO_PORT))
+    resp, _ = sock.recvfrom(1024)
+    print(cmd, resp.decode("utf-8"))
+
+send("command")
+send("takeoff")
+send("land")
+PY</code></pre>
+    </section>
+
+    <footer class="text-sm text-slate-500">lab 1 content hosted at ctf labs lab1</footer>
+  </main>
+
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
