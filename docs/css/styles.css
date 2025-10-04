@@ -3195,3 +3195,163 @@ body.loaded {
         padding: 0 1rem;
     }
 }
+
+/* PDF Embedding Styles */
+.pdf-section {
+    background: rgba(15, 22, 38, 0.6);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+
+.pdf-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.pdf-header h3 {
+    color: var(--text-primary);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.pdf-header h3 i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.pdf-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.pdf-container {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.pdf-embed {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    background: #f8f9fa;
+}
+
+.pdf-fallback {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 3rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.pdf-fallback i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.pdf-fallback h4 {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.pdf-fallback a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.pdf-fallback a:hover {
+    text-decoration: underline;
+}
+
+.section-content {
+    margin-bottom: 2rem;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.content-text {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.content-text h4 {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.content-text ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.content-text li {
+    margin-bottom: 0.5rem;
+}
+
+.highlight-box {
+    background: rgba(0, 102, 255, 0.1);
+    border: 1px solid rgba(0, 102, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.highlight-box h5 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.highlight-box p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Responsive PDF Styles */
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .pdf-embed {
+        height: 600px;
+    }
+    
+    .pdf-section {
+        padding: 1.5rem;
+    }
+    
+    .pdf-header h3 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

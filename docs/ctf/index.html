@@ -8,6 +8,159 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <meta name="description" content="Drone Security Workshop by CRACCON - October 4, 2025 at India International Centre, New Delhi">
+    <style>
+        /* Disable scroll snapping for this page only */
+        body {
+            scroll-snap-type: none !important;
+            scroll-behavior: auto !important;
+        }
+        
+        section {
+            scroll-snap-align: none !important;
+            scroll-snap-stop: normal !important;
+            min-height: auto !important;
+        }
+        
+        html {
+            scroll-behavior: auto !important;
+        }
+        
+        .pdf-embed {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: #f8f9fa;
+        }
+        
+        .pdf-section {
+            background: rgba(15, 22, 38, 0.6);
+            backdrop-filter: blur(10px) saturate(120%);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .pdf-header h3 {
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .pdf-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        .pdf-container {
+            position: relative;
+            margin-top: 2rem;
+        }
+        
+        .pdf-fallback {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .pdf-fallback i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .pdf-fallback h4 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pdf-fallback a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .pdf-fallback a:hover {
+            text-decoration: underline;
+        }
+        
+        .section-content {
+            margin-bottom: 2rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .content-text h4 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+        }
+        
+        .content-text ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+        
+        .content-text li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-box h5 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+        }
+        
+        .highlight-box p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .pdf-embed {
+                height: 400px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Floating Nav -->
@@ -26,237 +179,227 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="workshop-hero">
-        <div class="workshop-container">
-            <div class="workshop-kicker">
-                <i class="fas fa-drone"></i>
-                <span>CRACCON 2025 Workshop</span>
-            </div>
-            <h1 class="workshop-title">Drone Security <span class="highlight">Workshop</span></h1>
-            <p class="workshop-subtitle">Advanced techniques in drone security analysis, RF interception, and vulnerability assessment</p>
-            
-            <div class="workshop-details">
-                <div class="detail-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <div>
-                        <h3>Date</h3>
-                        <p>October 4, 2025</p>
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <h3>Venue</h3>
-                        <p>India International Centre<br>New Delhi</p>
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-university"></i>
-                    <div>
-                        <h3>Organizer</h3>
-                        <p>CRACCON</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Workshop Overview -->
-    <section class="workshop-overview">
-        <div class="workshop-container">
-            <div class="overview-content">
-                <div class="overview-text">
-                    <h2>Workshop Overview</h2>
-                    <p>This comprehensive workshop will cover advanced drone security techniques including RF signal analysis, telemetry interception, MAVLink protocol exploitation, and real-world vulnerability assessment methodologies.</p>
-                    
-                    <div class="topics-grid">
-                        <div class="topic-card">
-                            <i class="fas fa-broadcast-tower"></i>
-                            <h4>RF Analysis</h4>
-                            <p>Signal interception and analysis techniques</p>
-                        </div>
-                        <div class="topic-card">
-                            <i class="fas fa-satellite-dish"></i>
-                            <h4>Telemetry Hacking</h4>
-                            <p>MAVLink protocol exploitation and manipulation</p>
-                        </div>
-                        <div class="topic-card">
-                            <i class="fas fa-video"></i>
-                            <h4>FPV Systems</h4>
-                            <p>First Person View signal analysis and interception</p>
-                        </div>
-                        <div class="topic-card">
-                            <i class="fas fa-shield-alt"></i>
-                            <h4>Security Assessment</h4>
-                            <p>Vulnerability testing and penetration techniques</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="overview-visual">
-                    <div class="drone-diagram">
-                        <div class="drone-component">
-                            <i class="fas fa-wifi"></i>
-                            <span>RC Link</span>
-                        </div>
-                        <div class="drone-component">
-                            <i class="fas fa-microchip"></i>
-                            <span>Flight Controller</span>
-                        </div>
-                        <div class="drone-component">
-                            <i class="fas fa-laptop"></i>
-                            <span>Ground Station</span>
-                        </div>
-                        <div class="drone-component">
-                            <i class="fas fa-video"></i>
-                            <span>FPV System</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Resources Section -->
+    <!-- Main Presentation Section -->
     <section class="resources-section">
         <div class="workshop-container">
-            <h2>Workshop Resources</h2>
-            <p class="section-subtitle">Download materials and access additional resources for the workshop</p>
+            <h2>Workshop Materials</h2>
+            <p class="section-subtitle">Comprehensive resources and documentation for the drone security workshop</p>
             
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <div class="resource-icon">
-                        <i class="fas fa-presentation"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Main Slide Deck</h3>
-                        <p>Comprehensive presentation covering all workshop topics and methodologies</p>
-                        <a href="#" class="resource-btn">
-                            <i class="fas fa-download"></i>
-                            Download Slides
-                        </a>
-                    </div>
+            <!-- Main Slide Deck -->
+            <div class="pdf-section">
+                <div class="pdf-header">
+                    <h3><i class="fas fa-presentation"></i> Main Workshop Presentation</h3>
+                    <p>Comprehensive slide deck covering all workshop topics, methodologies, and hands-on exercises</p>
                 </div>
                 
-                <div class="resource-card">
-                    <div class="resource-icon">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Drone Security Handout</h3>
-                        <p>Detailed technical reference guide with practical examples and code samples</p>
-                        <a href="#" class="resource-btn">
-                            <i class="fas fa-download"></i>
-                            Download Handout
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Code Samples</h3>
-                        <p>Python scripts and GNURadio flowgraphs for hands-on exercises</p>
-                        <a href="#" class="resource-btn">
-                            <i class="fas fa-download"></i>
-                            Download Code
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="resource-content">
-                        <h3>Sample Data</h3>
-                        <p>MAVLink captures and RF samples for analysis exercises</p>
-                        <a href="#" class="resource-btn">
-                            <i class="fas fa-download"></i>
-                            Download Samples
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Prerequisites Section -->
-    <section class="prerequisites-section">
-        <div class="workshop-container">
-            <h2>Prerequisites & Requirements</h2>
-            
-            <div class="prerequisites-grid">
-                <div class="prereq-card">
-                    <h3><i class="fas fa-laptop-code"></i> Technical Requirements</h3>
-                    <ul>
-                        <li>Laptop with Linux/macOS/Windows</li>
-                        <li>8GB+ RAM recommended</li>
-                        <li>USB 3.0 port for SDR devices</li>
-                        <li>Python 3.8+ installed</li>
-                        <li>GNURadio (optional but recommended)</li>
-                    </ul>
-                </div>
-                
-                <div class="prereq-card">
-                    <h3><i class="fas fa-graduation-cap"></i> Knowledge Prerequisites</h3>
-                    <ul>
-                        <li>Basic understanding of RF concepts</li>
-                        <li>Python programming experience</li>
-                        <li>Familiarity with command line tools</li>
-                        <li>Basic networking knowledge</li>
-                        <li>Interest in drone technology</li>
-                    </ul>
-                </div>
-                
-                <div class="prereq-card">
-                    <h3><i class="fas fa-tools"></i> Software Setup</h3>
-                    <ul>
-                        <li>Wireshark for packet analysis</li>
-                        <li>GQRX or SDR# for RF analysis</li>
-                        <li>ArduPilot SITL simulator</li>
-                        <li>MAVProxy for MAVLink testing</li>
-                        <li>Text editor (VS Code recommended)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="workshop-contact">
-        <div class="workshop-container">
-            <div class="contact-content">
-                <h2>Questions About the Workshop?</h2>
-                <p>Contact us for more information about the workshop, prerequisites, or technical requirements.</p>
-                
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p>workshop@hexguard.net</p>
+                <div class="section-content">
+                    <div class="content-grid">
+                        <div class="content-text">
+                            <h4>Presentation Overview</h4>
+                            <p>This comprehensive presentation covers the complete spectrum of drone security analysis, from basic RF concepts to advanced exploitation techniques. The slides are designed to provide both theoretical knowledge and practical implementation guidance.</p>
+                            
+                            <h4>Key Topics Covered</h4>
+                            <ul>
+                                <li>RF Signal Analysis and Interception</li>
+                                <li>DroneID Protocol Deep Dive</li>
+                                <li>FPV System Security Assessment</li>
+                                <li>Telemetry Data Manipulation</li>
+                                <li>Real-world Attack Scenarios</li>
+                                <li>Defensive Countermeasures</li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <h4>Website</h4>
-                            <p>hexguard.net</p>
+                        <div class="content-text">
+                            <h4>Workshop Structure</h4>
+                            <p>The presentation is structured to provide a progressive learning experience, starting with fundamental concepts and advancing to complex security analysis techniques.</p>
+                            
+                            <div class="highlight-box">
+                                <h5>Duration: 2.5 Hours</h5>
+                                <p>Comprehensive workshop with hands-on exercises and real-world case studies</p>
+                            </div>
+                            
+                            <h4>Target Audience</h4>
+                            <ul>
+                                <li>Security Researchers</li>
+                                <li>Penetration Testers</li>
+                                <li>IoT Security Specialists</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
                 
-                <a href="../index.html#contact" class="cta-btn">
-                    <i class="fas fa-comment-dots"></i>
-                    Get in Touch
-                </a>
+                <div class="pdf-container">
+                    <iframe src="files/No-Fly-Zone.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" class="pdf-embed" title="Main Workshop Presentation">
+                        <div class="pdf-fallback">
+                            <i class="fas fa-file-pdf"></i>
+                            <h4>PDF Viewer Not Supported</h4>
+                            <p>Your browser doesn't support PDF embedding. <a href="files/No-Fly-Zone.pdf" target="_blank">Click here to view the presentation</a></p>
+                        </div>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Drone Security Analysis -->
+            <div class="pdf-section">
+                <div class="pdf-header">
+                    <h3><i class="fas fa-shield-alt"></i> Drone Security Analysis</h3>
+                    <p>Comprehensive infographic PDF on drone vulnerabilities based on OWASP research and extensive security analysis</p>
+                </div>
+                
+                <div class="section-content">
+                    <div class="content-grid">
+                        <div class="content-text">
+                            <h4>Research Foundation</h4>
+                            <p>This comprehensive analysis is based on extensive research from the OWASP Drone Security Cheat Sheet and other authoritative sources in the field of drone security. The document provides a systematic approach to understanding and mitigating drone vulnerabilities.</p>
+                            
+                            <h4>Vulnerability Categories</h4>
+                            <ul>
+                                <li>Communication Channel Vulnerabilities</li>
+                                <li>Authentication and Authorization Flaws</li>
+                                <li>Data Integrity Issues</li>
+                                <li>Physical Security Weaknesses</li>
+                                <li>Firmware and Software Vulnerabilities</li>
+                                <li>Network Protocol Exploits</li>
+                            </ul>
+                        </div>
+                        <div class="content-text">
+                            <h4>Analysis Methodology</h4>
+                            <p>The document follows a structured methodology for drone security assessment, providing both theoretical frameworks and practical implementation guidelines for security researchers and practitioners.</p>
+                            
+                            <div class="highlight-box">
+                                <h5>OWASP Compliant</h5>
+                                <p>Based on OWASP Drone Security Cheat Sheet v1.0 and industry best practices</p>
+                            </div>
+                            
+                            <h4>Target Scenarios</h4>
+                            <ul>
+                                <li>Commercial Drone Security Assessment</li>
+                                <li>Military UAV Vulnerability Analysis</li>
+                                <li>Consumer Drone Penetration Testing</li>
+                                <li>Industrial IoT Drone Security</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pdf-container">
+                    <iframe src="files/Drone Vulnerabilities_ A Comprehensive Security Analysis.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" class="pdf-embed" title="Drone Security Analysis">
+                        <div class="pdf-fallback">
+                            <i class="fas fa-file-pdf"></i>
+                            <h4>PDF Viewer Not Supported</h4>
+                            <p>Your browser doesn't support PDF embedding. <a href="files/Drone Vulnerabilities_ A Comprehensive Security Analysis.pdf" target="_blank">Click here to view the analysis</a></p>
+                        </div>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Original Research Papers -->
+            <div class="pdf-section">
+                <div class="pdf-header">
+                    <h3><i class="fas fa-graduation-cap"></i> Original Research Papers</h3>
+                    <p>Groundbreaking research that forms the foundation of this workshop - original slides and peer-reviewed academic paper</p>
+                </div>
+                
+                <div class="section-content">
+                    <div class="content-grid">
+                        <div class="content-text">
+                            <h4>Research Foundation</h4>
+                            <p>This workshop is based on cutting-edge research presented at REcon and published at NDSS 2023. The work focuses on DJI drones (94% market share) and reveals critical security vulnerabilities in consumer drone systems.</p>
+                            
+                            <h4>Key Research Findings</h4>
+                            <ul>
+                                <li>DroneID protocol reverse engineering</li>
+                                <li>16 critical vulnerabilities discovered</li>
+                                <li>Remote code execution capabilities</li>
+                                <li>Privacy implications of unencrypted tracking</li>
+                                <li>Bypass of safety countermeasures</li>
+                            </ul>
+                        </div>
+                        <div class="content-text">
+                            <h4>Academic Impact</h4>
+                            <p>The research has significant implications for drone security, revealing fundamental flaws in how manufacturers implement safety and privacy controls in consumer drones.</p>
+                            
+                            <div class="highlight-box">
+                                <h5>NDSS 2023 Publication</h5>
+                                <p>Peer-reviewed paper accepted at the Network and Distributed System Security Symposium</p>
+                            </div>
+                            
+                            <h4>Research Methodology</h4>
+                            <ul>
+                                <li>Firmware reverse engineering</li>
+                                <li>Novel fuzzing techniques</li>
+                                <li>Hardware analysis</li>
+                                <li>COTS hardware implementation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pdf-container">
+                    <iframe src="files/REcon_online_slides_mLUVm2u.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" class="pdf-embed" title="REcon Original Slides">
+                        <div class="pdf-fallback">
+                            <i class="fas fa-file-pdf"></i>
+                            <h4>PDF Viewer Not Supported</h4>
+                            <p>Your browser doesn't support PDF embedding. <a href="files/REcon_online_slides_mLUVm2u.pdf" target="_blank">Click here to view the slides</a></p>
+                        </div>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- NDSS 2023 Research Paper -->
+            <div class="pdf-section">
+                <div class="pdf-header">
+                    <h3><i class="fas fa-file-alt"></i> NDSS 2023 Research Paper</h3>
+                    <p>Drone Security and the Mysterious Case of DJI's DroneID</p>
+                </div>
+                
+                <div class="section-content">
+                    <div class="content-grid">
+                        <div class="content-text">
+                            <h4>Paper Abstract</h4>
+                            <p>Consumer drones enable high-class aerial video photography, promise to reform the logistics industry, and are already used for humanitarian rescue operations and during armed conflicts. Contrasting their widespread adoption and high popularity, the low entry barrier for air mobility poses many risks to safety, security, and privacy.</p>
+                            
+                            <h4>Critical Discoveries</h4>
+                            <ul>
+                                <li>DroneID protocol lacks encryption</li>
+                                <li>Operator privacy compromised</li>
+                                <li>Remote privilege escalation possible</li>
+                                <li>Safety countermeasures bypassable</li>
+                                <li>Mid-flight drone crashes achievable</li>
+                            </ul>
+                        </div>
+                        <div class="content-text">
+                            <h4>Research Impact</h4>
+                            <p>The paper demonstrates how malicious parties could misuse drones for surveillance, transportation of illegal goods, or cause economic damage by intruding restricted airspace around airports and other critical infrastructure.</p>
+                            
+                            <div class="highlight-box">
+                                <h5>16 Vulnerabilities Found</h5>
+                                <p>Range from denial of service to arbitrary code execution, with 14 triggerable remotely via smartphone</p>
+                            </div>
+                            
+                            <h4>Methodology</h4>
+                            <ul>
+                                <li>Reverse engineering DJI firmware</li>
+                                <li>Custom DroneID decoder implementation</li>
+                                <li>Novel fuzzing approach</li>
+                                <li>Hardware security analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pdf-container">
+                    <iframe src="files/ndss2023_f217_paper.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" class="pdf-embed" title="NDSS 2023 Research Paper">
+                        <div class="pdf-fallback">
+                            <i class="fas fa-file-pdf"></i>
+                            <h4>PDF Viewer Not Supported</h4>
+                            <p>Your browser doesn't support PDF embedding. <a href="files/ndss2023_f217_paper.pdf" target="_blank">Click here to view the paper</a></p>
+                        </div>
+                    </iframe>
+                </div>
             </div>
         </div>
     </section>
-
     <!-- Mini Floating Footer -->
     <div class="mini-footer" role="contentinfo" aria-label="Quick footer">
         <span class="mini-footer__copyright">© 2025 HexGuard</span>
@@ -268,5 +411,31 @@
     </div>
 
     <script src="../js/scripts.js"></script>
+    <script>
+        // Override any scroll snapping behavior for this page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remove any existing scroll event listeners that might interfere
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.scrollSnapAlign = 'none';
+                section.style.scrollSnapStop = 'normal';
+                section.style.minHeight = 'auto';
+            });
+            
+            // Ensure smooth scrolling is disabled
+            document.documentElement.style.scrollBehavior = 'auto';
+            document.body.style.scrollBehavior = 'auto';
+            
+            // Override any wheel event listeners that might cause snapping
+            let wheelOverride = false;
+            window.addEventListener('wheel', function(e) {
+                if (!wheelOverride) {
+                    wheelOverride = true;
+                    // Let the default scroll behavior handle this
+                    setTimeout(() => { wheelOverride = false; }, 100);
+                }
+            }, { passive: true });
+        });
+    </script>
 </body>
 </html>

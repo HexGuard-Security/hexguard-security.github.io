@@ -1178,6 +1178,11 @@ function initializeFeatureIconLogos() {
 
 // Smooth fullpage snap: wheel/keys/swipe jump to next/prev section and center
 function initializeFullpageSnapScroll() {
+    // Skip scroll snapping on CTF workshop page
+    if (window.location.pathname.includes('/ctf/')) {
+        return;
+    }
+    
     const sections = Array.from(document.querySelectorAll('section'));
     if (sections.length === 0) return;
 
