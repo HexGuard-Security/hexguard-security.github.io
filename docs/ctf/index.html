@@ -1,155 +1,272 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>No-Fly Zone — Workshop Handout</title>
-
-  <!-- Tailwind CDN (production-ready quickstart) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Chart.js for schedule / visualizations -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
-
-  <!-- Prism for code highlighting -->
-  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
-
-  <!-- Local CSS -->
-  <link rel="stylesheet" href="./assets/css/styles.css" />
-
-  <meta name="description" content="No-Fly Zone: Drone Hacking Workshop — handout, labs, downloads and diagrams. Hosted by HexGuard." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Security Workshop - CRACCON 2025</title>
+    <link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <meta name="description" content="Drone Security Workshop by CRACCON - October 4, 2025 at India International Centre, New Delhi">
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-  <header class="bg-slate-900 text-white">
-    <div class="max-w-6xl mx-auto p-6 flex items-start gap-4">
-      <div class="flex-1">
-        <h1 class="text-2xl font-semibold">No-Fly Zone — Drone Hacking Workshop</h1>
-        <p class="text-slate-300 mt-1">RF, telemetry, FPV and MAVLink</p>
-      </div>
-      <div class="text-sm text-slate-300">
-        Host: <strong>Adlin Seedon D'Souza</strong><br>
-        Files: <code>/ctf/</code> on <strong>hexguard.net</strong>
-      </div>
+<body>
+    <!-- Floating Nav -->
+    <div class="floating-nav" role="navigation" aria-label="Primary">
+        <a href="../index.html" class="floating-nav__brand" aria-label="HexGuard Home">
+            <img src="../img/logo.svg" alt="HexGuard" class="floating-nav__logo">
+            <span class="floating-nav__text">HexGuard</span>
+        </a>
+        <div class="floating-nav__links">
+            <a href="../index.html#team">Team</a>
+            <a href="../index.html#product">Product</a>
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#contact">Contact</a>
+            <a href="../res/docs.html">Docs</a>
+        </div>
     </div>
-  </header>
 
-  <main class="max-w-6xl mx-auto p-6 space-y-8">
-    <!-- Quick links -->
-    <section class="bg-white shadow rounded p-6">
-      <h2 class="text-xl font-semibold mb-3">Workshop Quick Links</h2>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div>
-          <ul class="space-y-2">
-            <li><a class="text-sky-600 hover:underline" href="./labs/1.html">Lab 1 — Intercepting Telemetry</a></li>
-            <li><a class="text-sky-600 hover:underline" href="./labs/2.html">Lab 2 — Analog FPV Demod</a></li>
-            <li><a class="text-sky-600 hover:underline" href="./labs/3.html">Lab 3 — Replay & Sandbox Demo</a></li>
-            <li><a class="text-sky-600 hover:underline" href="./labs/4.html">Lab 4 — MAVLink Exploration</a></li>
-            <li><a class="text-sky-600 hover:underline" href="./labs/5.html">Lab 5 — MAVLink Scripting</a></li>
-            <li><a class="text-sky-600 hover:underline" href="./labs/6.html">Lab 6 — Passive SDR Tracker</a></li>
-          </ul>
+    <!-- Hero Section -->
+    <section class="workshop-hero">
+        <div class="workshop-container">
+            <div class="workshop-kicker">
+                <i class="fas fa-drone"></i>
+                <span>CRACCON 2025 Workshop</span>
+            </div>
+            <h1 class="workshop-title">Drone Security <span class="highlight">Workshop</span></h1>
+            <p class="workshop-subtitle">Advanced techniques in drone security analysis, RF interception, and vulnerability assessment</p>
+            
+            <div class="workshop-details">
+                <div class="detail-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <h3>Date</h3>
+                        <p>October 4, 2025</p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Venue</h3>
+                        <p>India International Centre<br>New Delhi</p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-university"></i>
+                    <div>
+                        <h3>Organizer</h3>
+                        <p>CRACCON</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div>
-          <h3 class="font-medium">Downloads</h3>
-          <ul class="mt-2 space-y-2 text-sm">
-            <li><a class="text-sky-600 hover:underline" href="./samples/sitl_mav.pcap" download>sitl_mav.pcap</a> — SITL MAVLink capture</li>
-            <li><a class="text-sky-600 hover:underline" href="./samples/fpv_sample.f32" download>fpv_sample.f32</a> — analog FPV IQ sample</li>
-                <li><a class="text-sky-600 hover:underline" href="./grc/lab2_flowgraph.grc" download>lab2_flowgraph.grc</a> — GNURadio flowgraph</li>
-            <li><a class="text-sky-600 hover:underline" href="./scripts/mav2csv.py" download>mav2csv.py</a> — pymavlink parser</li>
-            <li><a class="text-sky-600 hover:underline" href="./scripts/tracker.py" download>tracker.py</a> — PSD-based tracker skeleton</li>
-            <li><a class="text-sky-600 hover:underline" href="./slides/workshop_slides.pdf" download>Workshop slides</a></li>
-          </ul>
+    <!-- Workshop Overview -->
+    <section class="workshop-overview">
+        <div class="workshop-container">
+            <div class="overview-content">
+                <div class="overview-text">
+                    <h2>Workshop Overview</h2>
+                    <p>This comprehensive workshop will cover advanced drone security techniques including RF signal analysis, telemetry interception, MAVLink protocol exploitation, and real-world vulnerability assessment methodologies.</p>
+                    
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <i class="fas fa-broadcast-tower"></i>
+                            <h4>RF Analysis</h4>
+                            <p>Signal interception and analysis techniques</p>
+                        </div>
+                        <div class="topic-card">
+                            <i class="fas fa-satellite-dish"></i>
+                            <h4>Telemetry Hacking</h4>
+                            <p>MAVLink protocol exploitation and manipulation</p>
+                        </div>
+                        <div class="topic-card">
+                            <i class="fas fa-video"></i>
+                            <h4>FPV Systems</h4>
+                            <p>First Person View signal analysis and interception</p>
+                        </div>
+                        <div class="topic-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Security Assessment</h4>
+                            <p>Vulnerability testing and penetration techniques</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overview-visual">
+                    <div class="drone-diagram">
+                        <div class="drone-component">
+                            <i class="fas fa-wifi"></i>
+                            <span>RC Link</span>
+                        </div>
+                        <div class="drone-component">
+                            <i class="fas fa-microchip"></i>
+                            <span>Flight Controller</span>
+                        </div>
+                        <div class="drone-component">
+                            <i class="fas fa-laptop"></i>
+                            <span>Ground Station</span>
+                        </div>
+                        <div class="drone-component">
+                            <i class="fas fa-video"></i>
+                            <span>FPV System</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-
-
-    <!-- Architecture diagram -->
-    <section class="bg-white shadow rounded p-6">
-      <h2 class="text-xl font-semibold mb-3">Drone Architecture</h2>
-      <div class="prose max-w-none">
-        <!-- Inline SVG: simple block diagram -->
-        <svg viewBox="0 0 900 360" class="w-full h-auto border rounded">
-            <defs>
-              <style>
-                .box {
-                  fill: #0f172a;
-                  fill-opacity: 0.04;
-                  stroke: #0f172a;
-                  stroke-opacity: 0.15;
-                  stroke-width: 1.5;
-                }
-                .label {
-                  font: 700 14px/1.4 Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-                  fill: #0f172a;
-                }
-                .sublabel {
-                  font: 400 12px/1.3 Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-                  fill: #334155;
-                }
-              </style>
-              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
-                <path d="M0,0 L10,5 L0,10 z" fill="#0f172a" fill-opacity="0.6"/>
-              </marker>
-            </defs>
-          
-            <!-- RC Tx / Rx -->
-            <rect x="30" y="40" width="180" height="120" class="box" rx="8"></rect>
-            <text x="120" y="80" text-anchor="middle" class="label">RC Tx / RC Rx</text>
-            <text x="120" y="105" text-anchor="middle" class="sublabel">2.4 GHz / DSM / FrSky</text>
-          
-            <!-- Flight Controller -->
-            <rect x="260" y="40" width="180" height="120" class="box" rx="8"></rect>
-            <text x="350" y="80" text-anchor="middle" class="label">Flight Controller</text>
-            <text x="350" y="105" text-anchor="middle" class="sublabel">Sensors / ESC / Telemetry</text>
-          
-            <!-- Companion / GCS -->
-            <rect x="490" y="40" width="180" height="120" class="box" rx="8"></rect>
-            <text x="580" y="80" text-anchor="middle" class="label">Companion / GCS</text>
-            <text x="580" y="105" text-anchor="middle" class="sublabel">MAVLink / Telemetry / Video</text>
-          
-            <!-- FPV TX -->
-            <rect x="260" y="190" width="180" height="120" class="box" rx="8"></rect>
-            <text x="350" y="230" text-anchor="middle" class="label">FPV TX</text>
-            <text x="350" y="255" text-anchor="middle" class="sublabel">Analog 5.8 GHz / Digital</text>
-          
-            <!-- arrows -->
-            <line x1="210" y1="100" x2="260" y2="100" stroke="#0f172a" stroke-opacity="0.25" stroke-width="2" marker-end="url(#arrow)"/>
-            <line x1="440" y1="100" x2="490" y2="100" stroke="#0f172a" stroke-opacity="0.25" stroke-width="2" marker-end="url(#arrow)"/>
-            <line x1="350" y1="160" x2="350" y2="190" stroke="#0f172a" stroke-opacity="0.25" stroke-width="2" marker-end="url(#arrow)"/>
-          </svg>
-          
-
-        <p class="text-sm text-slate-600 mt-2">Diagram: RC link → Flight controller → Companion/GCS. FPV transmitter (analog/digital) is separate and often in the 5.7–5.9 GHz band.</p>
-      </div>
+    <!-- Resources Section -->
+    <section class="resources-section">
+        <div class="workshop-container">
+            <h2>Workshop Resources</h2>
+            <p class="section-subtitle">Download materials and access additional resources for the workshop</p>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-presentation"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Main Slide Deck</h3>
+                        <p>Comprehensive presentation covering all workshop topics and methodologies</p>
+                        <a href="#" class="resource-btn">
+                            <i class="fas fa-download"></i>
+                            Download Slides
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Drone Security Handout</h3>
+                        <p>Detailed technical reference guide with practical examples and code samples</p>
+                        <a href="#" class="resource-btn">
+                            <i class="fas fa-download"></i>
+                            Download Handout
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Code Samples</h3>
+                        <p>Python scripts and GNURadio flowgraphs for hands-on exercises</p>
+                        <a href="#" class="resource-btn">
+                            <i class="fas fa-download"></i>
+                            Download Code
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>Sample Data</h3>
+                        <p>MAVLink captures and RF samples for analysis exercises</p>
+                        <a href="#" class="resource-btn">
+                            <i class="fas fa-download"></i>
+                            Download Samples
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- How to use this site -->
-    <section class="bg-white shadow rounded p-6">
-      <h2 class="text-xl font-semibold mb-3">How to use this handout</h2>
-      <ol class="list-decimal pl-6 space-y-2 text-sm text-slate-700">
-        <li>Download the sample files from <code>/ctf/samples/</code> — these are safe SITL & IQ samples.</li>
-        <li>Follow each lab's README in <code>/ctf/labs/</code>. Each README contains reproducible commands for GNURadio, pymavlink, and visualization.</li>
-        <li>Use the supplied GNURadio flowgraph <code>/ctf/grc/lab2_flowgraph.grc</code> to demod analog FPV.</li>
-        <li>Run the example scripts in <code>/ctf/scripts/</code> on your laptop. The scripts are documented and meant for SITL/offline data only.</li>
-      </ol>
-
-      <div class="mt-4">
-            <h3 class="font-medium">Terminal commands</h3>
-        <pre class="language-bash rounded bg-slate-900 text-white p-3 overflow-auto text-sm"><code># Example: run SITL (on your machine)
-# 1) Start ArduPilot SITL (see ArduPilot docs). Example (Linux/macOS with dev env):
-Tools/autotest/sim_vehicle.py -v ArduCopter -f quad --console --map
-
-# 2) Open the lab README and follow the commands in /ctf/labs/
-</code></pre>
-      </div>
+    <!-- Prerequisites Section -->
+    <section class="prerequisites-section">
+        <div class="workshop-container">
+            <h2>Prerequisites & Requirements</h2>
+            
+            <div class="prerequisites-grid">
+                <div class="prereq-card">
+                    <h3><i class="fas fa-laptop-code"></i> Technical Requirements</h3>
+                    <ul>
+                        <li>Laptop with Linux/macOS/Windows</li>
+                        <li>8GB+ RAM recommended</li>
+                        <li>USB 3.0 port for SDR devices</li>
+                        <li>Python 3.8+ installed</li>
+                        <li>GNURadio (optional but recommended)</li>
+                    </ul>
+                </div>
+                
+                <div class="prereq-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Knowledge Prerequisites</h3>
+                    <ul>
+                        <li>Basic understanding of RF concepts</li>
+                        <li>Python programming experience</li>
+                        <li>Familiarity with command line tools</li>
+                        <li>Basic networking knowledge</li>
+                        <li>Interest in drone technology</li>
+                    </ul>
+                </div>
+                
+                <div class="prereq-card">
+                    <h3><i class="fas fa-tools"></i> Software Setup</h3>
+                    <ul>
+                        <li>Wireshark for packet analysis</li>
+                        <li>GQRX or SDR# for RF analysis</li>
+                        <li>ArduPilot SITL simulator</li>
+                        <li>MAVProxy for MAVLink testing</li>
+                        <li>Text editor (VS Code recommended)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- Contact Section -->
+    <section class="workshop-contact">
+        <div class="workshop-container">
+            <div class="contact-content">
+                <h2>Questions About the Workshop?</h2>
+                <p>Contact us for more information about the workshop, prerequisites, or technical requirements.</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>workshop@hexguard.net</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h4>Website</h4>
+                            <p>hexguard.net</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="../index.html#contact" class="cta-btn">
+                    <i class="fas fa-comment-dots"></i>
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </section>
 
-  <!-- Local JS -->
-  <script src="./assets/js/main.js"></script>
+    <!-- Mini Floating Footer -->
+    <div class="mini-footer" role="contentinfo" aria-label="Quick footer">
+        <span class="mini-footer__copyright">© 2025 HexGuard</span>
+        <div class="mini-footer__links">
+            <a href="https://x.com/hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="social twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social linkedin"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/hexguardsec" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social github"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+
+    <script src="../js/scripts.js"></script>
 </body>
 </html>
