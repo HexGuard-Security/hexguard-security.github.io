@@ -13,19 +13,17 @@
             box-sizing: border-box;
         }
 
+        /* Update root variables for better visibility */
         :root {
             --bg-primary: #000000;
-            --bg-secondary: #0a0a0a;
-            --bg-tertiary: #141414;
-            --accent-primary: #8b5cf6;
-            --accent-secondary: #6366f1;
-            --accent-tertiary: #ec4899;
-            --text-primary: #f5f5f5;
-            --text-secondary: #a8a8a8;
-            --text-muted: #525252;
-            --border-primary: rgba(139, 92, 246, 0.15);
-            --border-secondary: rgba(139, 92, 246, 0.08);
-            --shadow-glow: rgba(139, 92, 246, 0.1);
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --border-primary: rgba(139, 92, 246, 0.3);
+            --border-secondary: rgba(139, 92, 246, 0.15);
+            --shadow-glow: rgba(139, 92, 246, 0.2);
         }
 
         body {
@@ -60,9 +58,10 @@
             pointer-events: none;
             z-index: 0;
             background: 
-                radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.04) 0%, transparent 40%),
-                radial-gradient(circle at 85% 60%, rgba(99, 102, 241, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.02) 0%, transparent 50%);
+                radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 60%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+            opacity: 0.7;
         }
 
         .container {
@@ -135,7 +134,7 @@
 
         .left-panel {
             flex: 1;
-            padding: 100px 40px 120px 40px;
+            padding: 120px 40px 160px 40px; /* Increased top and bottom padding */
             overflow-y: auto;
             height: 100vh;
             max-width: calc(100% - 600px);
@@ -246,12 +245,14 @@
             font-style: italic;
         }
 
+        /* Enhance section visibility */
         .section {
             padding: 32px;
-            margin-bottom: 24px;
+            margin-bottom: 32px; /* Increased margin between sections */
             border-radius: 16px;
-            backdrop-filter: blur(20px);
-            animation: fadeIn 0.4s ease-out backwards;
+            background: rgba(20, 20, 20, 0.7); /* Slightly lighter base for sections */
+            border: 1px solid var(--border-primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
         .section:nth-child(1) {
@@ -297,16 +298,11 @@
         }
 
         .section-title {
-            font-size: 18px;
-            margin-bottom: 28px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-secondary);
-            color: var(--text-primary);
+            font-size: 20px;
             font-weight: 600;
-            letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            margin-bottom: 32px;
         }
 
         .section-title::before {
@@ -336,7 +332,7 @@
             display: block;
             margin-bottom: 8px;
             color: var(--text-secondary);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             letter-spacing: 0.2px;
         }
@@ -347,7 +343,7 @@
         textarea {
             width: 100%;
             padding: 10px 14px;
-            background: var(--bg-primary);
+            background: rgba(30, 30, 30, 0.9);
             border: 1px solid var(--border-secondary);
             border-radius: 8px;
             color: var(--text-primary);
@@ -394,23 +390,18 @@
             padding: 4px;
         }
 
+        /* Enhance module items visibility */
         .module-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 18px 20px;
-            background: var(--bg-primary);
+            background: rgba(30, 30, 30, 0.9); /* Lighter background for module items */
             border: 1px solid var(--border-secondary);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .module-item:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--border-primary);
-            transform: translateX(2px);
+            border-color: var(--accent-primary);
+            background: rgba(40, 40, 40, 0.9);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
         }
 
         .module-item.disabled {
@@ -437,17 +428,14 @@
         }
 
         .module-name {
-            font-weight: 500;
             color: var(--text-primary);
-            margin-bottom: 4px;
-            font-size: 13px;
-            letter-spacing: -0.2px;
+            font-weight: 600;
+            font-size: 14px;
         }
 
         .module-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.5;
+            color: var(--text-secondary);
+            font-size: 13px;
         }
 
         .radio-group {
@@ -645,12 +633,10 @@
             align-items: center;
             gap: 6px;
             padding: 4px 10px;
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 6px;
-            font-size: 11px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
             color: var(--accent-primary);
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -691,7 +677,7 @@
     <div class="header">
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo-icon">HexGuard</div>
+                <div class="logo-icon">⚙️</div>
                 <div>
                     <h1>EMBA Profile Generator</h1>
                     <p class="subtitle">Tool to quickly configure emba firmware analyzer</p>
