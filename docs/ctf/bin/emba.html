@@ -69,6 +69,9 @@
             position: relative;
             z-index: 1;
             display: flex;
+            max-width: 2000px;
+            margin: 0 auto;
+            gap: 32px;
             min-height: 100vh;
         }
 
@@ -132,7 +135,7 @@
 
         .left-panel {
             flex: 1;
-            padding: 90px 24px 24px 24px;
+            padding: 100px 40px 120px 40px;
             overflow-y: auto;
             height: 100vh;
             max-width: calc(100% - 600px);
@@ -147,9 +150,10 @@
             position: fixed;
             right: 0;
             top: 70px;
-            width: 600px;
+            width: 650px;
             height: calc(100vh - 70px);
-            background: var(--bg-secondary);
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(30px);
             border-left: 1px solid var(--border-primary);
             display: flex;
             flex-direction: column;
@@ -173,7 +177,7 @@
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: 1px solid var(--border-primary);
             border-radius: 6px;
             background: transparent;
@@ -183,6 +187,7 @@
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: inherit;
+            backdrop-filter: blur(10px);
         }
 
         .btn:hover {
@@ -221,10 +226,10 @@
 
         #output {
             flex: 1;
-            padding: 24px;
+            padding: 32px;
             font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
-            font-size: 12px;
-            line-height: 1.8;
+            font-size: 13px;
+            line-height: 1.9;
             color: var(--text-secondary);
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -242,22 +247,60 @@
         }
 
         .section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-secondary);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 16px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 32px;
+            margin-bottom: 24px;
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            animation: fadeIn 0.4s ease-out backwards;
         }
 
-        .section:hover {
-            border-color: var(--border-primary);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        .section:nth-child(1) {
+            background: linear-gradient(to bottom right, rgba(139, 92, 246, 0.05), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.1);
+        }
+
+        .section:nth-child(2) {
+            background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.1);
+        }
+
+        .section:nth-child(3) {
+            background: linear-gradient(to bottom right, rgba(236, 72, 153, 0.05), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.1);
+        }
+
+        .section:nth-child(4) {
+            background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.05), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.1);
+        }
+
+        .section:nth-child(5) {
+            background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.05), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.1);
+        }
+
+        .section:nth-child(6) {
+            background: linear-gradient(to bottom right, rgba(239, 68, 68, 0.05), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.1);
+        }
+
+        .section:nth-child(7) {
+            background: linear-gradient(to bottom right, rgba(124, 58, 237, 0.05), rgba(0, 0, 0, 0));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.1);
         }
 
         .section-title {
-            font-size: 16px;
-            margin-bottom: 20px;
+            font-size: 18px;
+            margin-bottom: 28px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-secondary);
             color: var(--text-primary);
             font-weight: 600;
             letter-spacing: -0.3px;
@@ -277,11 +320,12 @@
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            gap: 24px;
+            margin-bottom: 8px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
 
         .form-group.full-width {
@@ -346,19 +390,21 @@
         .module-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 12px;
+            gap: 16px;
+            padding: 4px;
         }
 
         .module-item {
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            padding: 14px 16px;
+            padding: 18px 20px;
             background: var(--bg-primary);
             border: 1px solid var(--border-secondary);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
         }
 
         .module-item:hover {
@@ -442,11 +488,11 @@
         .toggle-buttons {
             display: flex;
             gap: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .toggle-btn {
-            padding: 6px 14px;
+            padding: 8px 16px;
             background: transparent;
             color: var(--text-muted);
             border: 1px solid var(--border-secondary);
@@ -468,13 +514,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 16px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
             background: var(--bg-primary);
             border: 1px solid var(--border-secondary);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 13px;
+            backdrop-filter: blur(10px);
         }
 
         .checkbox-inline:hover {
@@ -498,10 +546,10 @@
             bottom: 0;
             left: 0;
             right: 600px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(30px);
             border-top: 1px solid var(--border-primary);
-            padding: 16px 24px;
+            padding: 20px 32px;
             display: flex;
             justify-content: center;
             gap: 12px;
