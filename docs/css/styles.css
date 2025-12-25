@@ -1392,61 +1392,138 @@ section {
 }
 
 /* Social Card */
-.social-card {
+/* Office Section Styles */
+.office-section {
+    margin-top: 3rem;
+}
+
+.office-card {
     background: rgba(15, 22, 38, 0.6);
     backdrop-filter: blur(10px) saturate(120%);
     -webkit-backdrop-filter: blur(10px) saturate(120%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 2.5rem;
     transition: all 0.3s ease;
 }
 
-.social-card:hover {
+.office-card:hover {
     transform: translateY(-2px);
     border-color: rgba(0, 212, 170, 0.3);
     box-shadow: 0 8px 32px rgba(0, 212, 170, 0.1);
 }
 
-.social-card h4 {
+.office-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.office-header i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.office-header h3 {
     color: var(--text-primary);
-    font-size: 1.2rem;
+    font-size: 2rem;
     font-weight: 600;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 0.5rem 0;
 }
 
-.social-links {
-    display: flex;
-    gap: 1rem;
+.office-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
 }
 
-.social-link {
+.office-addresses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.office-item {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
+    gap: 1.5rem;
+    padding: 1.5rem;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 12px;
-    color: var(--text-secondary);
-    text-decoration: none;
     transition: all 0.3s ease;
-    flex: 1;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.social-link:hover {
-    background: rgba(0, 102, 255, 0.1);
-    color: var(--primary-color);
+.office-item:hover {
+    background: rgba(0, 102, 255, 0.05);
+    border-color: rgba(0, 102, 255, 0.2);
     transform: translateY(-2px);
 }
 
-.social-link i {
-    font-size: 1.5rem;
+.office-icon {
+    flex-shrink: 0;
 }
 
-.social-link span {
-    font-size: 0.8rem;
-    font-weight: 500;
+.office-icon i {
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+.office-details {
+    flex: 1;
+}
+
+.office-details h4 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.office-details h4 i {
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.office-location {
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+.office-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background: var(--accent-gradient);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+.office-info {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.office-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.office-info i {
+    color: var(--primary-color);
+    font-size: 0.9rem;
 }
 
 /* Contact Form Container */
@@ -1731,7 +1808,6 @@ section {
     }
     
     .contact-card,
-    .social-card,
     .form-card,
     .office-card {
         padding: 1.5rem;
