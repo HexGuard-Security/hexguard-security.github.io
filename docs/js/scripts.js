@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeOlderVersions();
         addSpotlightStyles();
         initializeLazyLoading();
-        registerServiceWorker();
+        // registerServiceWorker(); // Disabled - no sw.js file present
         initializeHqMap();
-        initializeHeroThree();
+        // initializeHeroThree(); // Temporarily disabled due to shader compilation issues
         replaceLogosWithSphere();
         startDynamicFavicon();
         injectHeroLogoSphere();
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeRecruitAvatarLogo();
         initializeDefaultAvatarLogos();
         initializeFeatureIconLogos();
+        // registerServiceWorker(); // Disabled - no sw.js file present
         
         // Add loaded class to prevent sporadic motion
         setTimeout(() => {
@@ -315,45 +316,6 @@ function handleContactForm(e) {
     window.open(url, '_blank');
 
     trackEvent('contact_whatsapp', { name_length: name.length, email_present: !!email, message_length: message.length });
-}
-
-// Download functionality
-function downloadFirmwire(platform = 'default') {
-    const downloadUrls = {
-        windows: 'https://releases.hexguard.net/firmwire-windows-x64.exe',
-        mac: 'https://releases.hexguard.net/firmwire-macos.dmg',
-        linux: 'https://releases.hexguard.net/firmwire-linux-x64.tar.gz',
-        default: 'https://releases.hexguard.net/firmwire-latest'
-    };
-    
-    // Track download
-    trackEvent('download', {
-        platform: platform,
-        product: 'firmwire'
-    });
-    
-    // Show download notification
-    showNotification(`Starting download for ${platform}...`, 'info');
-    
-    // Simulate download (in real implementation, this would trigger actual download)
-    setTimeout(() => {
-        showNotification('Download started! Check your downloads folder.', 'success');
-    }, 1000);
-    
-    // In real implementation, uncomment this:
-    // window.open(downloadUrls[platform] || downloadUrls.default, '_blank');
-}
-
-// Enhance older versions details to scroll into view when opened
-function initializeOlderVersions() {
-    const details = document.querySelector('.older-versions details');
-    if (details) {
-        details.addEventListener('toggle', function() {
-            if (details.open) {
-                details.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    }
 }
 
 // Contact sales functionality
@@ -656,23 +618,23 @@ function initializeErrorHandling() {
 // Security features demo
 function runSecurityDemo() {
     const demoSteps = [
-        'Initializing firmware analyzer...',
+        'Initializing hardware analysis...',
         'Detecting architecture: ARM Cortex-M4',
-        'Extracting firmware components...',
+        'Extracting device components...',
         'Analyzing code patterns...',
         '⚠️  Buffer overflow detected in auth_handler()',
         '⚠️  Hardcoded credentials found in config',
         '⚠️  Weak encryption algorithm detected',
         '✅ Analysis complete - 3 critical issues found',
         'Generating security report...',
-        '📊 Report ready for download'
+        '📊 Report ready for review'
     ];
     
     const terminal = document.querySelector('.terminal-body');
     if (!terminal) return;
     
     // Clear existing content
-    terminal.innerHTML = '<div class="terminal-line">$ firmwire analyze demo_firmware.bin</div>';
+    terminal.innerHTML = '<div class="terminal-line">$ hexguard analyze device.bin</div>';
     
     demoSteps.forEach((step, index) => {
         setTimeout(() => {
@@ -841,7 +803,7 @@ function addSpotlightStyles() {
     document.head.appendChild(style);
 }
 
-// Three.js firmware-themed hero visualization
+// Three.js hero visualization
 function initializeHeroThree() {
     const mount = document.getElementById('hero-three');
     if (!mount || !window.THREE) return;
@@ -907,50 +869,61 @@ function initializeHeroThree() {
         varying vec3 vColor;
         varying float vScanMix;
 
-        // Simple 3D noise (value noise blend)
-        float hash(vec3 p){ return fract(sin(dot(p, vec3(127.1,311.7, 74.7))) * 43758.5453123); }
-        float noise(vec3 x){
-          vec3 i = floor(x); vec3 f = fract(x);
-          float n000 = hash(i + vec3(0,0,0));
-          float n001 = hash(i + vec3(0,0,1));
-          float n010 = hash(i + vec3(0,1,0));
-          float n011 = hash(i + vec3(0,1,1));
-          float n100 = hash(i + vec3(1,0,0));
-          float n101 = hash(i + vec3(1,0,1));
-          float n110 = hash(i + vec3(1,1,0));
-          float n111 = hash(i + vec3(1,1,1));
-          vec3 u = f*f*(3.0-2.0*f);
-          return mix(mix(mix(n000, n100, u.x), mix(n010, n110, u.x), u.y),
-                     mix(mix(n001, n101, u.x), mix(n011, n111, u.x), u.y), u.z);
+        float hash(vec3 p) {
+          return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453123);
+        }
+        
+        float noise(vec3 x) {
+          vec3 i = floor(x);
+          vec3 f = fract(x);
+          float n000 = hash(i + vec3(0.0, 0.0, 0.0));
+          float n001 = hash(i + vec3(0.0, 0.0, 1.0));
+          float n010 = hash(i + vec3(0.0, 1.0, 0.0));
+          float n011 = hash(i + vec3(0.0, 1.0, 1.0));
+          float n100 = hash(i + vec3(1.0, 0.0, 0.0));
+          float n101 = hash(i + vec3(1.0, 0.0, 1.0));
+          float n110 = hash(i + vec3(1.0, 1.0, 0.0));
+          float n111 = hash(i + vec3(1.0, 1.0, 1.0));
+          vec3 u = f * f * (3.0 - 2.0 * f);
+          float nx0 = mix(n000, n100, u.x);
+          float nx1 = mix(n010, n110, u.x);
+          float ny0 = mix(nx0, nx1, u.y);
+          float nx2 = mix(n001, n101, u.x);
+          float nx3 = mix(n011, n111, u.x);
+          float ny1 = mix(nx2, nx3, u.y);
+          return mix(ny0, ny1, u.z);
         }
 
-        void main(){
+        void main() {
           float t = uTime * 0.35;
-          // layered noise for organic morph
-          float n1 = noise(base * (uNoiseScale*0.9) + vec3(0.0, t, 0.0));
-          float n2 = noise(base * (uNoiseScale*1.6) + vec3(t*0.7, 0.0, -t*0.5));
-          float disp = (n1*0.6 + n2*0.4 - 0.5) * uAmp * (1.0 + 0.5*uPulse);
+          float n1 = noise(base * (uNoiseScale * 0.9) + vec3(0.0, t, 0.0));
+          float n2 = noise(base * (uNoiseScale * 1.6) + vec3(t * 0.7, 0.0, -t * 0.5));
+          float disp = (n1 * 0.6 + n2 * 0.4 - 0.5) * uAmp * (1.0 + 0.5 * uPulse);
           vec3 pos = normalize(base) * (uRadius + disp);
-          // subtle drift across surface
-          pos += vec3(sin(t+base.y*3.0), cos(t*0.6+base.z*2.5), sin(t*0.8+base.x*2.0)) * 0.15;
-          // scanline mix factor based on world-space Y (approx via pos.y in model space)
+          pos += vec3(sin(t + base.y * 3.0), cos(t * 0.6 + base.z * 2.5), sin(t * 0.8 + base.x * 2.0)) * 0.15;
           vScanMix = pos.y;
           vColor = color;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-          gl_PointSize = 0.9 + disp*0.2;
-          gl_PointSize *= (300.0 / - (modelViewMatrix * vec4(pos,1.0)).z);
+          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+          gl_Position = projectionMatrix * mvPosition;
+          float pSize = 0.9 + disp * 0.2;
+          gl_PointSize = pSize * (300.0 / -mvPosition.z);
         }
     `;
     const fragmentShader = `
         precision mediump float;
         varying vec3 vColor;
-        uniform float uScanY; uniform float uScanW; uniform float uScanI;
+        uniform float uScanY;
+        uniform float uScanW;
+        uniform float uScanI;
         varying float vScanMix;
-        void main(){
+        
+        void main() {
           float d = length(gl_PointCoord - 0.5);
-          if(d>0.5) discard;
+          if (d > 0.5) discard;
           float alpha = smoothstep(0.5, 0.0, d) * 0.95;
-          float scan = smoothstep(uScanY - uScanW, uScanY, vScanMix) * smoothstep(uScanY + uScanW, uScanY, vScanMix);
+          float scan1 = smoothstep(uScanY - uScanW, uScanY, vScanMix);
+          float scan2 = smoothstep(uScanY + uScanW, uScanY, vScanMix);
+          float scan = scan1 * scan2;
           vec3 col = mix(vColor, vec3(0.0, 1.0, 0.85), scan * uScanI);
           gl_FragColor = vec4(col, alpha);
         }
@@ -965,6 +938,19 @@ function initializeHeroThree() {
         blending: THREE.AdditiveBlending,
         vertexColors: true
     });
+    
+    // Check for shader compilation errors
+    renderer.compile(scene, camera);
+    if (mat.program) {
+        const gl = renderer.getContext();
+        const program = mat.program.program;
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.error('Shader program failed to link:', gl.getProgramInfoLog(program));
+            console.error('Vertex shader log:', gl.getShaderInfoLog(mat.program.vertexShader));
+            console.error('Fragment shader log:', gl.getShaderInfoLog(mat.program.fragmentShader));
+        }
+    }
+    
     const points = new THREE.Points(geom, mat);
     scene.add(points);
 
@@ -1041,7 +1027,6 @@ function registerServiceWorker() {
 // Utility functions for external use
 window.HexGuard = {
     scrollToSection,
-    downloadFirmwire,
     contactSales,
     copyToClipboard,
     showNotification,
