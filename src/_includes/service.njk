@@ -1,0 +1,84 @@
+---
+layout: base.njk
+---
+<section class="hero">
+  <div class="container">
+    <p class="eyebrow">{{ category }}</p>
+    <h1>{{ title }}</h1>
+    <p class="lead">{{ summary }}</p>
+    <div class="hero-actions">
+      <a href="/contact/" class="btn btn-primary">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>What It Is</h2>
+    <p>{{ whatItIs }}</p>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="container">
+    <h2>Who It's For</h2>
+    <ul class="check-list">
+      {% for item in whoForList %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Our Methodology</h2>
+    <ol class="methodology-list">
+      {% for step in methodology %}
+      <li>
+        <h3>{{ step.step }}</h3>
+        <p>{{ step.description }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="container">
+    <h2>Deliverables</h2>
+    <ul class="check-list">
+      {% for item in deliverables %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Engagement Model</h2>
+    <p>{{ engagementModel }}</p>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="container">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      {% for item in faq %}
+      <details class="faq-item">
+        <summary>{{ item.q }}</summary>
+        <p>{{ item.a }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Ready to Talk About {{ title }}?</h2>
+    <a href="/contact/" class="btn btn-primary-inverse">Contact HexGuard</a>
+  </div>
+</section>
