@@ -67,3 +67,10 @@ test('application security service page renders with methodology and FAQ', () =>
   assert.match(html, /OWASP Top 10/);
   assert.match(html, /Do you test mobile apps/);
 });
+
+test('network implementation service page renders with methodology and FAQ', () => {
+  const html = readOutput('services/network-implementation/index.html');
+  assert.match(html, /Network Infrastructure Security/);
+  assert.match(html, /segmentation/);
+  assert.match(html, /administrative access to our network devices/);
+});
