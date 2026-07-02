@@ -60,3 +60,10 @@ test('network VAPT service page renders with methodology and FAQ', () => {
   assert.match(html, /lateral movement/);
   assert.match(html, /Do you test internal networks/);
 });
+
+test('application security service page renders with methodology and FAQ', () => {
+  const html = readOutput('services/application-security/index.html');
+  assert.match(html, /Application\/Product Security/);
+  assert.match(html, /OWASP Top 10/);
+  assert.match(html, /Do you test mobile apps/);
+});
