@@ -120,3 +120,10 @@ test('privacy policy page exists and covers data collection and confidentiality'
   assert.match(html, /does not use cookies/);
   assert.match(html, /confidential/i);
 });
+
+test('terms of service page exists and covers authorization and liability', () => {
+  const html = readOutput('terms-of-service/index.html');
+  assert.match(html, /Terms of Service/);
+  assert.match(html, /authorized/i);
+  assert.match(html, /liability/i);
+});
