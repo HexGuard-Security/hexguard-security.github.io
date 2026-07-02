@@ -4,10 +4,9 @@ This repository contains the source code for the HexGuard website, deployed at `
 
 ### Project Structure
 
-- `docs/` — GitHub Pages site root
-  - `index.html` — main landing page
-  - `css/styles.css` — site styles
-  - `js/scripts.js` — client-side scripts
+- `src/` — Eleventy source: page templates, `_includes/` layouts (nav/footer/service), and `assets/` (CSS, JS, images)
+- `docs/` — GitHub Pages site root (generated build output — do not edit directly, run `npm run build` instead)
+- `tests/` — build verification tests
 - `SECURITY.md` — responsible disclosure policy
 - `LICENSE` — project license
 
@@ -44,7 +43,7 @@ The site is served from the `docs/` directory on the `main` branch using GitHub 
 ### Contributing
 
 1. Create a feature branch.
-2. Make edits under `docs/` and validate locally.
+2. Make edits under `src/`, run `npm run build` and `npm test` to validate locally, and commit both the `src/` changes and the regenerated `docs/` output.
 3. Open a Pull Request with a clear description and screenshots where helpful.
 
 Please avoid submitting security-related issues via public PRs or issues.
