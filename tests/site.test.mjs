@@ -113,3 +113,10 @@ test('contact page has a mailto CTA and carried-over contact info', () => {
   assert.match(html, /\+91 6366934469/);
   assert.match(html, /U72900KA2024PTC186498/);
 });
+
+test('privacy policy page exists and covers data collection and confidentiality', () => {
+  const html = readOutput('privacy-policy/index.html');
+  assert.match(html, /Privacy Policy/);
+  assert.match(html, /does not use cookies/);
+  assert.match(html, /confidential/i);
+});
