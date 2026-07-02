@@ -98,3 +98,11 @@ test('about page lists company facts, certifications, and team with roles', () =
   assert.match(html, /Advisor/);
   assert.match(html, /Security Consultant/);
 });
+
+test('client work page has real stats and anonymized engagement summaries', () => {
+  const html = readOutput('client-work/index.html');
+  assert.match(html, /31/);
+  assert.match(html, /15/);
+  assert.match(html, /Fintech Startup/);
+  assert.doesNotMatch(html, /hexguardsec@gmail\.com.*client|client.*@/i);
+});
