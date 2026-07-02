@@ -106,3 +106,10 @@ test('client work page has real stats and anonymized engagement summaries', () =
   assert.match(html, /Fintech Startup/);
   assert.doesNotMatch(html, /hexguardsec@gmail\.com.*client|client.*@/i);
 });
+
+test('contact page has a mailto CTA and carried-over contact info', () => {
+  const html = readOutput('contact/index.html');
+  assert.match(html, /mailto:hexguardsec@gmail\.com/);
+  assert.match(html, /\+91 6366934469/);
+  assert.match(html, /U72900KA2024PTC186498/);
+});
