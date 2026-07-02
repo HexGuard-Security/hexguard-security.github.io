@@ -32,3 +32,10 @@ test('home page includes primary navigation and footer legal info', () => {
   assert.match(html, /href="\/contact\/"/);
   assert.match(html, /U72900KA2024PTC186498/);
 });
+
+test('home page has the new positioning headline, certifications, and engagement count', () => {
+  const html = readOutput('index.html');
+  assert.match(html, /Cybersecurity That Protects What You've Built/);
+  assert.match(html, /OSCP/);
+  assert.match(html, /31 engagements since 2020/);
+});
