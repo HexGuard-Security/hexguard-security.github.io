@@ -1,0 +1,28 @@
+:root {
+  /* Colors */
+  --bg: #FFFFFF;
+  --bg-alt: #F6F8FB;
+  --ink: #0A1220;
+  --ink-soft: #334155;
+  --accent: #1E3A8A;
+  --accent-hover: #152C6B;
+  --border: #E4E9F0;
+  --white: #FFFFFF;
+
+  /* Typography */
+  --font-heading: 'Manrope', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Spacing scale */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  /* Layout */
+  --max-width: 1200px;
+  --radius: 10px;
+}
