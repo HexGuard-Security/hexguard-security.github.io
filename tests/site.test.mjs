@@ -81,3 +81,10 @@ test('SDLC security service page renders with methodology and FAQ', () => {
   assert.match(html, /CI\/CD/);
   assert.match(html, /Which CI\/CD platforms do you support/);
 });
+
+test('policy creation service page renders with methodology and FAQ', () => {
+  const html = readOutput('services/policy-creation/index.html');
+  assert.match(html, /Policy &amp; Governance|Policy & Governance/);
+  assert.match(html, /ISO 27001/);
+  assert.match(html, /help us pass an ISO 27001/);
+});
