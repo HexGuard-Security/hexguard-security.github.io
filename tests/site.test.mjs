@@ -25,3 +25,10 @@ test('logo mark uses the navy palette, not the old cyan/blue gradient', () => {
   assert.match(svg, /#1E3A8A/);
   assert.doesNotMatch(svg, /#00D4FF/);
 });
+
+test('home page includes primary navigation and footer legal info', () => {
+  const html = readOutput('index.html');
+  assert.match(html, /href="\/services\/cloud-vapt\/"/);
+  assert.match(html, /href="\/contact\/"/);
+  assert.match(html, /U72900KA2024PTC186498/);
+});
