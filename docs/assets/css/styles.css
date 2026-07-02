@@ -186,7 +186,7 @@ a:hover {
   color: var(--accent);
 }
 
-.nav-cta {
+.nav-links > a.nav-cta {
   background: var(--accent);
   color: var(--white);
   padding: 0.6rem 1.25rem;
@@ -194,7 +194,7 @@ a:hover {
   font-weight: 600;
 }
 
-.nav-cta:hover {
+.nav-links > a.nav-cta:hover {
   background: var(--accent-hover);
   color: var(--white);
 }
