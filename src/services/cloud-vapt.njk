@@ -1,0 +1,36 @@
+---
+layout: service.njk
+title: Cloud Security Assessment (VAPT)
+description: A structured assessment of your cloud environment to identify misconfigurations, excessive permissions, and exploitable vulnerabilities.
+category: VAPT
+summary: A structured assessment of your cloud environment (AWS, Azure, GCP) to identify misconfigurations, excessive permissions, and exploitable vulnerabilities before attackers do.
+whatItIs: HexGuard's Cloud Security Assessment combines automated configuration review with manual, expert-led exploitation testing across your cloud accounts. We go beyond a compliance checklist to show you the real attack paths available to someone who gains a foothold in your environment.
+whoForList:
+  - Organizations running production workloads on AWS, Azure, or GCP
+  - Teams who have not had an independent review of IAM policies and cloud configuration
+  - Companies preparing for SOC 2, ISO 27001, or customer security questionnaires
+methodology:
+  - step: Scoping & Access Provisioning
+    description: Define cloud accounts and subscriptions in scope, agree rules of engagement, and set up scoped, read-only access.
+  - step: Configuration Review
+    description: Assess IAM policies, storage bucket permissions, network security groups, logging/monitoring, and encryption settings against CIS benchmarks.
+  - step: Exploitation & Privilege Escalation Testing
+    description: Attempt to chain misconfigurations into real attack paths, including privilege escalation, data exposure, and lateral movement between services.
+  - step: Reporting & Risk Rating
+    description: Document findings with severity ratings, business impact, and reproduction steps.
+  - step: Debrief & Remediation Support
+    description: Walk through findings with your engineering team and advise on fixes.
+deliverables:
+  - Executive summary report for leadership
+  - Detailed technical findings with reproduction steps and screenshots
+  - Risk-rated remediation roadmap
+  - One free retest of critical/high findings within 60 days
+engagementModel: Typical cloud assessments run 1-3 weeks depending on the number of accounts and services in scope, and are billed as a fixed-price engagement agreed during scoping.
+faq:
+  - q: Do you need production access or credentials?
+    a: We typically work with scoped, read-only IAM roles you provision for us; we never require your account root credentials.
+  - q: Which cloud providers do you support?
+    a: AWS, Microsoft Azure, and Google Cloud Platform.
+  - q: Will testing disrupt our production environment?
+    a: Cloud assessments are primarily configuration and permission reviews, so disruption risk is low; any active exploitation steps are scoped and agreed with you in advance.
+---

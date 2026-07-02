@@ -46,3 +46,10 @@ test('services hub lists both categories and links to all six service pages', ()
   assert.match(html, /Security Solutions/);
   assert.match(html, /href="\/services\/policy-creation\/"/);
 });
+
+test('cloud VAPT service page renders with methodology and FAQ', () => {
+  const html = readOutput('services/cloud-vapt/index.html');
+  assert.match(html, /Cloud Security Assessment/);
+  assert.match(html, /CIS benchmarks/);
+  assert.match(html, /Which cloud providers do you support/);
+});
