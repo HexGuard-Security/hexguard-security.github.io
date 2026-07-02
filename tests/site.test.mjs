@@ -74,3 +74,10 @@ test('network implementation service page renders with methodology and FAQ', () 
   assert.match(html, /segmentation/);
   assert.match(html, /administrative access to our network devices/);
 });
+
+test('SDLC security service page renders with methodology and FAQ', () => {
+  const html = readOutput('services/sdlc-security/index.html');
+  assert.match(html, /SDLC Security Integration/);
+  assert.match(html, /CI\/CD/);
+  assert.match(html, /Which CI\/CD platforms do you support/);
+});
