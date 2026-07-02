@@ -127,3 +127,28 @@ test('terms of service page exists and covers authorization and liability', () =
   assert.match(html, /authorized/i);
   assert.match(html, /liability/i);
 });
+
+test('every top-level page in the sitemap builds successfully', () => {
+  const pages = [
+    'index.html',
+    'services/index.html',
+    'services/cloud-vapt/index.html',
+    'services/network-vapt/index.html',
+    'services/application-security/index.html',
+    'services/network-implementation/index.html',
+    'services/sdlc-security/index.html',
+    'services/policy-creation/index.html',
+    'about/index.html',
+    'client-work/index.html',
+    'contact/index.html',
+    'privacy-policy/index.html',
+    'terms-of-service/index.html',
+  ];
+
+  for (const page of pages) {
+    const html = readOutput(page);
+    assert.match(html, /<html/, `${page} did not build valid HTML`);
+    assert.match(html, /class="site-nav"/, `${page} is missing the shared nav`);
+    assert.match(html, /class="site-footer"/, `${page} is missing the shared footer`);
+  }
+});

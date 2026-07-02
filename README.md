@@ -13,24 +13,33 @@ This repository contains the source code for the HexGuard website, deployed at `
 
 ### Local Preview
 
-You can preview the static site locally with any static server. Example using Python:
+This site is built with [Eleventy](https://www.11ty.dev/). To preview it locally:
 
 ```bash
-cd docs
-python3 -m http.server 8000
-# open http://localhost:8000
+npm install
+npm run serve
+# open http://localhost:8080
 ```
 
-Or using Node.js (http-server):
+### Building
 
 ```bash
-npx --yes http-server docs -p 8000
-# open http://localhost:8000
+npm run build
 ```
+
+This compiles the templates in `src/` into static HTML in `docs/`, which is the GitHub Pages source directory.
+
+### Testing
+
+```bash
+npm test
+```
+
+This builds the site and runs assertions against the generated HTML in `docs/` using Node's built-in test runner.
 
 ### Deployment
 
-The site is served from the `docs/` directory on the `main` branch using GitHub Pages. Pushing changes to `main` will automatically update the live site after Pages rebuilds.
+The site is served from the `docs/` directory on the `main` branch using GitHub Pages. After making changes under `src/`, run `npm run build`, commit both the `src/` changes and the regenerated `docs/` output, and push to `main` — GitHub Pages will pick up the change automatically.
 
 ### Contributing
 
