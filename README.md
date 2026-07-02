@@ -4,11 +4,11 @@ This repository contains the source code for the HexGuard website, deployed at `
 
 ### Project Structure
 
-- `src/` — Eleventy source: page templates, `_includes/` layouts (nav/footer/service), and `assets/` (CSS, JS, images)
-- `docs/` — GitHub Pages site root (generated build output — do not edit directly, run `npm run build` instead)
-- `tests/` — build verification tests
-- `SECURITY.md` — responsible disclosure policy
-- `LICENSE` — project license
+- `src/` - Eleventy source: page templates, `_includes/` layouts (nav/footer/service), and `assets/` (CSS, JS, images)
+- `docs/` - GitHub Pages site root (generated build output - do not edit directly, run `npm run build` instead)
+- `tests/` - build verification tests
+- `SECURITY.md` - responsible disclosure policy
+- `LICENSE` - project license
 
 ### Local Preview
 
@@ -38,7 +38,7 @@ This builds the site and runs assertions against the generated HTML in `docs/` u
 
 ### Deployment
 
-The site is served from the `docs/` directory on the `main` branch using GitHub Pages. After making changes under `src/`, run `npm run build`, commit both the `src/` changes and the regenerated `docs/` output, and push to `main` — GitHub Pages will pick up the change automatically.
+The site is served from the `docs/` directory on the `main` branch using GitHub Pages. After making changes under `src/`, run `npm run build`, commit both the `src/` changes and the regenerated `docs/` output, and push to `main` - GitHub Pages will pick up the change automatically.
 
 ### Contributing
 
