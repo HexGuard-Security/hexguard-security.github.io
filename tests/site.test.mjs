@@ -39,3 +39,10 @@ test('home page has the new positioning headline, certifications, and engagement
   assert.match(html, /OSCP/);
   assert.match(html, /31 engagements since 2020/);
 });
+
+test('services hub lists both categories and links to all six service pages', () => {
+  const html = readOutput('services/index.html');
+  assert.match(html, /Vulnerability Assessment/);
+  assert.match(html, /Security Solutions/);
+  assert.match(html, /href="\/services\/policy-creation\/"/);
+});
