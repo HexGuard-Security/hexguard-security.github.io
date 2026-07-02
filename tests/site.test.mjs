@@ -88,3 +88,13 @@ test('policy creation service page renders with methodology and FAQ', () => {
   assert.match(html, /ISO 27001/);
   assert.match(html, /help us pass an ISO 27001/);
 });
+
+test('about page lists company facts, certifications, and team with roles', () => {
+  const html = readOutput('about/index.html');
+  assert.match(html, /U72900KA2024PTC186498/);
+  assert.match(html, /CRTP/);
+  assert.match(html, /Adlin Seedon D&#39;Souza|Adlin Seedon D'Souza/);
+  assert.match(html, /Founder/);
+  assert.match(html, /Advisor/);
+  assert.match(html, /Security Consultant/);
+});
