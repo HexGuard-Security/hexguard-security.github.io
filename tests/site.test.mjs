@@ -53,3 +53,10 @@ test('cloud VAPT service page renders with methodology and FAQ', () => {
   assert.match(html, /CIS benchmarks/);
   assert.match(html, /Which cloud providers do you support/);
 });
+
+test('network VAPT service page renders with methodology and FAQ', () => {
+  const html = readOutput('services/network-vapt/index.html');
+  assert.match(html, /Network Penetration Testing/);
+  assert.match(html, /lateral movement/);
+  assert.match(html, /Do you test internal networks/);
+});
