@@ -19,3 +19,9 @@ test('design tokens stylesheet is copied to the build output', () => {
   assert.match(css, /--bg: #FFFFFF/);
   assert.match(css, /--ink: #0A1220/);
 });
+
+test('logo mark uses the navy palette, not the old cyan/blue gradient', () => {
+  const svg = readOutput('assets/img/logo.svg');
+  assert.match(svg, /#1E3A8A/);
+  assert.doesNotMatch(svg, /#00D4FF/);
+});
